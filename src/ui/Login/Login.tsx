@@ -44,7 +44,9 @@ const Login = () => {
         {/* {error && <Alert variant="danger">{error}</Alert>} */}
         <form className="login__form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label className="login__form__title" htmlFor="email">
+              Email
+            </label>
             <input
               className="login__form__input"
               type="email"
@@ -55,7 +57,9 @@ const Login = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label className="login__form__title" htmlFor="password">
+              Password
+            </label>
             <input
               className="login__form__input"
               type="password"
@@ -65,12 +69,16 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit" disabled={loading}>
+          <button
+            className="login__form__button"
+            type="submit"
+            disabled={loading}
+          >
             Log In
           </button>
         </form>
-        <div className="login__right__signup">
-          <p>
+        <div>
+          <p className="login_form__link">
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </p>
         </div>

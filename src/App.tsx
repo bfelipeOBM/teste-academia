@@ -1,9 +1,9 @@
-import RouteWrapper from "./routes";
+import Routes from "./routes";
 
 function App() {
   return (
     <>
-      <RouteWrapper />
+      <Routes />
     </>
   );
 }

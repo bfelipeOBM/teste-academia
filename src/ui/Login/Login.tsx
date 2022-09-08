@@ -121,7 +121,7 @@ const Login = () => {
           <div>
             <p className="login__form__first-access">
               <span>Este é seu primeiro acesso?</span>{" "}
-              <Link className="login__form__first-access__link" to="/signup">
+              <Link className="login__form__first-access__link" to="/register">
                 Cadastrar-se
               </Link>
             </p>

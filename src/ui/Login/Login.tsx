@@ -53,7 +53,14 @@ const Login = () => {
         </div>
         <div className="login__vertical-divider"></div>
         <div className="login__right">
-          <span>Já possuo cadastro</span>
+          <div
+            className="login__right__backbutton"
+            onClick={() => navigate(-1)}
+          >
+            <span className="material-icons ">arrow_back</span>
+            <span className="login__right__backbutton__title">Voltar</span>
+          </div>
+          <span className="login__right__title">Já possuo cadastro</span>
           <p>
             Se você tiver uma conta, acesse com seu endereço de e-mail ou
             CPF/CNPJ e senha.
@@ -104,7 +111,7 @@ const Login = () => {
               <div className="login__form__aux__buttons__forgot-password">
                 <Link
                   className="login__form__aux__buttons__forgot-password__link"
-                  to="/forgot-password"
+                  to="/forgotpassword"
                 >
                   Esqueceu a sua senha?
                 </Link>

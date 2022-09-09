@@ -1,6 +1,4 @@
-/* registration form css with mobile responsive following Register.tsx */
-
-.register-watermark-image {
+.token-watermark-image {
   position: absolute;
   top: 0;
   right: 0 !important;
@@ -9,7 +7,7 @@
   height: 156px;
 }
 
-.register {
+.token {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -43,7 +41,7 @@
     padding-left: 146px;
 
     &__title {
-      width: 314px;
+      width: 366px;
       height: 39px;
       text-align: left;
       font-size: 32px;
@@ -53,7 +51,7 @@
     }
 
     p {
-      width: 674px;
+      width: 500px;
       height: 48px;
       text-align: left;
       font-size: 18px;
@@ -71,6 +69,9 @@
       letter-spacing: 0px;
       color: #141b23;
       margin-bottom: 110px;
+      position: absolute;
+      top: 0;
+      margin-top: 70px;
 
       &__title {
         margin-left: 10px;
@@ -103,6 +104,7 @@
     align-items: flex-start;
     justify-content: center;
     background-color: #fff;
+    margin-top: 37px;
 
     &__inputs-group {
       display: flex;
@@ -131,35 +133,46 @@
     }
 
     &__title {
-      width: 39px;
+      width: 536px;
       height: 21px;
       text-align: left;
       font-size: 16px;
       letter-spacing: 0px;
-      color: #000000;
+      color: #575655;
 
-      &__confirm-password {
-        width: 120px;
-        height: 21px;
-        text-align: left;
+      &__counter {
         font-size: 16px;
         letter-spacing: 0px;
-        color: #000000;
+        color: #ef7f00 !important;
       }
+    }
 
-      &__email {
-        width: 50px;
+    &__resend__title {
+      width: 536px;
+      height: 21px;
+      text-align: left;
+      font-size: 16px;
+      letter-spacing: 0px;
+      color: #575655;
+
+      &__link {
+        text-decoration: underline;
+        color: #ef7f00 !important;
       }
     }
 
     &__input {
-      margin-bottom: 20px;
-      margin-top: 10px;
+      margin: 10px 10px 20px 0;
       padding: 0 10px;
-      border-radius: 5px;
       outline: none;
-      height: 45px;
-      border: 1px solid #dce6f4;
+      height: 100px;
+      width: 81px;
+      border-bottom: 3px solid #575655 !important;
+      border: none;
+      font-size: 50px;
+      font-weight: bold;
+      color: #575655;
+      text-align: center;
     }
 
     &__input-profession {
@@ -261,6 +274,7 @@
     }
 
     &__button {
+      margin-top: 35px;
       margin-bottom: 20px;
       border: none;
       color: #fff;

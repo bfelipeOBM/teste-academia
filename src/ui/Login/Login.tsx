@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import waterMark from "../../assets/carimbo_obra_compromisso.png";
+import facebookLogo from "../../assets/facebook@2x.png";
+import googleLogo from "../../assets/google@2x.png";
 import loginImg from "../../assets/login_sideimage.png";
+import obramaxLogo from "../../assets/obramax@2x.png";
 import "./Login.scss";
+
+const LOGIN_TYPE = {
+  FACEBOOK: "facebook",
+  GOOGLE: "google",
+  OBRAMAX: "obramax",
+};
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +42,27 @@ const Login = () => {
     }
 
     setLoading(false);
+  };
+
+  const handleSocialLogin = async (currentLoginType: string) => {
+    try {
+      switch (currentLoginType) {
+        case LOGIN_TYPE.FACEBOOK:
+          // await loginWithFacebook();
+          break;
+        case LOGIN_TYPE.GOOGLE:
+          // await loginWithGoogle();
+          break;
+        case LOGIN_TYPE.OBRAMAX:
+          // await loginWithObramax();
+          break;
+        default:
+          break;
+      }
+      navigate("/");
+    } catch {
+      setError("Failed to log in");
+    }
   };
 
   return (
@@ -117,13 +147,55 @@ const Login = () => {
                 </Link>
               </div>
             </div>
-            <button
-              className="login__form__button"
-              type="submit"
-              disabled={loading}
-            >
-              Entrar
-            </button>
+
+            <div className="login__form__login__buttons">
+              <button
+                className="login__form__login__buttons__login"
+                type="submit"
+                disabled={loading}
+              >
+                Entrar
+              </button>
+
+              <div className="login__form__login__buttons__sociallogin">
+                <span className="login__form__login__buttons__sociallogin__title">
+                  ou entrar com:
+                </span>
+
+                <div className="login__form__login__buttons__sociallogin__buttons">
+                  <div
+                    className="login__form__login__buttons__sociallogin__buttons__icon"
+                    onClick={() => handleSocialLogin(LOGIN_TYPE.OBRAMAX)}
+                  >
+                    <img
+                      src={obramaxLogo}
+                      alt="obramax"
+                      width="33"
+                      height="33"
+                    />
+                  </div>
+
+                  <div
+                    className="login__form__login__buttons__sociallogin__buttons__icon"
+                    onClick={() => handleSocialLogin(LOGIN_TYPE.FACEBOOK)}
+                  >
+                    <img
+                      src={facebookLogo}
+                      alt="facebook"
+                      width="33"
+                      height="33"
+                    />
+                  </div>
+
+                  <div
+                    className="login__form__login__buttons__sociallogin__buttons__icon"
+                    onClick={() => handleSocialLogin(LOGIN_TYPE.GOOGLE)}
+                  >
+                    <img src={googleLogo} alt="google" width="33" height="33" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </form>
           <div>
             <p className="login__form__first-access">

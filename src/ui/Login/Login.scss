@@ -175,38 +175,77 @@
           letter-spacing: 0px;
           color: #000000;
           text-decoration: none;
+          margin-right: 0;
         }
       }
     }
 
-    &__button {
+    &__login__buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 696px;
       margin-bottom: 20px;
-      border: none;
-      color: #fff;
-      font-size: 16px;
-      text-transform: uppercase;
-      cursor: pointer;
-      width: 260px;
-      height: 50px;
-      background: #ef7f00 0% 0% no-repeat padding-box;
-      border: 1px solid #ef7f00;
+      margin-top: 10px;
 
-      &:hover {
-        background: #002a5b 0% 0% no-repeat padding-box;
-        transition: ease-in-out 0.3s;
-        animation: forwards;
-        border: 1px solid #002a5b;
+      &__login {
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 260px;
+        height: 50px;
+        background: #ef7f00 0% 0% no-repeat padding-box;
+        border: 1px solid #ef7f00;
+
+        &:hover {
+          background: #002a5b 0% 0% no-repeat padding-box;
+          transition: ease-in-out 0.3s;
+          animation: forwards;
+          border: 1px solid #002a5b;
+        }
+
+        &:active {
+          background: #002a5b 0% 0% no-repeat padding-box;
+          border: 1px solid #002a5b;
+        }
+
+        &:disabled {
+          background: #dce6f4 0% 0% no-repeat padding-box;
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
       }
 
-      &:active {
-        background: #002a5b 0% 0% no-repeat padding-box;
-        border: 1px solid #002a5b;
-      }
+      &__sociallogin {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
 
-      &:disabled {
-        background: #dce6f4 0% 0% no-repeat padding-box;
-        opacity: 0.5;
-        cursor: not-allowed;
+        &__title {
+          font-size: 16px;
+          font-weight: bold;
+          letter-spacing: 0px;
+          color: #000000;
+          margin-right: 16px;
+        }
+
+        &__buttons {
+          display: flex;
+          flex-direction: row;
+
+          &__icon {
+            margin-right: 16px;
+            width: 33px;
+            height: 33px;
+          }
+        }
+
+        &__buttons > *:last-child {
+          margin-right: 0;
+        }
       }
     }
 

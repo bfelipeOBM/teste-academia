@@ -1,12 +1,17 @@
-/* Signup page containing form with the information: email, name, whatsapp number, profession, 
-password, password confirmation and accepting to receive information from Obramax. 
-Design similar to Login with mobile responsiveness. */
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import waterMark from "../../assets/carimbo_obra_compromisso.png";
+import facebookLogo from "../../assets/facebook@2x.png";
+import googleLogo from "../../assets/google@2x.png";
 import registerImg from "../../assets/login_sideimage.png";
+import obramaxLogo from "../../assets/obramax@2x.png";
 import "./Register.scss";
+
+const REGISTER_TYPE = {
+  FACEBOOK: "facebook",
+  GOOGLE: "google",
+  OBRAMAX: "obramax",
+};
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -34,6 +39,27 @@ const Register = () => {
 
     setLoading(false);
   };
+
+  const handleSocialRegister = async (currentRegisterType: string) => {
+    try {
+      switch (currentRegisterType) {
+        case REGISTER_TYPE.FACEBOOK:
+          // await loginWithFacebook();
+          break;
+        case REGISTER_TYPE.GOOGLE:
+          // await loginWithGoogle();
+          break;
+        case REGISTER_TYPE.OBRAMAX:
+          // await loginWithObramax();
+          break;
+        default:
+          break;
+      }
+    } catch {
+      setError("Failed to register");
+    }
+  };
+
   return (
     <>
       <div className="register-watermark-image">
@@ -150,20 +176,60 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className="register__form__inputs-group">
-              <label
-                className="register__form__title-checkbox"
-                htmlFor="acceptTerms"
-              >
-                <input
-                  className="register__form__input-checkbox"
-                  type="checkbox"
-                  id="acceptTerms"
-                  checked={acceptTerms}
-                  onChange={(e) => setAcceptTerms(e.target.checked)}
-                />
-                Aceita receber informações da Obramax?
-              </label>
+            <div className="register__form__inputs-row-direction-space-between">
+              <div className="register__form__checkbox">
+                <label
+                  className="register__form__checkbox__title"
+                  htmlFor="acceptTerms"
+                >
+                  <input
+                    className="register__form__checkbox__input"
+                    type="checkbox"
+                    id="acceptTerms"
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                  />
+                  Aceita receber informações da Obramax?
+                </label>
+              </div>
+              <div className="register__form__register__buttons__socialregister">
+                <span className="register__form__register__buttons__socialregister__title">
+                  Vincular conta com:
+                </span>
+
+                <div className="register__form__register__buttons__socialregister__buttons">
+                  <div
+                    className="register__form__register__buttons__socialregister__buttons__icon"
+                    onClick={() => handleSocialRegister(REGISTER_TYPE.OBRAMAX)}
+                  >
+                    <img
+                      src={obramaxLogo}
+                      alt="obramax"
+                      width="33"
+                      height="33"
+                    />
+                  </div>
+
+                  <div
+                    className="register__form__register__buttons__socialregister__buttons__icon"
+                    onClick={() => handleSocialRegister(REGISTER_TYPE.FACEBOOK)}
+                  >
+                    <img
+                      src={facebookLogo}
+                      alt="facebook"
+                      width="33"
+                      height="33"
+                    />
+                  </div>
+
+                  <div
+                    className="register__form__register__buttons__socialregister__buttons__icon"
+                    onClick={() => handleSocialRegister(REGISTER_TYPE.GOOGLE)}
+                  >
+                    <img src={googleLogo} alt="google" width="33" height="33" />
+                  </div>
+                </div>
+              </div>
             </div>
             <button
               type="submit"

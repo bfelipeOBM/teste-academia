@@ -1,0 +1,136 @@
+.footer {
+  width: 100%;
+  height: 527px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background: #141b23 0% 0% no-repeat padding-box;
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    &__up {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-top: 60px;
+
+      &__logo {
+        display: flex;
+        width: 260px;
+        height: 84px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        margin-right: 50px;
+        margin-left: 140px;
+      }
+
+      &__about {
+        width: 1330px;
+        height: 48px;
+        display: flex;
+        margin-right: 140px;
+
+        &__text {
+          text-align: left;
+          font-size: 18px;
+          color: #fff;
+        }
+      }
+    }
+
+    &__divider__middle {
+      width: 1640px;
+      height: 1px;
+      background: #707070;
+      opacity: 0.3;
+      margin-top: 60px;
+      margin-bottom: 60px;
+      margin-left: 140px;
+    }
+
+    &__middle {
+      display: flex;
+      flex-direction: row;
+      margin-left: 140px;
+
+      &__reputation-certified {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        &__title {
+          font-size: 31px;
+          font-weight: bold;
+          color: #fff;
+        }
+
+        &__images {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-top: 27px;
+
+          img {
+            margin-right: 11px;
+          }
+        }
+      }
+
+      &__social-media {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 140px;
+
+        &__title {
+          font-size: 31px;
+          font-weight: bold;
+          color: #fff;
+        }
+
+        &__images {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-top: 27px;
+
+          img {
+            margin-right: 11px;
+          }
+        }
+      }
+    }
+
+    &__divider__down {
+      width: 100%;
+      height: 1px;
+      background: #707070;
+      margin-top: 60px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+
+    &__down {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      &__copyright {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__text {
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

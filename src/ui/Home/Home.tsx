@@ -1,4 +1,5 @@
 import "../../App.css";
+import DetailsBanner from "../Banners/DetailsBanner/DetailsBanner";
 import CourseCategory from "../Courses/CourseCategory/CourseCategory";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -8,6 +9,7 @@ const Home = () => {
     <div className="App">
       <Header></Header>
       <CourseCategory></CourseCategory>
+      <DetailsBanner></DetailsBanner>
       <Footer></Footer>
     </div>
   );

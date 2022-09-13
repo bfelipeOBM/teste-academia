@@ -202,6 +202,8 @@
       align-items: center;
 
       &__title {
+        display: inline-block;
+        position: relative; /* needed for checkbox absolute positioning */
         height: 22px;
         text-align: left;
         font-size: 16px;
@@ -210,12 +212,28 @@
         color: #000000;
       }
 
-      &__input {
-        background: #ffffff 0% 0% no-repeat padding-box;
-        outline: 2px solid #ef7f00;
-        margin-right: 10px;
-        height: 12px;
-        width: 12px;
+      &__title > input[type="checkbox"] {
+        display: block;
+        position: absolute; /* remove it from the flow */
+        width: 100%;
+        height: 100%;
+        margin: -0.5rem; /* negative the padding of label to cover the "button" */
+        cursor: pointer;
+        opacity: 0; /* make it transparent */
+        z-index: 666; /* place it on top of everything else */
+      }
+
+      &__title > input[type="checkbox"] + span {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+        outline: #ef7f00 solid 1px;
+      }
+
+      &__title > input[type="checkbox"]:checked + span {
+        background-color: #ef7f00;
+        border: 2px solid #fff;
       }
     }
 

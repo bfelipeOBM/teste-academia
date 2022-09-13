@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import headerLogo from "../../assets/logo.png";
+import headerLogo from "../../assets/logo-PB@2x.png";
 import "./Header.scss";
 
 const Header = () => {

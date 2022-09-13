@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import waterMark from "../../assets/carimbo_obra_compromisso.png";
 import facebookLogo from "../../assets/facebook@2x.png";
 import googleLogo from "../../assets/google@2x.png";
@@ -119,14 +120,10 @@ const Register = () => {
                 <label className="register__form__title" htmlFor="profession">
                   Profissão
                 </label>
-                <input
+                <Select
                   placeholder="Selecione sua profissão"
                   className="register__form__input-profession"
-                  type="select"
-                  id="profession"
-                  value={profession}
-                  onChange={(e) => setProfession(e.target.value)}
-                />
+                ></Select>
               </div>
               <div className="register__form__input-row-group-right">
                 <label className="register__form__title" htmlFor="whatsapp">
@@ -189,6 +186,7 @@ const Register = () => {
                     checked={acceptTerms}
                     onChange={(e) => setAcceptTerms(e.target.checked)}
                   />
+                  <span>&nbsp;</span>
                   Aceita receber informações da Obramax?
                 </label>
               </div>

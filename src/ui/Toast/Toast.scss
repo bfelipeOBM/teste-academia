@@ -1,0 +1,50 @@
+/* toast */
+
+.toast {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  width: 674px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+  margin-left: 75px;
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    background: #2a8c62 0% 0% no-repeat padding-box;
+
+    &__icon {
+      color: #ffffff;
+      font-size: 40px;
+      margin: 8px 25px;
+    }
+
+    &__text {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0px;
+      color: #ffffff;
+    }
+
+    &__close {
+      margin-left: auto;
+
+      span {
+        font-size: 26px;
+        margin: 17px;
+        cursor: pointer;
+        color: #ffffff;
+      }
+    }
+  }
+}

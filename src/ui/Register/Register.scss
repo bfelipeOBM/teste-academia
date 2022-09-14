@@ -203,7 +203,7 @@
 
       &__title {
         display: inline-block;
-        position: relative; /* needed for checkbox absolute positioning */
+        position: relative;
         height: 22px;
         text-align: left;
         font-size: 16px;
@@ -214,13 +214,13 @@
 
       &__title > input[type="checkbox"] {
         display: block;
-        position: absolute; /* remove it from the flow */
+        position: absolute;
         width: 100%;
         height: 100%;
-        margin: -0.5rem; /* negative the padding of label to cover the "button" */
+        margin: -0.5rem;
         cursor: pointer;
-        opacity: 0; /* make it transparent */
-        z-index: 666; /* place it on top of everything else */
+        opacity: 0;
+        z-index: 666;
       }
 
       &__title > input[type="checkbox"] + span {

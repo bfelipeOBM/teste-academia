@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import waterMark from "../../assets/carimbo_obra_compromisso.png";
 import facebookLogo from "../../assets/facebook@2x.png";
 import googleLogo from "../../assets/google@2x.png";
 import loginImg from "../../assets/login_sideimage.png";
 import obramaxLogo from "../../assets/obramax@2x.png";
+import Toast from "../Toast/Toast";
 import "./Login.scss";
 
 const LOGIN_TYPE = {
@@ -13,12 +14,18 @@ const LOGIN_TYPE = {
   OBRAMAX: "obramax",
 };
 
+type LocationState = {
+  toast: boolean;
+};
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [hasToast, setHasToast] = useState(false);
 
   // const { currentUser } = useAuth();
   const { currentUser } = { currentUser: null };
@@ -28,6 +35,13 @@ const Login = () => {
       navigate("/");
     }
   }, [currentUser, navigate]);
+
+  useEffect(() => {
+    if (location?.state) {
+      const { toast } = location?.state as LocationState;
+      setHasToast(toast);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,6 +84,8 @@ const Login = () => {
       <div className="login-watermark-image">
         <img src={waterMark} alt="login" />
       </div>
+
+      {hasToast && <Toast toast={hasToast} />}
 
       <div className="login">
         <div className="login__left">
@@ -127,14 +143,15 @@ const Login = () => {
             </div>
             <div className="login__form__aux__buttons">
               <div className="login__form__aux__buttons__rememberme">
-                <input
-                  className="login__form__aux__buttons__rememberme-radio"
-                  type="radio"
-                ></input>
                 <label
-                  className="login__form__aux__buttons__rememberme-radio__label"
+                  className="login__form__aux__buttons__rememberme-checkbox__label"
                   htmlFor="rememberme"
                 >
+                  <input
+                    className="login__form__aux__buttons__rememberme-checkbox"
+                    type="checkbox"
+                  ></input>
+                  <span>&nbsp;</span>
                   Lembrar-me
                 </label>
               </div>

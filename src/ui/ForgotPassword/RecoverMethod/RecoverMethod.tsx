@@ -59,35 +59,47 @@ const RecoverMethod = () => {
           <p>Por favor, selecione uma forma de recuperação.</p>
           <form className="recovermethod__form" onSubmit={handleSubmit}>
             <div className="recovermethod__form__inputs-group">
-              <label
-                className="recovermethod__form__title-checkbox"
-                htmlFor="usernameNumber"
-              >
-                <input
-                  className="recovermethod__form__input-checkbox"
-                  type="checkbox"
-                  id="usernameNumber"
-                  checked={usernameNumber}
-                  onChange={(e) => setUsernameNumber(e.target.checked)}
-                />
-                Utilizar a recuperação por SMS com o número{" "}
-                <strong>{userNumber}</strong>
-              </label>
+              <div className="recovermethod__form__checkbox">
+                <label
+                  className="recovermethod__form__checkbox__title"
+                  htmlFor="usernameNumber"
+                >
+                  <input
+                    className="recovermethod__form__checkbox__input"
+                    type="checkbox"
+                    id="usernameNumber"
+                    checked={usernameNumber}
+                    onChange={(e) => {
+                      setUsernameNumber(e.target.checked);
+                      setUsernameEmail(false);
+                    }}
+                  />
+                  <span>&nbsp;</span>
+                  Utilizar a recuperação por SMS com o número{" "}
+                  <strong>{userNumber}</strong>
+                </label>
+              </div>
             </div>
             <div className="recovermethod__form__inputs-group">
-              <label
-                className="recovermethod__form__title-checkbox"
-                htmlFor="usernameEmail"
-              >
-                <input
-                  className="recovermethod__form__input-checkbox"
-                  type="checkbox"
-                  id="usernameEmail"
-                  checked={usernameEmail}
-                  onChange={(e) => setUsernameEmail(e.target.checked)}
-                />
-                Utilizar o e-mail <strong>{userEmail}</strong>
-              </label>
+              <div className="recovermethod__form__checkbox">
+                <label
+                  className="recovermethod__form__checkbox__title"
+                  htmlFor="usernameEmail"
+                >
+                  <input
+                    className="recovermethod__form__checkbox__input"
+                    type="checkbox"
+                    id="usernameEmail"
+                    checked={usernameEmail}
+                    onChange={(e) => {
+                      setUsernameEmail(e.target.checked);
+                      setUsernameNumber(false);
+                    }}
+                  />
+                  <span>&nbsp;</span>
+                  Utilizar o e-mail <strong>{userEmail}</strong>
+                </label>
+              </div>
             </div>
             <button
               type="submit"

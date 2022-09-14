@@ -71,7 +71,7 @@ const Token = () => {
       setError("");
       setLoading(true);
       // await token(tokenNumber);
-      navigate("/login");
+      navigate("/login", { state: { toast: true } });
     } catch {
       setError("Failed to reset password");
     }

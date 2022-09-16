@@ -1,5 +1,8 @@
+import { UserLogin } from "@/application/models/user";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { login } from "../../application/store/user/action";
 import waterMark from "../../assets/carimbo_obra_compromisso.png";
 import facebookLogo from "../../assets/facebook@2x.png";
 import googleLogo from "../../assets/google@2x.png";
@@ -27,6 +30,8 @@ const Login = () => {
   const location = useLocation();
   const [hasToast, setHasToast] = useState(false);
 
+  const dispatch = useDispatch();
+
   // const { currentUser } = useAuth();
   const { currentUser } = { currentUser: null };
 
@@ -49,8 +54,11 @@ const Login = () => {
     try {
       setError("");
       setLoading(true);
-      // await login(email, password);
-      navigate("/");
+      const loginData: UserLogin = {
+        email,
+        password,
+      };
+      dispatch(login(loginData) as any);
     } catch {
       setError("Failed to log in");
     }

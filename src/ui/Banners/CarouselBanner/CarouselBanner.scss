@@ -14,9 +14,10 @@
 }
 
 .carousel-indicators {
-  margin-right: 140px;
   justify-content: flex-end;
   margin-bottom: -10px;
+  margin-left: 0;
+  margin-right: 120px;
 
   button {
     width: 122px !important;

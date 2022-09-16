@@ -1,0 +1,64 @@
+.support-material {
+  width: 100%;
+  height: 465px;
+  background: #f5f4f7 0% 0% no-repeat padding-box;
+  padding: 60px 140px;
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    &__info {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 68px 50px;
+
+      .title {
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 0.58px;
+        color: #141b23;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+      }
+
+      .description {
+        font-size: 18px;
+        color: #141b23;
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      &__buttons {
+        button {
+          width: 260px;
+          height: 50px;
+          background: #ef7f00 0% 0% no-repeat padding-box;
+          border: 1px solid #ef7f00;
+          color: #fff;
+          font-size: 16px;
+          text-transform: uppercase;
+
+          &:hover {
+            background: #fff 0% 0% no-repeat padding-box;
+            transition: ease-in-out 0.3s;
+            animation: forwards;
+            color: #002a5b;
+            border: 1px solid #002a5b;
+          }
+
+          &:active {
+            background: #fff 0% 0% no-repeat padding-box;
+            border: 1px solid #002a5b;
+          }
+        }
+      }
+    }
+  }
+}

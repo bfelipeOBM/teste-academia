@@ -1,6 +1,9 @@
+import { User } from "@/application/models/user";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { register } from "../../application/store/user/action";
 import waterMark from "../../assets/carimbo_obra_compromisso.png";
 import facebookLogo from "../../assets/facebook@2x.png";
 import googleLogo from "../../assets/google@2x.png";
@@ -21,10 +24,11 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [profession, setProfession] = useState("");
-  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [acceptReceiveNews, setAcceptReceiveNews] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +36,16 @@ const Register = () => {
     try {
       setError("");
       setLoading(true);
-      // await login(email, password);
+      const registerData: User = {
+        name,
+        email,
+        password,
+        phone: whatsapp,
+        role: profession,
+        accept_receive_news: acceptReceiveNews,
+      };
+
+      dispatch(register(registerData) as any);
       navigate("/");
     } catch {
       setError("Failed to register");
@@ -177,14 +190,14 @@ const Register = () => {
               <div className="register__form__checkbox">
                 <label
                   className="register__form__checkbox__title"
-                  htmlFor="acceptTerms"
+                  htmlFor="acceptReceiveNews"
                 >
                   <input
                     className="register__form__checkbox__input"
                     type="checkbox"
-                    id="acceptTerms"
-                    checked={acceptTerms}
-                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                    id="acceptReceiveNews"
+                    checked={acceptReceiveNews}
+                    onChange={(e) => setAcceptReceiveNews(e.target.checked)}
                   />
                   <span>&nbsp;</span>
                   Aceita receber informações da Obramax?

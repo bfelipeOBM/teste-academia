@@ -1,11 +1,12 @@
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import forgotpasswordImg from "@/assets/login_sideimage.png";
+import AuthService from "@/services/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import waterMark from "../../assets/carimbo_obra_compromisso.png";
-import forgotpasswordImg from "../../assets/login_sideimage.png";
 import "./ForgotPassword.scss";
 
 const ForgotPassword = () => {
-  const [username, setUsername] = useState("");
+  const [userDocument, setUserDocument] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const ForgotPassword = () => {
     try {
       setError("");
       setLoading(true);
-      // await resetPassword(email);
+      await AuthService.resetPassword(userDocument);
       navigate("/recovermethod");
     } catch {
       setError("Failed to reset password");
@@ -57,7 +58,10 @@ const ForgotPassword = () => {
           <p>Por favor, insira seu CPF/CNPJ para recuperar sua senha</p>
           <form className="forgotpassword__form" onSubmit={handleSubmit}>
             <div className="forgotpassword__form__inputs-group">
-              <label className="forgotpassword__form__title" htmlFor="username">
+              <label
+                className="forgotpassword__form__title"
+                htmlFor="userDocument"
+              >
                 CPF/CNPJ
               </label>
               <input
@@ -65,8 +69,8 @@ const ForgotPassword = () => {
                 className="forgotpassword__form__input"
                 type="text"
                 id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={userDocument}
+                onChange={(e) => setUserDocument(e.target.value)}
               />
             </div>
             <button

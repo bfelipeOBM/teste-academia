@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.0.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
+    "framer-motion": "^7.3.5",
     "react": "^18.2.0",
     "react-auth-code-input": "^3.2.1",
     "react-dom": "^18.2.0",
@@ -28,9 +29,9 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -52,6 +53,8 @@
     ]
   },
   "devDependencies": {
+    "react-app-alias": "^2.2.2",
+    "react-app-rewired": "^2.2.1",
     "redux-devtools-extension": "^2.13.9"
   }
 }

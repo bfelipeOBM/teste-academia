@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import recoverMethodImg from "@/assets/login_sideimage.png";
+import AuthService from "@/services/auth";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import waterMark from "../../../assets/carimbo_obra_compromisso.png";
-import recoverMethodImg from "../../../assets/login_sideimage.png";
 import "./RecoverMethod.scss";
+
+const recoveryMethodType = {
+  EMAIL: "email",
+  PHONE: "phone",
+};
 
 const RecoverMethod = () => {
   const [usernameNumber, setUsernameNumber] = useState(false);
   const [usernameEmail, setUsernameEmail] = useState(false);
+  const [recoveryMethod, setRecoveryMethod] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const userNumber = "(55) *****-3979";
-  const userEmail = "e-mail **********uto@gmail.com";
+  const { phone: userNumber, email: userEmail } = JSON.parse(
+    localStorage.getItem("reset-pwd-methods")!
+  );
+
+  const userDocument: string = JSON.parse(
+    localStorage.getItem("userDocument")!
+  );
+
+  useEffect(() => {
+    localStorage.removeItem("reset-pwd-selected-method");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,7 +36,11 @@ const RecoverMethod = () => {
     try {
       setError("");
       setLoading(true);
-      // await recoverMethod(username);
+      localStorage.setItem(
+        "reset-pwd-selected-method",
+        JSON.stringify(recoveryMethod)
+      );
+      await AuthService.recoverPasswordMethod(userDocument, recoveryMethod);
       navigate("/token");
     } catch {
       setError("Failed to recover password");
@@ -72,6 +92,7 @@ const RecoverMethod = () => {
                     onChange={(e) => {
                       setUsernameNumber(e.target.checked);
                       setUsernameEmail(false);
+                      setRecoveryMethod(recoveryMethodType.PHONE);
                     }}
                   />
                   <span>&nbsp;</span>
@@ -94,6 +115,7 @@ const RecoverMethod = () => {
                     onChange={(e) => {
                       setUsernameEmail(e.target.checked);
                       setUsernameNumber(false);
+                      setRecoveryMethod(recoveryMethodType.EMAIL);
                     }}
                   />
                   <span>&nbsp;</span>

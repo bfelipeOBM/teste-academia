@@ -1,8 +1,9 @@
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import tokenImg from "@/assets/login_sideimage.png";
+import AuthService from "@/services/auth";
 import React, { useEffect, useRef, useState } from "react";
 import AuthCode, { AuthCodeRef } from "react-auth-code-input";
 import { useNavigate } from "react-router-dom";
-import waterMark from "../../../assets/carimbo_obra_compromisso.png";
-import tokenImg from "../../../assets/login_sideimage.png";
 import "./Token.scss";
 
 const INITIAL_COUNT = 120;
@@ -34,7 +35,6 @@ const STATUS = {
 
 const Token = () => {
   const [tokenNumber, setTokenNumber] = useState("");
-  const [userNumber, setUserNumber] = useState("(55) *****-3979");
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
   const [status, setStatus] = useState(STATUS.STARTED);
   const [error, setError] = useState("");
@@ -42,10 +42,21 @@ const Token = () => {
   const navigate = useNavigate();
 
   const AuthInputRef = useRef<AuthCodeRef>(null);
-  const [result, setResult] = useState("");
   const handleOnChange = (res: string) => {
-    setResult(res);
+    setTokenNumber(res);
   };
+
+  const userDocument: string = JSON.parse(
+    localStorage.getItem("userDocument")!
+  );
+
+  const selectRecoveryMethod: string = JSON.parse(
+    localStorage.getItem("reset-pwd-selected-method")!
+  );
+
+  const { phone: userNumber, email: userEmail } = JSON.parse(
+    localStorage.getItem("reset-pwd-methods")!
+  );
 
   //TODO: colocar num utils.js
   const secondsToDisplay = secondsRemaining % 60;
@@ -70,7 +81,7 @@ const Token = () => {
     try {
       setError("");
       setLoading(true);
-      // await token(tokenNumber);
+      await AuthService.sendRecoveryCode(userDocument, tokenNumber);
       navigate("/login", { state: { toast: true } });
     } catch {
       setError("Failed to reset password");
@@ -105,9 +116,14 @@ const Token = () => {
           </div>
           <span className="token__right__title">Código de verificação</span>
           <p>
-            Insira abaixo o código de verificação recebido via SMS para o número{" "}
+            Insira abaixo o código de verificação recebido via{" "}
+            {selectRecoveryMethod === "email"
+              ? "E-mail para"
+              : "SMS para o número"}{" "}
             {""}
-            <strong>{userNumber}</strong>
+            <strong>
+              {selectRecoveryMethod === "email" ? userEmail : userNumber}
+            </strong>
           </p>
           <form className="token__form" onSubmit={handleSubmit}>
             <div className="token__form__inputs-group">
@@ -116,7 +132,7 @@ const Token = () => {
                 <span className="token__form__title__counter">
                   {twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}
                 </span>{" "}
-                minutos
+                {twoDigits(minutesToDisplay) === "00" ? "segundos" : "minutos"}
               </label>
               <AuthCode
                 inputClassName="token__form__input"

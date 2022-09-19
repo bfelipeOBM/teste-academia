@@ -1,5 +1,5 @@
-import footerLogo from "@/assets/logo.png";
 import { ChangeEvent, useState } from "react";
+import footerLogo from "../../assets/logo.png";
 import "./Footer.scss";
 
 const Footer = () => {

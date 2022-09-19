@@ -1,5 +1,5 @@
 import { User } from "@/application/models/user";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -23,7 +23,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [profession, setProfession] = useState("");
+  const [occupation, setOccupation] = useState("");
   const [acceptReceiveNews, setAcceptReceiveNews] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ const Register = () => {
         email,
         password,
         phone: whatsapp,
-        role: profession,
+        occupation,
         accept_receive_news: acceptReceiveNews,
       };
 
@@ -73,6 +73,17 @@ const Register = () => {
       setError("Failed to register");
     }
   };
+
+  const options = [
+    { value: "eletricista", label: "Eletricista" },
+    { value: "pedreiro", label: "Pedreiro" },
+    { value: "encanador", label: "Encanador" },
+    { value: "pintor", label: "Pintor" },
+  ];
+
+  useEffect(() => {
+    console.log(occupation);
+  }, [occupation]);
 
   return (
     <>
@@ -134,8 +145,12 @@ const Register = () => {
                   Profissão
                 </label>
                 <Select
+                  onChange={(e) => {
+                    setOccupation(e?.value as string);
+                  }}
                   placeholder="Selecione sua profissão"
                   className="register__form__input-profession"
+                  options={options}
                 ></Select>
               </div>
               <div className="register__form__input-row-group-right">

@@ -1,7 +1,7 @@
-import slider1 from "@/assets/slider-1@2x.png";
-import slider2 from "@/assets/slider-2@2x.png";
 import { useState } from "react";
 import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
+import slider1 from "../../../assets/slider-1@2x.png";
+import slider2 from "../../../assets/slider-2@2x.png";
 import "./CarouselBanner.scss";
 
 const CarouselBanner = () => {

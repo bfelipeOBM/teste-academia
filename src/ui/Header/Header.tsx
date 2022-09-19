@@ -1,8 +1,9 @@
-import { ApplicationState } from "@/application/store";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { ApplicationState } from "../../application/store";
 import headerLogo from "../../assets/logo-PB@2x.png";
+import AuthService from "../../services/auth";
 import "./Header.scss";
 
 const Header = () => {
@@ -12,7 +13,9 @@ const Header = () => {
 
   const user = useSelector((state: ApplicationState) => state.user);
 
-  console.log(user);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const navigate = useNavigate();
 
@@ -23,6 +26,12 @@ const Header = () => {
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
+  };
+
+  const logOut = () => {
+    AuthService.logout();
+    setIsUserMenuOpen(false);
+    navigate(0);
   };
 
   return (
@@ -141,13 +150,20 @@ const Header = () => {
               </div>
 
               {isUserMenuOpen && (
-                <div className="header__items__login__info__username-dropdown-menu__menu">
+                <div
+                  className={`header__items__login__info__username-dropdown-menu__menu ${
+                    isUserMenuOpen ? "active" : ""
+                  }`}
+                >
                   <div className="header__items__login__info__username-dropdown-menu__menu__items">
                     <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
                       <span>Minha conta</span>
                     </div>
 
-                    <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
+                    <div
+                      className="header__items__login__info__username-dropdown-menu__menu__items__item"
+                      onClick={() => logOut()}
+                    >
                       <span>Sair</span>
                     </div>
                   </div>

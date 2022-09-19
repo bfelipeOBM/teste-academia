@@ -4,7 +4,10 @@ import { CLEAR_MESSAGE, MessageState, SET_MESSAGE } from "./types";
 
 const initialState: MessageState = { data: {} as Message };
 
-const reducer: Reducer<MessageState> = (state = initialState, action) => {
+const reducer: Reducer<MessageState> = (
+  state: MessageState = initialState,
+  action
+) => {
   const { type, payload } = action;
 
   switch (type) {

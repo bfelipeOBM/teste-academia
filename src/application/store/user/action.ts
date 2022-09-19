@@ -1,4 +1,4 @@
-import { SET_MESSAGE } from "../message/types";
+import { SET_MESSAGE } from "@/application/store/message/types";
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -8,19 +8,19 @@ import {
 } from "./types";
 
 import { User, UserLogin } from "@/application/models/user";
+import AuthService from "@/services/auth";
 import { Dispatch } from "redux";
-import AuthService from "../../../services/auth";
 
 export const register = (user: User) => (dispatch: Dispatch) => {
   return AuthService.register(user).then(
-    (response) => {
+    (data) => {
       dispatch({
         type: REGISTER_SUCCESS,
       });
 
       dispatch({
         type: SET_MESSAGE,
-        payload: response.data.message,
+        payload: { data },
       });
 
       return Promise.resolve();
@@ -52,7 +52,7 @@ export const login = (user: UserLogin) => (dispatch: Dispatch) => {
     (data) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: { user: data },
+        payload: { data },
       });
 
       return Promise.resolve();

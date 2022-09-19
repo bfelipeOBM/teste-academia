@@ -1,6 +1,7 @@
 import { UserLogin } from "@/application/models/user";
+import { ApplicationState } from "@/application/store";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "../../application/store/user/action";
 import waterMark from "../../assets/carimbo_obra_compromisso.png";
@@ -32,14 +33,13 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  // const { currentUser } = useAuth();
-  const { currentUser } = { currentUser: null };
+  const user = useSelector((state: ApplicationState) => state.user);
 
   useEffect(() => {
-    if (currentUser) {
+    if (user.isLoggedIn) {
       navigate("/");
     }
-  }, [currentUser, navigate]);
+  }, [user, navigate]);
 
   useEffect(() => {
     if (location?.state) {

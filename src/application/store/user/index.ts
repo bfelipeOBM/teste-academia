@@ -1,4 +1,3 @@
-import { User } from "@/application/models/user";
 import { Reducer } from "redux";
 import {
   LOGIN_FAIL,
@@ -9,13 +8,17 @@ import {
   UserState,
 } from "./types";
 
-const user: User = JSON.parse(localStorage.getItem("user")!);
+const user: UserState = JSON.parse(localStorage.getItem("user")!);
+console.log(user);
 
 const initialState: UserState = user
-  ? { isLoggedIn: true, data: user }
+  ? { isLoggedIn: true, data: user.data }
   : { isLoggedIn: false, data: null };
 
-const reducer: Reducer<UserState> = (state = initialState, action) => {
+const reducer: Reducer<UserState> = (
+  state: UserState = initialState,
+  action
+) => {
   const { type, payload } = action;
 
   switch (type) {

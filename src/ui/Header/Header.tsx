@@ -1,19 +1,20 @@
+import { ApplicationState } from "@/application/store";
 import { ChangeEvent, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import headerLogo from "../../assets/logo-PB@2x.png";
 import "./Header.scss";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [menuIcon, setMenuIcon] = useState("expand_more");
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-  const navigate = useNavigate();
+  const user = useSelector((state: ApplicationState) => state.user);
 
-  const handleMenuClick = () => {
-    setIsMenuOpen(!isMenuOpen);
-    setMenuIcon(!isMenuOpen ? "expand_more" : "expand_less");
-  };
+  console.log(user);
+
+  const navigate = useNavigate();
 
   const handleMenuItemClick = (path: string) => {
     setIsMenuOpen(false);
@@ -33,9 +34,14 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="header__items__categories" onClick={handleMenuClick}>
+        <div
+          className="header__items__categories"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
           <span className="header__items__categories__title">Categorias</span>
-          <i className="material-icons ">{menuIcon}</i>
+          <i className="material-icons ">
+            {!isMenuOpen ? "expand_more" : "expand_less"}
+          </i>
         </div>
         {/* <div
             className={`header__right__menu__items ${
@@ -100,24 +106,55 @@ const Header = () => {
             <i className="material-icons">account_circle</i>
           </div>
 
-          <div className="header__items__login__info__buttons">
-            <Link
-              to="/login"
-              className="header__items__login__info__buttons__button"
-            >
-              <span>Entre</span>{" "}
-              <span className="header__items__login__info__buttons__or__text">
-                ou
-              </span>
-            </Link>
+          {!user?.isLoggedIn && (
+            <div className="header__items__login__info__buttons">
+              <Link
+                to="/login"
+                className="header__items__login__info__buttons__button"
+              >
+                <span>Entre</span>{" "}
+                <span className="header__items__login__info__buttons__or__text">
+                  ou
+                </span>
+              </Link>
 
-            <Link
-              to="/register"
-              className="header__items__login__info__buttons__button"
-            >
-              <span>Cadastre-se</span>
-            </Link>
-          </div>
+              <Link
+                to="/register"
+                className="header__items__login__info__buttons__button"
+              >
+                <span>Cadastre-se</span>
+              </Link>
+            </div>
+          )}
+
+          {user?.isLoggedIn && (
+            <div className="header__items__login__info__username-dropdown-menu">
+              <div
+                className="header__items__login__info__username-dropdown-menu__username"
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              >
+                {/* <span>{user?.name}</span> */}
+                <span>Nome Usuário</span>
+                <i className="material-icons">
+                  {!isUserMenuOpen ? "expand_more" : "expand_less"}
+                </i>
+              </div>
+
+              {isUserMenuOpen && (
+                <div className="header__items__login__info__username-dropdown-menu__menu">
+                  <div className="header__items__login__info__username-dropdown-menu__menu__items">
+                    <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
+                      <span>Minha conta</span>
+                    </div>
+
+                    <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
+                      <span>Sair</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </header>

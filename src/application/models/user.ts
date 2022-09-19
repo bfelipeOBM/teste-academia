@@ -10,6 +10,7 @@ export type User = {
   active?: boolean;
   role?: string;
   isLoggedIn?: boolean;
+  occupation?: string;
 };
 
 export type UserLogin = {

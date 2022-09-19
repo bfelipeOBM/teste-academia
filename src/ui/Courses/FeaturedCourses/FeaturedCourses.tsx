@@ -1,6 +1,6 @@
-import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
 import { useState } from "react";
 import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
+import CourseCard from "../CourseCard/CourseCard";
 import "./FeaturedCourses.scss";
 
 const courses = [

@@ -1,5 +1,5 @@
-import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
 import { ChangeEvent, useState } from "react";
+import CourseCard from "../CourseCard/CourseCard";
 import "./CourseCategory.scss";
 
 const CourseCategory = () => {

@@ -153,6 +153,9 @@
       }
 
       &__username-dropdown-menu {
+        margin-left: 10px;
+        position: relative;
+        display: inline-block;
         cursor: pointer;
 
         &__username {
@@ -164,6 +167,7 @@
             font-size: 16px;
             font-weight: bold;
             color: #ef7f00;
+            text-align: left;
           }
 
           i {
@@ -173,24 +177,45 @@
           }
         }
 
+        &__menu.active {
+          display: block;
+        }
+
         &__menu {
           width: 268px;
           height: 120px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-right: 154px;
+          display: none;
+          position: absolute;
+          z-index: 9999;
+          margin-left: -50px;
+          margin-top: 10px;
           background: #002a5b 0% 0% no-repeat padding-box;
-          box-shadow: 0px 3px 6px #00000029;
-          opacity: 1;
-          padding: 0.5rem 1rem;
-          color: #fff;
-          font-size: 16px;
-          font-weight: bold;
-          text-align: left;
-          text-decoration: none;
-          display: block;
-          cursor: pointer;
+          box-shadow: 0px 3px 6px rgb(0 0 0 / 16%);
+
+          &__items {
+            display: block;
+
+            &__item {
+              width: 268px;
+              height: 60px;
+              padding: 10px 50px;
+              color: #fff;
+              font-size: 16px;
+              font-weight: bold;
+              text-align: left;
+              text-decoration: none;
+              display: block;
+              cursor: pointer;
+
+              &:first-child {
+                padding-top: 30px;
+              }
+
+              &:hover {
+                background: #ef7f00 0% 0% no-repeat padding-box;
+              }
+            }
+          }
         }
       }
     }

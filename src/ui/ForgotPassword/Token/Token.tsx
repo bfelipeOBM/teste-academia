@@ -1,9 +1,9 @@
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import tokenImg from "@/assets/login_sideimage.png";
+import AuthService from "@/services/auth";
 import React, { useEffect, useRef, useState } from "react";
 import AuthCode, { AuthCodeRef } from "react-auth-code-input";
 import { useNavigate } from "react-router-dom";
-import waterMark from "../../../assets/carimbo_obra_compromisso.png";
-import tokenImg from "../../../assets/login_sideimage.png";
-import AuthService from "../../../services/auth";
 import "./Token.scss";
 
 const INITIAL_COUNT = 120;

@@ -1,8 +1,8 @@
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import forgotpasswordImg from "@/assets/login_sideimage.png";
+import AuthService from "@/services/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import waterMark from "../../assets/carimbo_obra_compromisso.png";
-import forgotpasswordImg from "../../assets/login_sideimage.png";
-import AuthService from "../../services/auth";
 import "./ForgotPassword.scss";
 
 const ForgotPassword = () => {

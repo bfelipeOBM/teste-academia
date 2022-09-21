@@ -1,14 +1,14 @@
 import { User } from "@/application/models/user";
-import React, { useEffect, useState } from "react";
+import { register } from "@/application/store/user/action";
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import facebookLogo from "@/assets/facebook@2x.png";
+import googleLogo from "@/assets/google@2x.png";
+import registerImg from "@/assets/login_sideimage.png";
+import obramaxLogo from "@/assets/obramax@2x.png";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { register } from "../../application/store/user/action";
-import waterMark from "../../assets/carimbo_obra_compromisso.png";
-import facebookLogo from "../../assets/facebook@2x.png";
-import googleLogo from "../../assets/google@2x.png";
-import registerImg from "../../assets/login_sideimage.png";
-import obramaxLogo from "../../assets/obramax@2x.png";
 import "./Register.scss";
 
 const REGISTER_TYPE = {
@@ -80,10 +80,6 @@ const Register = () => {
     { value: "encanador", label: "Encanador" },
     { value: "pintor", label: "Pintor" },
   ];
-
-  useEffect(() => {
-    console.log(occupation);
-  }, [occupation]);
 
   return (
     <>

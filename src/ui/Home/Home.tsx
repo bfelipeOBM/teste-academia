@@ -1,11 +1,11 @@
-import "../../App.css";
-import CarouselBanner from "../Banners/CarouselBanner/CarouselBanner";
-import DetailsBanner from "../Banners/DetailsBanner/DetailsBanner";
-import CourseCategory from "../Courses/CourseCategory/CourseCategory";
-import FeaturedCourses from "../Courses/FeaturedCourses/FeaturedCourses";
-import SupportMaterial from "../Courses/SupportMaterial/SupportMaterial";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
+import "@/App.css";
+import CarouselBanner from "@/ui/Banners/CarouselBanner/CarouselBanner";
+import DetailsBanner from "@/ui/Banners/DetailsBanner/DetailsBanner";
+import CourseCategory from "@/ui/Courses/CourseCategory/CourseCategory";
+import FeaturedCourses from "@/ui/Courses/FeaturedCourses/FeaturedCourses";
+import SupportMaterial from "@/ui/Courses/SupportMaterial/SupportMaterial";
+import Footer from "@/ui/Footer/Footer";
+import Header from "@/ui/Header/Header";
 
 const Home = () => {
   return (

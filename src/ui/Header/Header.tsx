@@ -1,9 +1,9 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ApplicationState } from "@/application/store";
+import headerLogo from "@/assets/logo-PB@2x.png";
+import AuthService from "@/services/auth";
+import { ChangeEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { ApplicationState } from "../../application/store";
-import headerLogo from "../../assets/logo-PB@2x.png";
-import AuthService from "../../services/auth";
 import "./Header.scss";
 
 const Header = () => {
@@ -12,10 +12,6 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const user = useSelector((state: ApplicationState) => state.user);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   const navigate = useNavigate();
 

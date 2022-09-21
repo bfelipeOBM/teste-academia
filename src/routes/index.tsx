@@ -1,3 +1,10 @@
+import Course from "@/ui/Courses/Course/Course";
+import ForgotPassword from "@/ui/ForgotPassword/ForgotPassword";
+import RecoverMethod from "@/ui/ForgotPassword/RecoverMethod/RecoverMethod";
+import Token from "@/ui/ForgotPassword/Token/Token";
+import Home from "@/ui/Home/Home";
+import Login from "@/ui/Login/Login";
+import Register from "@/ui/Register/Register";
 import { motion } from "framer-motion";
 import {
   BrowserRouter as Router,
@@ -6,12 +13,6 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import ForgotPassword from "../ui/ForgotPassword/ForgotPassword";
-import RecoverMethod from "../ui/ForgotPassword/RecoverMethod/RecoverMethod";
-import Token from "../ui/ForgotPassword/Token/Token";
-import Home from "../ui/Home/Home";
-import Login from "../ui/Login/Login";
-import Register from "../ui/Register/Register";
 
 const PageLayout = ({ children }: any) => children;
 
@@ -61,6 +62,7 @@ const RouteWrapper = () => {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/token" element={<Token />} />
           <Route path="/recovermethod" element={<RecoverMethod />} />
+          <Route path="/course/:id" element={<Course />} />
         </Route>
       </Routes>
     </Router>

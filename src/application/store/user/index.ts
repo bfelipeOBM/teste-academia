@@ -9,7 +9,6 @@ import {
 } from "./types";
 
 const user: UserState = JSON.parse(localStorage.getItem("user")!);
-console.log(user);
 
 const initialState: UserState = user
   ? { isLoggedIn: true, data: user.data }

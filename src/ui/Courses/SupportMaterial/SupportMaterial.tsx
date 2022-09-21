@@ -1,4 +1,4 @@
-import supMaterialImg from "../../../assets/sup-material.png";
+import supMaterialImg from "@/assets/sup-material.png";
 import "./SupportMaterial.scss";
 
 const SupportMaterial = () => {

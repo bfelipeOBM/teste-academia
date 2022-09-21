@@ -1,0 +1,49 @@
+.related-courses {
+  width: 100%;
+  height: 364px;
+  position: relative;
+  margin: 83px 0 79px 0;
+
+  &__title {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 48px;
+
+    h1 {
+      letter-spacing: 0.58px;
+      color: #141b23;
+      text-transform: uppercase;
+      font-size: 32px;
+      font-weight: bold;
+    }
+  }
+
+  &__content {
+    height: 100%;
+    width: 100%;
+
+    .carousel {
+      height: 100%;
+    }
+
+    .carousel-indicators {
+      justify-content: flex-end;
+      margin-bottom: -21px;
+      margin-left: 0;
+      margin-right: -8px;
+
+      button {
+        width: 122px !important;
+        height: 8px !important;
+        background-color: #b9bbbe !important;
+        opacity: 1;
+        border: none;
+        margin: 0 8px !important;
+      }
+    }
+
+    .carousel-indicators .active {
+      background-color: #ef7f00 !important;
+    }
+  }
+}

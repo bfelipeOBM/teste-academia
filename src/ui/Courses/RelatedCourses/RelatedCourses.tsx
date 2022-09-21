@@ -1,7 +1,7 @@
 import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
 import { useState } from "react";
 import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
-import "./FeaturedCourses.scss";
+import "./RelatedCourses.scss";
 
 const courses = [
   {
@@ -33,7 +33,7 @@ const courses = [
   },
 ];
 
-const FeaturedCourses = () => {
+const RelatedCourses = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
@@ -67,12 +67,12 @@ const FeaturedCourses = () => {
   });
 
   return (
-    <div className="featured-courses">
-      <div className="featured-courses__title">
-        <h1>Cursos em destaque</h1>
+    <div className="related-courses">
+      <div className="related-courses__title">
+        <h1>Cursos Relacionados</h1>
       </div>
 
-      <div className="featured-courses__content">
+      <div className="related-courses__content">
         <Carousel
           fade
           activeIndex={activeIndex}
@@ -91,4 +91,4 @@ const FeaturedCourses = () => {
   );
 };
 
-export default FeaturedCourses;
+export default RelatedCourses;

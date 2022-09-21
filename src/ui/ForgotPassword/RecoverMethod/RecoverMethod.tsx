@@ -1,8 +1,8 @@
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import recoverMethodImg from "@/assets/login_sideimage.png";
+import AuthService from "@/services/auth";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import waterMark from "../../../assets/carimbo_obra_compromisso.png";
-import recoverMethodImg from "../../../assets/login_sideimage.png";
-import AuthService from "../../../services/auth";
 import "./RecoverMethod.scss";
 
 const recoveryMethodType = {

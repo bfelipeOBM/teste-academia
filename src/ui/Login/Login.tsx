@@ -1,15 +1,15 @@
 import { UserLogin } from "@/application/models/user";
 import { ApplicationState } from "@/application/store";
+import { login } from "@/application/store/user/action";
+import waterMark from "@/assets/carimbo_obra_compromisso.png";
+import facebookLogo from "@/assets/facebook@2x.png";
+import googleLogo from "@/assets/google@2x.png";
+import loginImg from "@/assets/login_sideimage.png";
+import obramaxLogo from "@/assets/obramax@2x.png";
+import Toast from "@/ui/Toast/Toast";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { login } from "../../application/store/user/action";
-import waterMark from "../../assets/carimbo_obra_compromisso.png";
-import facebookLogo from "../../assets/facebook@2x.png";
-import googleLogo from "../../assets/google@2x.png";
-import loginImg from "../../assets/login_sideimage.png";
-import obramaxLogo from "../../assets/obramax@2x.png";
-import Toast from "../Toast/Toast";
 import "./Login.scss";
 
 const LOGIN_TYPE = {

@@ -8,6 +8,8 @@ const CourseCategory = () => {
   const [categoryIcon, setCategoryIcon] = useState("expand_more");
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [locationIcon, setLocationIcon] = useState("expand_more");
+  const [isTypesOpen, setIsTypesOpen] = useState(false);
+  const [typesIcon, setTypesIcon] = useState("expand_more");
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -16,6 +18,11 @@ const CourseCategory = () => {
   const handleCategoryClick = () => {
     setIsCategoryOpen(!isCategoryOpen);
     setCategoryIcon(!isCategoryOpen ? "expand_more" : "expand_less");
+  };
+
+  const handleTypesClick = () => {
+    setIsTypesOpen(!isTypesOpen);
+    setTypesIcon(!isTypesOpen ? "expand_more" : "expand_less");
   };
 
   const handleLocationClick = () => {
@@ -92,6 +99,11 @@ const CourseCategory = () => {
               <div className="item-category" onClick={handleCategoryClick}>
                 <span className="title">Categorias</span>
                 <i className="material-icons ">{categoryIcon}</i>
+              </div>
+
+              <div className="item-category" onClick={handleTypesClick}>
+                <span className="title">Tipos</span>
+                <i className="material-icons ">{typesIcon}</i>
               </div>
 
               <div className="item-location" onClick={handleLocationClick}>

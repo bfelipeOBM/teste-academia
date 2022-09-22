@@ -44,6 +44,8 @@
           background: #fff 0% 0% no-repeat padding-box;
           border: 1px solid #ef7f00;
           cursor: pointer;
+          display: flex;
+          align-items: center;
 
           .title {
             margin: 0 30px;

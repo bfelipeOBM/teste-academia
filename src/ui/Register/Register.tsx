@@ -1,3 +1,4 @@
+import { cpfOrCnpjMask, phoneMask } from "@/application/common/Utils";
 import { User } from "@/application/models/user";
 import { register } from "@/application/store/user/action";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
@@ -20,6 +21,7 @@ const REGISTER_TYPE = {
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [document, setDocument] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
@@ -40,6 +42,7 @@ const Register = () => {
         name,
         email,
         password,
+        document: document.replace(/\D/g, ""),
         phone: whatsapp,
         occupation,
         accept_receive_news: acceptReceiveNews,
@@ -80,6 +83,14 @@ const Register = () => {
     { value: "encanador", label: "Encanador" },
     { value: "pintor", label: "Pintor" },
   ];
+
+  const checkPassword = () => {
+    if (password !== confirmPassword) {
+      setError("As senhas não conferem");
+    } else {
+      setError("");
+    }
+  };
 
   return (
     <>
@@ -122,18 +133,38 @@ const Register = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="register__form__inputs-group">
-              <label className="register__form__title__email" htmlFor="email">
-                E-mail
-              </label>
-              <input
-                placeholder="Seu e-mail"
-                className="register__form__input"
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <div className="register__form__inputs-row-direction">
+              <div className="register__form__input-row-group-left">
+                <label className="register__form__title__email" htmlFor="email">
+                  E-mail
+                </label>
+                <input
+                  placeholder="Seu e-mail"
+                  className="register__form__input"
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="register__form__input-row-group-right">
+                <label
+                  className="register__form__title__cpf-cnpf"
+                  htmlFor="cpf-cnpf"
+                >
+                  CPF/CNPJ
+                </label>
+                <input
+                  placeholder="Seu CPF ou CNPJ"
+                  className="register__form__input"
+                  type="text"
+                  id="cpf-cnpf"
+                  maxLength={18}
+                  value={document}
+                  onChange={(e) => setDocument(cpfOrCnpjMask(e.target.value))}
+                />
+              </div>
             </div>
             <div className="register__form__inputs-row-direction">
               <div className="register__form__input-row-group-left">
@@ -146,6 +177,7 @@ const Register = () => {
                   }}
                   placeholder="Selecione sua profissão"
                   className="register__form__input-profession"
+                  classNamePrefix="react-select"
                   options={options}
                 ></Select>
               </div>
@@ -158,8 +190,9 @@ const Register = () => {
                   className="register__form__input"
                   type="text"
                   id="whatsapp"
+                  maxLength={15}
                   value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
+                  onChange={(e) => setWhatsapp(phoneMask(e.target.value))}
                 />
               </div>
             </div>
@@ -193,7 +226,10 @@ const Register = () => {
                   type="password"
                   id="confirmPassword"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    checkPassword();
+                  }}
                 />
               </div>
             </div>

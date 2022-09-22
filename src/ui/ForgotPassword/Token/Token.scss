@@ -62,6 +62,7 @@
 
     &__backbutton {
       display: flex;
+      align-items: center;
       width: 120px;
       height: 24px;
       text-align: left;
@@ -73,6 +74,11 @@
       position: absolute;
       top: 0;
       margin-top: 70px;
+      cursor: pointer;
+
+      &:hover {
+        color: #ef7f00;
+      }
 
       &__title {
         margin-left: 10px;

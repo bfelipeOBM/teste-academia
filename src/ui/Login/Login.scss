@@ -35,6 +35,7 @@
     &__title {
       width: 314px;
       height: 39px;
+      margin-bottom: 10px;
       text-align: left;
       font-size: 32px;
       font-weight: 900;
@@ -53,6 +54,7 @@
 
     &__backbutton {
       display: flex;
+      align-items: center;
       width: 120px;
       height: 24px;
       text-align: left;
@@ -64,6 +66,11 @@
       position: absolute;
       top: 0;
       margin-top: 70px;
+      cursor: pointer;
+
+      &:hover {
+        color: #ef7f00;
+      }
 
       &__title {
         margin-left: 10px;
@@ -144,12 +151,9 @@
         justify-content: flex-start;
 
         &-checkbox {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-
           &__label {
-            display: inline-block;
+            display: flex;
+            align-items: center;
             position: relative;
             height: 18px;
             margin-left: 10px;

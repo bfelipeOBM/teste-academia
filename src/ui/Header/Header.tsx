@@ -104,7 +104,7 @@ const Header = () => {
           </form>
         </div>
 
-        <div className="header__items__loren__ipsum">loren ipsum</div>
+        <div className="header__items__all-courses">Todos os cursos</div>
 
         <div className="header__items__login__info">
           <div className="header__items__login__info__avatar">

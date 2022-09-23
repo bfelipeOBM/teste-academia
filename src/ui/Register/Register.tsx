@@ -48,7 +48,7 @@ const Register = () => {
         accept_receive_news: acceptReceiveNews,
       };
 
-      dispatch(register(registerData) as any);
+      await dispatch(register(registerData) as any);
       navigate("/");
     } catch {
       setError("Failed to register");

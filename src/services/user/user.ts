@@ -1,8 +1,14 @@
-import axios from "axios";
+import Constants from "@/application/common/Constants";
+import authHeader from "@/services/auth-header";
+import axios, { AxiosRequestHeaders } from "axios";
 
-const userInfo = async (userDocument: string) => {
-  const response = await axios.get(
-    `https://api-qa.4all.com/users/${userDocument}`
+const userInfo = async () => {
+  const response = await axios.post(
+    Constants.API_URL + "auth/token",
+    {},
+    {
+      headers: authHeader() as AxiosRequestHeaders,
+    }
   );
   return response.data;
 };

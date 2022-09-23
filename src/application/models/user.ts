@@ -1,5 +1,4 @@
 export type User = {
-  access_token?: string;
   id?: number;
   name: string;
   email: string;
@@ -9,11 +8,15 @@ export type User = {
   accept_receive_news: boolean;
   active?: boolean;
   role?: string;
-  isLoggedIn?: boolean;
   occupation?: string;
 };
 
 export type UserLogin = {
   email: string;
   password: string;
+};
+
+export type AccessToken = {
+  access_token: string;
+  refresh_token: string;
 };

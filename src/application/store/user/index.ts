@@ -1,3 +1,4 @@
+import { AccessToken } from "@/application/models/user";
 import { Reducer } from "redux";
 import {
   LOGIN_FAIL,
@@ -8,10 +9,12 @@ import {
   UserState,
 } from "./types";
 
-const user: UserState = JSON.parse(localStorage.getItem("user")!);
+const accessToken: AccessToken = JSON.parse(
+  localStorage.getItem("accessToken")!
+);
 
-const initialState: UserState = user
-  ? { isLoggedIn: true, data: user.data }
+const initialState: UserState = accessToken
+  ? { isLoggedIn: true, data: accessToken }
   : { isLoggedIn: false, data: null };
 
 const reducer: Reducer<UserState> = (
@@ -24,7 +27,8 @@ const reducer: Reducer<UserState> = (
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: true,
+        data: payload.data,
       };
     case REGISTER_FAIL:
       return {
@@ -35,19 +39,17 @@ const reducer: Reducer<UserState> = (
       return {
         ...state,
         isLoggedIn: true,
-        user: payload.user,
+        data: payload.data,
       };
     case LOGIN_FAIL:
       return {
         ...state,
         isLoggedIn: false,
-        user: null,
       };
     case LOGOUT:
       return {
         ...state,
         isLoggedIn: false,
-        user: null,
       };
 
     default:

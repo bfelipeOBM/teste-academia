@@ -1,3 +1,5 @@
+import { ApplicationState } from "@/application/store";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./CourseCard.scss";
 
@@ -17,9 +19,10 @@ type Course = {
 const CourseCard = (props: Props) => {
   const { course } = props;
   const navigate = useNavigate();
+  const user = useSelector((state: ApplicationState) => state.user);
 
   const goToCourse = () => {
-    navigate(`/courses/${course.id}`);
+    user.isLoggedIn ? navigate(`/course/${course.id}`) : navigate(`/login`);
   };
 
   return (
@@ -57,7 +60,10 @@ const CourseCard = (props: Props) => {
             Quero Participar
           </button>
 
-          <Link className="learn-more" to={`/courses/${course.id}`}>
+          <Link
+            className="learn-more"
+            to={user.isLoggedIn ? `/course/${course.id}` : `/login`}
+          >
             <span>mais informações</span>
           </Link>
         </div>

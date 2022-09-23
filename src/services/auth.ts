@@ -7,7 +7,8 @@ const API_URL = Constants.API_URL;
 const register = async (userData: User) => {
   const response = await axios.post(API_URL + "users/", userData);
   if (response.data.access_token) {
-    localStorage.setItem("user", JSON.stringify(response.data));
+    localStorage.clear();
+    localStorage.setItem("accessToken", JSON.stringify(response.data));
   }
   return response.data;
 };
@@ -15,7 +16,8 @@ const register = async (userData: User) => {
 const login = async (login: UserLogin) => {
   const response = await axios.post(API_URL + "auth/", login);
   if (response.data.access_token) {
-    localStorage.setItem("user", JSON.stringify(response.data));
+    localStorage.clear();
+    localStorage.setItem("accessToken", JSON.stringify(response.data));
   }
   return response.data;
 };
@@ -48,7 +50,7 @@ const sendRecoveryCode = async (userDocument: string, code: string) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.clear();
 };
 
 export default {

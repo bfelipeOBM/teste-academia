@@ -1,8 +1,10 @@
+import { getFirstAndLastName } from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
+import { userProfile } from "@/application/store/profile/action";
 import headerLogo from "@/assets/logo-PB@2x.png";
 import AuthService from "@/services/auth";
-import { ChangeEvent, useState } from "react";
-import { useSelector } from "react-redux";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.scss";
 
@@ -12,8 +14,10 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const user = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleMenuItemClick = (path: string) => {
     setIsMenuOpen(false);
@@ -29,6 +33,12 @@ const Header = () => {
     setIsUserMenuOpen(false);
     navigate(0);
   };
+
+  useEffect(() => {
+    if (user.isLoggedIn) {
+      dispatch(userProfile() as any);
+    }
+  }, [dispatch]);
 
   return (
     <header className="header">
@@ -138,8 +148,7 @@ const Header = () => {
                 className="header__items__login__info__username-dropdown-menu__username"
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
               >
-                {/* <span>{user?.name}</span> */}
-                <span>Nome Usuário</span>
+                <span>{getFirstAndLastName(profile?.name)}</span>
                 <i className="material-icons">
                   {!isUserMenuOpen ? "expand_more" : "expand_less"}
                 </i>

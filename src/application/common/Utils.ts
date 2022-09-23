@@ -26,9 +26,15 @@ const cpfOrCnpjMask = (value: string) => {
 const phoneMask = (value: string | number) => {
   const stringValue = value.toString();
   return stringValue
-    .replace(/\D/g, "")
+    ?.replace(/\D/g, "")
     .replace(/(\d{2})(\d)/, "($1) $2")
     .replace(/(\d{5})(\d{4})/, "$1-$2");
 };
 
-export { cpfOrCnpjMask, phoneMask };
+const getFirstAndLastName = (name: string) => {
+  const names = name?.split(" ");
+
+  return names?.length > 1 ? `${names[0]} ${names[names.length - 1]}` : name;
+};
+
+export { cpfOrCnpjMask, phoneMask, getFirstAndLastName };

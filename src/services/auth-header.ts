@@ -1,10 +1,14 @@
-import { User } from "@/application/models/user";
+import { AccessToken } from "@/application/models/user";
 
 export default function authHeader() {
-  const user: User = JSON.parse(localStorage.getItem("user")!);
+  const { access_token }: AccessToken = JSON.parse(
+    localStorage.getItem("accessToken")!
+  );
 
-  if (user?.access_token) {
-    return { Authorization: "Bearer " + user.access_token };
+  if (access_token) {
+    return {
+      bearer: access_token,
+    };
   } else {
     return {};
   }

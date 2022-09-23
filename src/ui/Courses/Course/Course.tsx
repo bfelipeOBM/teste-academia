@@ -1,3 +1,5 @@
+import Footer from "@/ui/Footer/Footer";
+import Header from "@/ui/Header/Header";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -9,6 +11,8 @@ const Course = () => {
   const dispatch = useDispatch();
   //   const course = useSelector((state: any) => state.course);
   const [loading, setLoading] = useState(false);
+
+  window.scrollTo(0, 0);
 
   const course = {
     id: 1,
@@ -57,92 +61,96 @@ const Course = () => {
   }, [dispatch, id]);
 
   return (
-    <div className="course">
-      <div className="course__header">
-        <div className="course__header__title">
-          CURSO <span> {course.title}</span>
-        </div>
-      </div>
-      <div className="course__content">
-        <div className="course__info">
-          <div className="course__info__video">
-            <iframe
-              width="100%"
-              height="100%"
-              src={course.video_url}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+    <>
+      <Header></Header>
+      <div className="course">
+        <div className="course__header">
+          <div className="course__header__title">
+            CURSO <span> {course.title}</span>
           </div>
-          <div className="course__info__content">
-            <div className="tags">
-              {course.tags?.map((tag: string) => (
-                <div key={tag} className="tag">
-                  <span className="title">{tag}</span>
+        </div>
+        <div className="course__content">
+          <div className="course__info">
+            <div className="course__info__video">
+              <iframe
+                width="100%"
+                height="100%"
+                src={course.video_url}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <div className="course__info__content">
+              <div className="tags">
+                {course.tags?.map((tag: string) => (
+                  <div key={tag} className="tag">
+                    <span className="title">{tag}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="title">{course.title}</div>
+              <div className="description">
+                <p>{course.description}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="course__details">
+            <div className="course__details__content">
+              <div className="title">
+                <span>DETALHES DO CURSO</span>
+              </div>
+              <div className="details">
+                <div className="date">
+                  Data: <span>13/10/2022</span>
+                </div>
+
+                <div className="workload">
+                  Carga horária: <span>8 horas</span>
+                </div>
+
+                <div className="categories">
+                  Categorias: <span>online, pintura</span>
+                </div>
+
+                <div className="enrollments">
+                  <span>100</span> pessoas já se inscreveram nesse curso
+                </div>
+              </div>
+
+              <div className="download">
+                <button>
+                  <i className="material-icons-outlined">cloud_download</i>{" "}
+                  Baixar material de apoio
+                </button>
+              </div>
+            </div>
+
+            <div className="course__details__subscribe">
+              <button>Inscrever-se</button>
+            </div>
+
+            <div className="course__details__next-dates">
+              <span className="title">Próximas datas</span>
+              {course.next_dates?.map((item: any) => (
+                <div key={item.date} className="date">
+                  <span className="title">{item.date}</span>
+                  <div className="divider"></div>
+                  <span className="location">{item.location}</span>
                 </div>
               ))}
             </div>
-            <div className="title">{course.title}</div>
-            <div className="description">
-              <p>{course.description}</p>
-            </div>
           </div>
         </div>
 
-        <div className="course__details">
-          <div className="course__details__content">
-            <div className="title">
-              <span>DETALHES DO CURSO</span>
-            </div>
-            <div className="details">
-              <div className="date">
-                Data: <span>13/10/2022</span>
-              </div>
-
-              <div className="workload">
-                Carga horária: <span>8 horas</span>
-              </div>
-
-              <div className="categories">
-                Categorias: <span>online, pintura</span>
-              </div>
-
-              <div className="enrollments">
-                <span>100</span> pessoas já se inscreveram nesse curso
-              </div>
-            </div>
-
-            <div className="download">
-              <button>
-                <i className="material-icons-outlined">cloud_download</i> Baixar
-                material de apoio
-              </button>
-            </div>
-          </div>
-
-          <div className="course__details__subscribe">
-            <button>Inscrever-se</button>
-          </div>
-
-          <div className="course__details__next-dates">
-            <span className="title">Próximas datas</span>
-            {course.next_dates?.map((item: any) => (
-              <div key={item.date} className="date">
-                <span className="title">{item.date}</span>
-                <div className="divider"></div>
-                <span className="location">{item.location}</span>
-              </div>
-            ))}
-          </div>
+        <div className="course__footer">
+          <RelatedCourses></RelatedCourses>
         </div>
       </div>
-
-      <div className="course__footer">
-        <RelatedCourses></RelatedCourses>
-      </div>
-    </div>
+      <Footer></Footer>
+    </>
   );
 };
 

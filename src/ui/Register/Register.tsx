@@ -6,7 +6,7 @@ import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import registerImg from "@/assets/login_sideimage.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -28,6 +28,7 @@ const Register = () => {
   const [occupation, setOccupation] = useState("");
   const [acceptReceiveNews, setAcceptReceiveNews] = useState(false);
   const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Register = () => {
       await dispatch(register(registerData) as any);
       navigate("/");
     } catch {
-      setError("Failed to register");
+      setError("Falha ao se registrar");
     }
 
     setLoading(false);
@@ -73,7 +74,7 @@ const Register = () => {
           break;
       }
     } catch {
-      setError("Failed to register");
+      setError("Falha ao se registrar");
     }
   };
 
@@ -86,11 +87,15 @@ const Register = () => {
 
   const checkPassword = () => {
     if (password !== confirmPassword) {
-      setError("As senhas não conferem");
+      setPasswordError("*As senhas não conferem");
     } else {
-      setError("");
+      setPasswordError("");
     }
   };
+
+  useEffect(() => {
+    checkPassword();
+  }, [password, confirmPassword]);
 
   return (
     <>
@@ -130,6 +135,7 @@ const Register = () => {
                 type="text"
                 id="name"
                 value={name}
+                maxLength={95}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -226,13 +232,13 @@ const Register = () => {
                   type="password"
                   id="confirmPassword"
                   value={confirmPassword}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                    checkPassword();
-                  }}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
             </div>
+            {passwordError && (
+              <span className="register__password-error">{passwordError}</span>
+            )}
             <div className="register__form__inputs-row-direction-space-between">
               <div className="register__form__checkbox">
                 <label
@@ -292,7 +298,7 @@ const Register = () => {
             <button
               type="submit"
               className="register__form__button"
-              disabled={loading}
+              disabled={loading || passwordError !== ""}
             >
               {loading ? "Carregando..." : "Cadastrar"}
             </button>

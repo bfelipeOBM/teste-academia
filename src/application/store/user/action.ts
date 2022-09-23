@@ -16,6 +16,7 @@ export const register = (user: User) => (dispatch: Dispatch) => {
     (data) => {
       dispatch({
         type: REGISTER_SUCCESS,
+        payload: { data },
       });
 
       dispatch({

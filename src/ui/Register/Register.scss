@@ -416,4 +416,10 @@
       text-decoration: none;
     }
   }
+
+  &__password-error {
+    font-size: 14px;
+    color: #f5222d;
+    margin-bottom: 20px;
+  }
 }

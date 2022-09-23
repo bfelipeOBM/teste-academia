@@ -38,7 +38,7 @@ const Header = () => {
     if (user.isLoggedIn) {
       dispatch(userProfile() as any);
     }
-  }, [dispatch]);
+  }, [user.isLoggedIn, dispatch]);
 
   return (
     <header className="header">

@@ -113,6 +113,8 @@
       display: flex;
       flex-direction: column;
       width: 674px;
+      margin-bottom: 10px;
+      position: relative;
     }
 
     &__inputs-row-direction {
@@ -120,6 +122,8 @@
       flex-direction: row;
       width: 674px;
       align-items: self-end;
+      margin-bottom: 10px;
+      position: relative;
     }
 
     &__inputs-row-direction-space-between {
@@ -165,6 +169,16 @@
       }
     }
 
+    input:hover {
+      border-color: hsl(0, 0%, 70%);
+      box-shadow: 0 0 0 0.1rem hsla(0, 0%, 70%, 0.25);
+    }
+
+    input.error {
+      border-color: #ff0000;
+      box-shadow: 0 0 0 0.1rem rgba(255, 0, 0, 0.25);
+    }
+
     &__input {
       margin-bottom: 20px;
       margin-top: 10px;
@@ -185,6 +199,20 @@
           outline: none;
           height: 45px;
           border: 1px solid #dce6f4;
+
+          &:hover {
+            border-color: hsl(0, 0%, 70%);
+            box-shadow: 0 0 0 0.1rem hsla(0, 0%, 70%, 0.25);
+          }
+        }
+      }
+    }
+
+    &__input-profession.error {
+      .react-select {
+        &__control {
+          border-color: #ff0000;
+          box-shadow: 0 0 0 0.1rem rgba(255, 0, 0, 0.25);
         }
       }
     }
@@ -349,49 +377,9 @@
     &__error {
       font-size: 14px;
       color: #f5222d;
-      margin-bottom: 20px;
-
-      &:empty {
-        display: none;
-      }
-
-      &:disabled {
-        color: #f5222d;
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-    }
-
-    &__loading {
-      font-size: 14px;
-      color: #1890ff;
-      margin-bottom: 20px;
-
-      &:empty {
-        display: none;
-      }
-
-      &:disabled {
-        color: #1890ff;
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-    }
-
-    &__success {
-      font-size: 14px;
-      color: #52c41a;
-      margin-bottom: 20px;
-
-      &:empty {
-        display: none;
-      }
-
-      &:disabled {
-        color: #52c41a;
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
+      position: absolute;
+      bottom: 0;
+      padding-left: 11px;
     }
   }
 
@@ -415,11 +403,5 @@
       color: #000000;
       text-decoration: none;
     }
-  }
-
-  &__password-error {
-    font-size: 14px;
-    color: #f5222d;
-    margin-bottom: 20px;
   }
 }

@@ -6,11 +6,13 @@ import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import registerImg from "@/assets/login_sideimage.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
-import React, { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import "./Register.scss";
+import { formInitialState, schema } from "./RegisterForm";
 
 const REGISTER_TYPE = {
   FACEBOOK: "facebook",
@@ -18,41 +20,41 @@ const REGISTER_TYPE = {
   OBRAMAX: "obramax",
 };
 
+interface RegisterForm {
+  name: string;
+  email: string;
+  document: string;
+  password: string;
+  confirmPassword: string;
+  whatsapp: string;
+  occupation: string;
+  acceptReceiveNews: boolean;
+}
+
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [document, setDocument] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [acceptReceiveNews, setAcceptReceiveNews] = useState(false);
-  const [error, setError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const initialFormValues: RegisterForm = formInitialState;
 
+  const handleSubmit = async (values: RegisterForm) => {
     try {
-      setError("");
       setLoading(true);
       const registerData: User = {
-        name,
-        email,
-        password,
-        document: document.replace(/\D/g, ""),
-        phone: whatsapp,
-        occupation,
-        accept_receive_news: acceptReceiveNews,
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        document: values.document.replace(/\D/g, ""),
+        phone: values.whatsapp,
+        occupation: values.occupation,
+        accept_receive_news: values.acceptReceiveNews,
       };
 
       await dispatch(register(registerData) as any);
       navigate("/");
     } catch {
-      setError("Falha ao se registrar");
+      alert("Falha ao se registrar!");
     }
 
     setLoading(false);
@@ -74,7 +76,7 @@ const Register = () => {
           break;
       }
     } catch {
-      setError("Falha ao se registrar");
+      alert("Falha ao se registrar!");
     }
   };
 
@@ -85,17 +87,13 @@ const Register = () => {
     { value: "pintor", label: "Pintor" },
   ];
 
-  const checkPassword = () => {
-    if (password !== confirmPassword) {
-      setPasswordError("*As senhas não conferem");
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  useEffect(() => {
-    checkPassword();
-  }, [password, confirmPassword]);
+  const formik = useFormik({
+    initialValues: initialFormValues,
+    validationSchema: schema,
+    onSubmit: (values: RegisterForm) => {
+      handleSubmit(values);
+    },
+  });
 
   return (
     <>
@@ -124,20 +122,35 @@ const Register = () => {
           </div>
           <span className="register__right__title">Criar uma conta</span>
           <p>Se você não tiver uma conta, crie uma agora mesmo.</p>
-          <form className="register__form" onSubmit={handleSubmit}>
+
+          <form
+            className="register__form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              formik.handleSubmit(e);
+            }}
+          >
             <div className="register__form__inputs-group">
               <label className="register__form__title" htmlFor="name">
                 Nome
               </label>
               <input
                 placeholder="Nome completo"
-                className="register__form__input"
+                className={`register__form__input ${
+                  formik.touched.name && formik.errors.name ? "error" : ""
+                }`}
                 type="text"
                 id="name"
-                value={name}
+                value={formik.values.name}
                 maxLength={95}
-                onChange={(e) => setName(e.target.value)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+              {formik.touched.name && formik.errors.name && (
+                <span className="register__form__error">
+                  {formik.errors.name}
+                </span>
+              )}
             </div>
             <div className="register__form__inputs-row-direction">
               <div className="register__form__input-row-group-left">
@@ -146,12 +159,20 @@ const Register = () => {
                 </label>
                 <input
                   placeholder="Seu e-mail"
-                  className="register__form__input"
+                  className={`register__form__input ${
+                    formik.touched.email && formik.errors.email ? "error" : ""
+                  }`}
                   type="email"
                   id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.email && formik.errors.email && (
+                  <span className="register__form__error">
+                    {formik.errors.email}
+                  </span>
+                )}
               </div>
 
               <div className="register__form__input-row-group-right">
@@ -163,13 +184,28 @@ const Register = () => {
                 </label>
                 <input
                   placeholder="Seu CPF ou CNPJ"
-                  className="register__form__input"
+                  className={`register__form__input ${
+                    formik.touched.document && formik.errors.document
+                      ? "error"
+                      : ""
+                  }`}
                   type="text"
-                  id="cpf-cnpf"
+                  id="document"
                   maxLength={18}
-                  value={document}
-                  onChange={(e) => setDocument(cpfOrCnpjMask(e.target.value))}
+                  value={formik.values.document}
+                  onBlur={formik.handleBlur}
+                  onChange={(e) =>
+                    formik.setFieldValue(
+                      "document",
+                      cpfOrCnpjMask(e.target.value)
+                    )
+                  }
                 />
+                {formik.touched.document && formik.errors.document && (
+                  <span className="register__form__error">
+                    {formik.errors.document}
+                  </span>
+                )}
               </div>
             </div>
             <div className="register__form__inputs-row-direction">
@@ -178,14 +214,23 @@ const Register = () => {
                   Profissão
                 </label>
                 <Select
+                  id="occupation"
                   onChange={(e) => {
-                    setOccupation(e?.value as string);
+                    formik.setFieldValue("occupation", e?.value as string);
                   }}
+                  onBlur={formik.handleBlur}
                   placeholder="Selecione sua profissão"
-                  className="register__form__input-profession"
+                  className={`register__form__input-profession ${
+                    formik.errors.occupation ? "error" : ""
+                  }`}
                   classNamePrefix="react-select"
                   options={options}
                 ></Select>
+                {formik.errors.occupation && (
+                  <span className="register__form__error">
+                    {formik.errors.occupation}
+                  </span>
+                )}
               </div>
               <div className="register__form__input-row-group-right">
                 <label className="register__form__title" htmlFor="whatsapp">
@@ -193,13 +238,25 @@ const Register = () => {
                 </label>
                 <input
                   placeholder="Seu Whatsapp"
-                  className="register__form__input"
+                  className={`register__form__input ${
+                    formik.touched.whatsapp && formik.errors.whatsapp
+                      ? "error"
+                      : ""
+                  }`}
                   type="text"
                   id="whatsapp"
                   maxLength={15}
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(phoneMask(e.target.value))}
+                  value={formik.values.whatsapp}
+                  onBlur={formik.handleBlur}
+                  onChange={(e) =>
+                    formik.setFieldValue("whatsapp", phoneMask(e.target.value))
+                  }
                 />
+                {formik.touched.whatsapp && formik.errors.whatsapp && (
+                  <span className="register__form__error">
+                    {formik.errors.whatsapp}
+                  </span>
+                )}
               </div>
             </div>
             <div className="register__form__inputs-row-direction">
@@ -212,12 +269,22 @@ const Register = () => {
                 </label>
                 <input
                   placeholder="Sua senha"
-                  className="register__form__input-password"
+                  className={`register__form__input-password ${
+                    formik.touched.password && formik.errors.password
+                      ? "error"
+                      : ""
+                  }`}
                   type="password"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.password && formik.errors.password && (
+                  <span className="register__form__error">
+                    {formik.errors.password}
+                  </span>
+                )}
               </div>
               <div className="register__form__input-row-group-right">
                 <label
@@ -228,17 +295,26 @@ const Register = () => {
                 </label>
                 <input
                   placeholder="Confirme sua senha"
-                  className="register__form__input-confirm-password"
+                  className={`register__form__input-confirm-password ${
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
+                      ? "error"
+                      : ""
+                  }`}
                   type="password"
                   id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={formik.values.confirmPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword && (
+                    <span className="register__form__error">
+                      {formik.errors.confirmPassword}
+                    </span>
+                  )}
               </div>
             </div>
-            {passwordError && (
-              <span className="register__password-error">{passwordError}</span>
-            )}
             <div className="register__form__inputs-row-direction-space-between">
               <div className="register__form__checkbox">
                 <label
@@ -249,8 +325,8 @@ const Register = () => {
                     className="register__form__checkbox__input"
                     type="checkbox"
                     id="acceptReceiveNews"
-                    checked={acceptReceiveNews}
-                    onChange={(e) => setAcceptReceiveNews(e.target.checked)}
+                    checked={formik.values.acceptReceiveNews}
+                    onChange={formik.handleChange}
                   />
                   <span>&nbsp;</span>
                   Aceita receber informações da Obramax?
@@ -298,12 +374,10 @@ const Register = () => {
             <button
               type="submit"
               className="register__form__button"
-              disabled={loading || passwordError !== ""}
+              disabled={loading || !formik.isValid || !formik.dirty}
             >
               {loading ? "Carregando..." : "Cadastrar"}
             </button>
-            {error && <p className="register__error">{error}</p>}
-
             <div className="register__footer">
               <span>Elaborado e desenvolvido pela MLab / Obramax</span>
             </div>

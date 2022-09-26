@@ -1,3 +1,4 @@
+import { validateCpfCnpj } from "@/application/common/Utils";
 import * as Yup from "yup";
 
 export const schema = Yup.object().shape({
@@ -8,10 +9,13 @@ export const schema = Yup.object().shape({
   email: Yup.string().email("*Email inválido").required("*Email é obrigatório"),
   document: Yup.string()
     .matches(
-      /^.*(?=.{14})\d{3}\.\d{3}\.\d{3}\-\d{2}$|\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
+      /(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/,
       "*CPF ou CNPJ inválido"
     )
-    .required("*CPF ou CNPJ é obrigatório"),
+    .required("*CPF ou CNPJ é obrigatório")
+    .test("cpf-cnpj", "*CPF ou CNPJ inválido", (value) =>
+      value ? validateCpfCnpj(value) : false
+    ),
   password: Yup.string()
     .matches(/^.{6,}$/, "*A senha deve conter pelo menos 6 caracteres")
     .required("*Senha é obrigatória"),

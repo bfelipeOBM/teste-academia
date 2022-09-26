@@ -5,7 +5,7 @@ export const schema = Yup.object().shape({
     .trim()
     .matches(/(\w.+\s).+/i, "*Nome completo inválido")
     .required("*Nome completo é obrigatório"),
-  email: Yup.string().email().required("*Email é obrigatório"),
+  email: Yup.string().email("*Email inválido").required("*Email é obrigatório"),
   document: Yup.string()
     .matches(
       /^.*(?=.{14})\d{3}\.\d{3}\.\d{3}\-\d{2}$|\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,

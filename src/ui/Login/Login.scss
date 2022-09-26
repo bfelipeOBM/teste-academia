@@ -320,22 +320,6 @@
           }
         }
       }
-
-      &__loading {
-        font-size: 14px;
-        color: #1890ff;
-        margin-bottom: 20px;
-
-        &:empty {
-          display: none;
-        }
-
-        &:disabled {
-          color: #1890ff;
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-      }
     }
 
     &__footer {
@@ -657,22 +641,6 @@
           &:hover {
             text-decoration: underline;
           }
-        }
-      }
-
-      &__loading {
-        font-size: 14px;
-        color: #1890ff;
-        margin-bottom: 20px;
-
-        &:empty {
-          display: none;
-        }
-
-        &:disabled {
-          color: #1890ff;
-          opacity: 0.5;
-          cursor: not-allowed;
         }
       }
     }

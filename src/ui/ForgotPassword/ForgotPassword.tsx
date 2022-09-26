@@ -21,7 +21,7 @@ const ForgotPassword = () => {
       await AuthService.resetPassword(userDocument.replace(/\D/g, ""));
       navigate("/recovermethod");
     } catch {
-      setError("Failed to reset password");
+      setError("Falha ao solicitar recuperação de senha");
     }
 
     setLoading(false);
@@ -37,8 +37,8 @@ const ForgotPassword = () => {
           <img
             src={forgotpasswordImg}
             alt="forgotpassword"
-            width="1080"
-            height="960"
+            width="100%"
+            height="100%"
             className="forgotpassword__img"
           />
         </div>

@@ -362,7 +362,7 @@
       }
 
       &__input {
-        margin: 20px 10px 30px 0;
+        margin: 20px 16px 30px 0;
         padding: 0 10px;
         outline: none;
         height: 100px;
@@ -425,9 +425,9 @@
     }
 
     &__footer {
-      position: absolute;
-      bottom: 2%;
-      left: 10%;
+      display: flex;
+      align-self: center;
+      height: 19px;
 
       span {
         text-align: center;

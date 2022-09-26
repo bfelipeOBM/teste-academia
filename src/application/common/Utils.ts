@@ -1,4 +1,4 @@
-/* Utils file */
+import React from "react";
 
 const cpfOrCnpjMask = (value: string) => {
   value = value?.replace(/\D/g, "");
@@ -37,4 +37,26 @@ const getFirstAndLastName = (name: string) => {
   return names?.length > 1 ? `${names[0]} ${names[names.length - 1]}` : name;
 };
 
-export { cpfOrCnpjMask, phoneMask, getFirstAndLastName };
+const useWindowSize = () => {
+  const isSSR = typeof window !== "undefined";
+  const [windowSize, setWindowSize] = React.useState({
+    width: isSSR ? 1200 : window.innerWidth,
+    height: isSSR ? 800 : window.innerHeight,
+  });
+
+  function changeWindowSize() {
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  React.useEffect(() => {
+    window.addEventListener("resize", changeWindowSize);
+
+    return () => {
+      window.removeEventListener("resize", changeWindowSize);
+    };
+  }, []);
+
+  return windowSize;
+};
+
+export { cpfOrCnpjMask, phoneMask, getFirstAndLastName, useWindowSize };

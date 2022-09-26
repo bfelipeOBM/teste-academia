@@ -1,3 +1,4 @@
+import { useWindowSize } from "@/application/common/Utils";
 import { UserLogin } from "@/application/models/user";
 import { ApplicationState } from "@/application/store";
 import { login } from "@/application/store/user/action";
@@ -25,7 +26,6 @@ type LocationState = {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,6 +35,8 @@ const Login = () => {
 
   const user = useSelector((state: ApplicationState) => state.user);
 
+  const { width } = useWindowSize();
+
   useEffect(() => {
     if (user.isLoggedIn) {
       navigate("/");
@@ -42,6 +44,8 @@ const Login = () => {
   }, [user, navigate]);
 
   useEffect(() => {
+    console.log(width);
+
     if (location?.state) {
       const { toast } = location?.state as LocationState;
       setHasToast(toast);
@@ -52,7 +56,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      setError("");
       setLoading(true);
       const loginData: UserLogin = {
         email,
@@ -60,7 +63,7 @@ const Login = () => {
       };
       dispatch(login(loginData) as any);
     } catch {
-      setError("Failed to log in");
+      alert("Falha ao fazer login");
     }
 
     setLoading(false);
@@ -83,15 +86,17 @@ const Login = () => {
       }
       navigate("/");
     } catch {
-      setError("Failed to log in");
+      alert("Falha ao fazer login");
     }
   };
 
   return (
     <>
-      <div className="login-watermark-image">
-        <img src={waterMark} alt="login" />
-      </div>
+      {width > 1199 && (
+        <div className="login-watermark-image">
+          <img src={waterMark} alt="login" />
+        </div>
+      )}
 
       {hasToast && <Toast toast={hasToast} />}
 
@@ -100,8 +105,8 @@ const Login = () => {
           <img
             src={loginImg}
             alt="login"
-            width="1080"
-            height="960"
+            width="100%"
+            height="100%"
             className="login__img"
           />
         </div>
@@ -119,7 +124,6 @@ const Login = () => {
             Se você tiver uma conta, acesse com seu endereço de e-mail ou
             CPF/CNPJ e senha.
           </p>
-          {/* {error && <Alert variant="danger">{error}</Alert>} */}
           <form className="login__form" onSubmit={handleSubmit}>
             <div className="login__form__user">
               <label className="login__form__title" htmlFor="email">
@@ -195,8 +199,8 @@ const Login = () => {
                     <img
                       src={obramaxLogo}
                       alt="obramax"
-                      width="33"
-                      height="33"
+                      width="100%"
+                      height="100%"
                     />
                   </div>
 
@@ -207,8 +211,8 @@ const Login = () => {
                     <img
                       src={facebookLogo}
                       alt="facebook"
-                      width="33"
-                      height="33"
+                      width="100%"
+                      height="100%"
                     />
                   </div>
 
@@ -216,14 +220,19 @@ const Login = () => {
                     className="login__form__login__buttons__sociallogin__buttons__icon"
                     onClick={() => handleSocialLogin(LOGIN_TYPE.GOOGLE)}
                   >
-                    <img src={googleLogo} alt="google" width="33" height="33" />
+                    <img
+                      src={googleLogo}
+                      alt="google"
+                      width="100%"
+                      height="100%"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </form>
-          <div>
-            <p className="login__form__first-access">
+          <div className="login__form__first-access">
+            <p>
               <span>Este é seu primeiro acesso?</span>{" "}
               <Link className="login__form__first-access__link" to="/register">
                 Cadastrar-se

@@ -106,8 +106,8 @@ const Register = () => {
           <img
             src={registerImg}
             alt="register"
-            width="1080"
-            height="960"
+            width="100%"
+            height="100%"
             className="register__img"
           />
         </div>
@@ -345,8 +345,8 @@ const Register = () => {
                     <img
                       src={obramaxLogo}
                       alt="obramax"
-                      width="33"
-                      height="33"
+                      width="50"
+                      height="50"
                     />
                   </div>
 
@@ -357,8 +357,8 @@ const Register = () => {
                     <img
                       src={facebookLogo}
                       alt="facebook"
-                      width="33"
-                      height="33"
+                      width="50"
+                      height="50"
                     />
                   </div>
 
@@ -366,7 +366,7 @@ const Register = () => {
                     className="register__form__register__buttons__socialregister__buttons__icon"
                     onClick={() => handleSocialRegister(REGISTER_TYPE.GOOGLE)}
                   >
-                    <img src={googleLogo} alt="google" width="33" height="33" />
+                    <img src={googleLogo} alt="google" width="50" height="50" />
                   </div>
                 </div>
               </div>

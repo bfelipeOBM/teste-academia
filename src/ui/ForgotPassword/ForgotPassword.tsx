@@ -1,3 +1,4 @@
+import { cpfOrCnpjMask } from "@/application/common/Utils";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import forgotpasswordImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
@@ -17,10 +18,10 @@ const ForgotPassword = () => {
     try {
       setError("");
       setLoading(true);
-      await AuthService.resetPassword(userDocument);
+      await AuthService.resetPassword(userDocument.replace(/\D/g, ""));
       navigate("/recovermethod");
     } catch {
-      setError("Failed to reset password");
+      setError("Falha ao solicitar recuperação de senha");
     }
 
     setLoading(false);
@@ -36,8 +37,8 @@ const ForgotPassword = () => {
           <img
             src={forgotpasswordImg}
             alt="forgotpassword"
-            width="1080"
-            height="960"
+            width="100%"
+            height="100%"
             className="forgotpassword__img"
           />
         </div>
@@ -69,8 +70,9 @@ const ForgotPassword = () => {
                 className="forgotpassword__form__input"
                 type="text"
                 id="username"
+                maxLength={18}
                 value={userDocument}
-                onChange={(e) => setUserDocument(e.target.value)}
+                onChange={(e) => setUserDocument(cpfOrCnpjMask(e.target.value))}
               />
             </div>
             <button

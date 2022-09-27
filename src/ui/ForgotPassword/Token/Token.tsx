@@ -84,7 +84,7 @@ const Token = () => {
       await AuthService.sendRecoveryCode(userDocument, tokenNumber);
       navigate("/login", { state: { toast: true } });
     } catch {
-      setError("Failed to reset password");
+      setError("Falha ao recuperar senha");
     }
 
     setLoading(false);
@@ -100,8 +100,8 @@ const Token = () => {
           <img
             src={tokenImg}
             alt="token"
-            width="1080"
-            height="960"
+            width="100%"
+            height="100%"
             className="token__img"
           />
         </div>

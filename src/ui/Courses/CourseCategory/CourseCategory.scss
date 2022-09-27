@@ -35,6 +35,8 @@
         flex-direction: row;
         align-items: flex-end;
         margin-bottom: 20px;
+        width: 100%;
+        justify-content: space-between;
 
         .search {
           width: 398px;
@@ -87,8 +89,7 @@
         .filters {
           display: flex;
           flex-direction: row;
-          width: 100%;
-          height: 100%;
+          align-items: flex-end;
 
           .filter__title {
             color: #000;
@@ -99,9 +100,29 @@
           .item-category {
             height: 23px;
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
+            align-items: center;
             margin-right: 32px;
+            cursor: pointer;
+
+            .title {
+              font-size: 18px;
+              font-weight: bold;
+              letter-spacing: 0.32px;
+              color: #141b23;
+            }
+
+            i {
+              font-size: 26px;
+              color: #141b23;
+              align-self: baseline;
+            }
+          }
+
+          .item-type {
+            height: 23px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
 
             .title {
               font-size: 18px;
@@ -120,8 +141,8 @@
           .item-location {
             height: 23px;
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
+            align-items: center;
+            cursor: pointer;
 
             .title {
               font-size: 18px;

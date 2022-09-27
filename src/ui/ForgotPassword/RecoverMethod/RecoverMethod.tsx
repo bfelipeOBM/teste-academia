@@ -43,7 +43,7 @@ const RecoverMethod = () => {
       await AuthService.recoverPasswordMethod(userDocument, recoveryMethod);
       navigate("/token");
     } catch {
-      setError("Failed to recover password");
+      setError("Falha ao solicitar recuperação de senha");
     }
 
     setLoading(false);
@@ -59,8 +59,8 @@ const RecoverMethod = () => {
           <img
             src={recoverMethodImg}
             alt="recovermethod"
-            width="1080"
-            height="960"
+            width="100%"
+            height="100%"
             className="recovermethod__img"
           />
         </div>

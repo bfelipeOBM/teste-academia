@@ -1,23 +1,38 @@
 import Constants from "@/application/common/Constants"
-import { Flex, HStack, Button, IconButton, AspectRatio, Heading, Box, Image, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from "@chakra-ui/react"
+import { ApplicationState } from "@/application/store"
+import { userProfile } from "@/application/store/profile/action"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Checkbox} from "@chakra-ui/react"
 import axios from "axios"
-import { ArrowLeft, Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { toast, ToastContainer } from "react-toastify"
 import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
 import { Sidebar } from "../Components/Sidebar"
-import { Course } from "../interface/course"
-import { User } from "../interface/user"
+import 'react-toastify/dist/ReactToastify.css';
 
 export const UsersAdminCreate = () => {
-  const {id} = useParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [document, setDocument] = useState("");
   const [phone, setPhone] = useState("");
   const [active, setActive] = useState<boolean>(true);
   const [acceptReceiveNews, setAcceptReceiveNews] = useState<boolean>(true);
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+  }, [userState.isLoggedIn, dispatch]);
 
   function handleCreateUser(e: any) {
     e.preventDefault();
@@ -31,9 +46,32 @@ export const UsersAdminCreate = () => {
       active
     }
 
-    console.log(createUser)
-
-    axios.post(`${Constants.API_URL}users/`, createUser)
+    axios.post(`${Constants.API_URL}users/`, createUser).then((response) => {
+      toast.success('Conta criada!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored'
+        });
+        setTimeout(() => {
+          window.location.href = "/admin/users";
+        }, 2000)
+    }).catch((error) => {
+      toast.error('Erro ao criar conta!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
+    })
   }
   
   return (
@@ -103,6 +141,7 @@ export const UsersAdminCreate = () => {
           </VStack>
         </Box>
       </Box>
+      <ToastContainer />
     </Flex>
   )
 }

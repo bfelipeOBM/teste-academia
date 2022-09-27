@@ -1,8 +1,9 @@
 import Constants from '@/application/common/Constants';
-import { Flex, HStack, Button, IconButton, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react'
-import axios from 'axios';
-import { ArrowLeft, } from 'phosphor-react';
+import { ApplicationState } from '@/application/store';
+import { userProfile } from '@/application/store/profile/action';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack} from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { BackButton } from '../../Components/BackButton';
 import { Header } from '../../Components/Header';
@@ -12,6 +13,22 @@ export const CreateCourseMaterialAdmin = () => {
   const {id} = useParams();
   const [filesInput, setFilesInput] = useState<any[]>([])
   const [files, setFiles] = useState<string[]>([])
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   function handleAddFile(e: any) { 
     setFiles(previouState => [...previouState, e.target.files[0]])
@@ -38,8 +55,8 @@ export const CreateCourseMaterialAdmin = () => {
     })
     let request = new XMLHttpRequest();
     
-    request.open('POST', `${Constants.API_URL}/courses/${id}/material`);
-    request.setRequestHeader("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJhbmRvbSBuYW1lIiwiZXhwIjoxNjY1OTQyNjk0LCJyb2xlIjoiYWRtaW4ifQ.5tB5v5Pg9Bt0PZDLVxhnHpW6fAb2Te6DS-gRyEA8xjc")
+    request.open('POST', `${Constants.API_URL}courses/${id}/material`);
+    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
     request.send(form);
   }
 

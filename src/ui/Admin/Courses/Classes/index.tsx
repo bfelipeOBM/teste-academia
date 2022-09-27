@@ -1,34 +1,53 @@
 import Constants from "@/application/common/Constants";
+import { ApplicationState } from "@/application/store";
+import { userProfile } from "@/application/store/profile/action";
 import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, Image, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { Plus } from "phosphor-react";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
-import { User } from "../../interface/user";
 
 export const ClassesInfoAdmin = () => {
   const {id, class_id} = useParams();
   const [users, setUsers] = useState<any[]>();
   const [classe, setClasse] = useState<any>();
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}`).then((res) => {
       setClasse(res.data);
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments`).then((res) => {
       setUsers(res.data);
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classe])
 
   function handleUpdateUserParticipated(e: any, user_id: number) {
     axios.patch(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments/${user_id}`, {
       user_participated: e.target.checked
-    }).then((res) => {
     })
 
     const updatedUsers = users?.map(user => {

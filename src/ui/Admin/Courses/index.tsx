@@ -1,8 +1,11 @@
 import Constants from "@/application/common/Constants";
+import { ApplicationState } from "@/application/store";
+import { userProfile } from "@/application/store/profile/action";
 import { Box, Button, Grid, GridItem, Image, Heading, HStack, Text, VStack, IconButton, AspectRatio, Tooltip, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
 import axios from "axios"
 import { Eye, PencilLine, Plus, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Header } from "../Components/Header";
 import { Course } from "../interface/course";
@@ -11,6 +14,22 @@ export const Courses = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [courseToDelete, setCourseToDelete] = useState<Course>();
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses`).then(res => {
@@ -21,6 +40,17 @@ export const Courses = () => {
   function handleDeleteButton(course: Course) {
     setCourseToDelete(course);
     onOpen();
+  }
+
+  function handleDeleteCourse() {
+    axios.delete(`${Constants.API_URL}courses/${courseToDelete?.id}`, {
+      headers: {
+        'Bearer': `${userState.data?.access_token}`
+      }
+    } ).then(res => {
+      setCourses(courses.filter(course => course.id !== courseToDelete?.id));
+      onClose();
+    })
   }
   
 
@@ -104,7 +134,7 @@ export const Courses = () => {
             <Button variant="ghost" mr={3} onClick={onClose}>
               Fechar
             </Button>
-            <Button colorScheme='red'>Deletar curso</Button>
+            <Button colorScheme='red' onClick={handleDeleteCourse}>Deletar curso</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

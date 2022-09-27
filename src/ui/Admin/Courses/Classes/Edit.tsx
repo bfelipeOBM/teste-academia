@@ -1,8 +1,10 @@
 import Constants from '@/application/common/Constants';
-import { Flex, HStack, Button, IconButton, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react'
+import { ApplicationState } from '@/application/store';
+import { userProfile } from '@/application/store/profile/action';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react'
 import axios from 'axios';
-import { ArrowLeft, } from 'phosphor-react';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { BackButton } from '../../Components/BackButton';
 import { Header } from '../../Components/Header';
@@ -14,11 +16,28 @@ export const EditClassAdmin = () => {
   const [maxStudents, setMaxStudents] = useState<number>();
   const [locationId, setLocationId] = useState<number>();
   const [classe, setClasse] = useState<any>();
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}`).then((response) => {
       setClasse(response.data);
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleUpdateClass(e: any) {

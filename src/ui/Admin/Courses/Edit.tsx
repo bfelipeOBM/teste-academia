@@ -1,8 +1,11 @@
 import Constants from "@/application/common/Constants"
-import { Flex, HStack, Button, IconButton, AspectRatio, Heading, Box, Image, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from "@chakra-ui/react"
+import { ApplicationState } from "@/application/store"
+import { userProfile } from "@/application/store/profile/action"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from "@chakra-ui/react"
 import axios from "axios"
-import { ArrowLeft, Plus } from "phosphor-react"
+import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
 import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
@@ -19,6 +22,22 @@ export const EditCourseAdmin = () => {
   const [video, setVideo] = useState("")
   const [image, setImage] = useState("")
   const [active, setActive] = useState<boolean>()
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   const {id} = useParams();
   const [course, setCourse] = useState<Course>();
@@ -29,6 +48,7 @@ export const EditCourseAdmin = () => {
       setSelectedOptions(res.data.category[0].split(","));
       setActive(res.data.active);
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleAddCategory(e: any) {
@@ -54,8 +74,12 @@ export const EditCourseAdmin = () => {
 
     let request = new XMLHttpRequest();
     request.open('PATCH', `${Constants.API_URL}courses/${id}`);
-    request.setRequestHeader("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJhbmRvbSBuYW1lIiwiZXhwIjoxNjY1OTQyNjk0LCJyb2xlIjoiYWRtaW4ifQ.5tB5v5Pg9Bt0PZDLVxhnHpW6fAb2Te6DS-gRyEA8xjc")
+    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
     request.send(form);
+  }
+
+  function handleAddImage(e: any) {
+    setImage(e.target.files[0])
   }
   
   return (
@@ -119,7 +143,7 @@ export const EditCourseAdmin = () => {
                 <Input
                   type="file"
                   name="file"
-                  // onChange={(e) => handleAddImage(e)}
+                  onChange={(e) => handleAddImage(e)}
                   placeholder={course?.image}
                   accept="image/png, image/gif, image/jpeg, image/jpg "/>
               </FormControl>

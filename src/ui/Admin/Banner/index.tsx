@@ -1,8 +1,11 @@
 import Constants from "@/application/common/Constants";
+import { ApplicationState } from "@/application/store";
+import { userProfile } from "@/application/store/profile/action";
 import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Tooltip, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import { Plus, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Header } from "../Components/Header";
 import { Sidebar } from "../Components/Sidebar";
@@ -16,7 +19,23 @@ interface Banner {
 export const BannersInfoAdmin = () => {
   const [banners, setBanners] = useState<Banner[]>([])
   const [bannerToDeleteId, setBannerToDeleteId] = useState<number>();
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}banners/`).then((response) => {
@@ -30,7 +49,7 @@ export const BannersInfoAdmin = () => {
       url: `${Constants.API_URL}banners/${banner_id}`,
       headers: {
         'Content-Type': 'application/json',
-        Bearer: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6Ik1hbmRpb2NhIiwiZXhwIjoxNjY2NjQwODU2LCJyb2xlIjoiYWRtaW4ifQ.e5eTWGFPGQ7e87AJZRGd_8dkVNnpVlCH9T-4pxa4hXc'
+        Bearer: `${userState.data?.access_token}`
       },
       data: {active: e.target.checked}
     };
@@ -54,7 +73,7 @@ export const BannersInfoAdmin = () => {
   function handleDeleteBannerConfirm() {
     axios.delete(`${Constants.API_URL}banners/${bannerToDeleteId}`,{
       headers: {
-        'Bearer': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6Ik1hbmRpb2NhIiwiZXhwIjoxNjY2NjQwODU2LCJyb2xlIjoiYWRtaW4ifQ.e5eTWGFPGQ7e87AJZRGd_8dkVNnpVlCH9T-4pxa4hXc'
+        'Bearer': `${userState.data?.access_token}`
       }
     }).then(res => {
       setBanners(banners.filter(banner => banner.id !== bannerToDeleteId));

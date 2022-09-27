@@ -1,18 +1,38 @@
 import Constants from '@/application/common/Constants';
-import { Flex, HStack, Button, IconButton, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react'
+import { ApplicationState } from '@/application/store';
+import { userProfile } from '@/application/store/profile/action';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react'
 import axios from 'axios';
-import { ArrowLeft, } from 'phosphor-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { BackButton } from '../../Components/BackButton';
 import { Header } from '../../Components/Header';
 import { Sidebar } from '../../Components/Sidebar';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const CreateClassAdmin = () => {
   const {id} = useParams();
   const [date, setDate] = useState<Date>();
   const [maxStudents, setMaxStudents] = useState(0);
   const [locationId, setLocationId] = useState(1);
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   function handleCreateClass(e: any) {
     e.preventDefault();
@@ -20,6 +40,31 @@ export const CreateClassAdmin = () => {
       date,
       max_students: maxStudents,
       location_id: locationId,
+    }).then((response) => {
+      toast.success('Turma criada!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored'
+        });
+        setTimeout(() => {
+          window.location.href = "/admin/users";
+        }, 2000)
+    }).catch((error) => {
+      toast.error('Erro ao criar turma!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
     })
   }
 
@@ -79,6 +124,7 @@ export const CreateClassAdmin = () => {
           </VStack>
         </Box>
       </Box>
+      <ToastContainer />
     </Flex>
   );
 }

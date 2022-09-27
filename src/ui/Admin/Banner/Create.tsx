@@ -1,14 +1,32 @@
 import Constants from '@/application/common/Constants';
-import { Flex, HStack, Button, IconButton, AspectRatio, Heading, Box, Image, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Select, useRadioGroup, Grid } from '@chakra-ui/react'
-import axios from 'axios';
-import { ArrowLeft, Plus } from 'phosphor-react';
-import { useState } from 'react';
+import { ApplicationState } from '@/application/store';
+import { userProfile } from '@/application/store/profile/action';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BackButton } from '../Components/BackButton';
 import { Header } from '../Components/Header';
 import { Sidebar } from '../Components/Sidebar';
 
+
 export const CreateBannerAdmin = () => {
   const [image, setImage] = useState("")
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   function handleAddImage(e: any) {
     setImage(e.target.files[0])
@@ -21,8 +39,8 @@ export const CreateBannerAdmin = () => {
     form.append("file", image);
 
     let request = new XMLHttpRequest();
-    request.open('POST', `${Constants.API_URL}/banners`);
-    request.setRequestHeader("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJhbmRvbSBuYW1lIiwiZXhwIjoxNjY1OTQyNjk0LCJyb2xlIjoiYWRtaW4ifQ.5tB5v5Pg9Bt0PZDLVxhnHpW6fAb2Te6DS-gRyEA8xjc")
+    request.open('POST', `${Constants.API_URL}banners`);
+    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
     request.send(form);
   }
 

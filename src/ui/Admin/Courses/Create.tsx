@@ -1,8 +1,10 @@
 import Constants from '@/application/common/Constants';
-import { Flex, HStack, Button, IconButton, AspectRatio, Heading, Box, Image, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Select, useRadioGroup, Grid } from '@chakra-ui/react'
-import axios from 'axios';
-import { ArrowLeft, Plus } from 'phosphor-react';
-import { useState } from 'react';
+import { ApplicationState } from '@/application/store';
+import { userProfile } from '@/application/store/profile/action';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from '@chakra-ui/react';
+import {  Plus } from 'phosphor-react';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BackButton } from '../Components/BackButton';
 import { Header } from '../Components/Header';
 import { Sidebar } from '../Components/Sidebar';
@@ -16,6 +18,22 @@ export const CreateCourseAdmin = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [video, setVideo] = useState("")
   const [image, setImage] = useState("")
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
 
   function handleAddCategory(e: any) {
@@ -45,7 +63,7 @@ export const CreateCourseAdmin = () => {
     form.append("active", "true");
     let request = new XMLHttpRequest();
     request.open('POST', `${Constants.API_URL}courses`);
-    request.setRequestHeader("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJhbmRvbSBuYW1lIiwiZXhwIjoxNjY1OTQyNjk0LCJyb2xlIjoiYWRtaW4ifQ.5tB5v5Pg9Bt0PZDLVxhnHpW6fAb2Te6DS-gRyEA8xjc")
+    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
     request.send(form);
   }
 

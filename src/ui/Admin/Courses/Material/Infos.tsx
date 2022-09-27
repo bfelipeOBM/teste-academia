@@ -1,9 +1,12 @@
 import Constants from "@/application/common/Constants";
-import { Box, Grid, GridItem, HStack, IconButton, Tooltip, Link, Heading, Button} from "@chakra-ui/react";
+import { ApplicationState } from "@/application/store";
+import { userProfile } from "@/application/store/profile/action";
+import { Box, Grid, GridItem, HStack, IconButton, Tooltip, Heading, Button, Link as ChakraLink} from "@chakra-ui/react";
 import axios from "axios";
 import { Eye, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 interface Material {
   id: number;
   course_id: number;
@@ -13,12 +16,39 @@ interface Material {
 export const InfosCreateMaterialAdmin = () => {
   const {id} = useParams();
   const [materials, setMaterials] = useState<Material[]>([]);
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+  }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
-    axios.get(`${Constants.API_URL}/courses/${id}/material`).then(res => {
+    axios.get(`${Constants.API_URL}courses/${id}/material`, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+    }}).then(res => {
       setMaterials(res.data);
     })
   }, [])
+
+  function handleDeleteMaterial(materialId: number) {
+    axios.delete(`${Constants.API_URL}courses/${id}/material/${materialId}`, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+    }}).then(res => {
+      setMaterials(materials.filter(material => material.id !== materialId));
+    })
+  }
   
   return (
     <div>
@@ -39,7 +69,7 @@ export const InfosCreateMaterialAdmin = () => {
               
               <Box position={"relative"} mt={4}>
               <HStack>
-              <Link href={material.file_url} download={"Banana"} isExternal>  
+              <ChakraLink href={material.file_url} download={"Banana"} isExternal>  
                 <Tooltip label="Visualizar material">
                   <IconButton
                     icon={<Eye size={30}/>}
@@ -47,22 +77,22 @@ export const InfosCreateMaterialAdmin = () => {
                     // onClick={() => {handleDeleteBanner(banner.id)}}
                     aria-label="Visualizar material" />
                 </Tooltip>
-                </Link>
-                <Tooltip label="Deletar material">
-                  <IconButton
-                    icon={<Trash size={30}/>}
-                    colorScheme={"red"}
-                    // onClick={() => {handleDeleteBanner(banner.id)}}
-                    aria-label="Deletar material" />
-                </Tooltip>
+              </ChakraLink>
+              <Tooltip label="Deletar material">
+                <IconButton
+                  icon={<Trash size={30}/>}
+                  colorScheme={"red"}
+                  onClick={() => {handleDeleteMaterial(material.id)}}
+                  aria-label="Deletar material" />
+              </Tooltip>
               </HStack>
             </Box>
             </GridItem>
-          
         ))}
-
       </Grid>
-      <Button colorScheme={'green'}>Adicionar material de apoio</Button>
+      <Link to={`/admin/courses/${id}/material`}>
+        <Button colorScheme={'green'}>Adicionar material de apoio</Button>
+      </Link>
     </div>
   )
 }

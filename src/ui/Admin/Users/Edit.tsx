@@ -1,14 +1,17 @@
 import Constants from "@/application/common/Constants"
-import { Flex, HStack, Button, IconButton, AspectRatio, Heading, Box, Image, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from "@chakra-ui/react"
+import { ApplicationState } from "@/application/store"
+import { userProfile } from "@/application/store/profile/action"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Checkbox} from "@chakra-ui/react"
 import axios from "axios"
-import { ArrowLeft, Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
+import { toast, ToastContainer } from "react-toastify"
 import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
 import { Sidebar } from "../Components/Sidebar"
-import { Course } from "../interface/course"
 import { User } from "../interface/user"
+import 'react-toastify/dist/ReactToastify.css';
 
 export const UsersAdminEdit = () => {
   const {id} = useParams();
@@ -18,11 +21,26 @@ export const UsersAdminEdit = () => {
   const [document, setDocument] = useState("");
   const [phone, setPhone] = useState("");
   const [active, setActive] = useState<boolean>();
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+  }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}users/${id}`, {
       headers: {
-        'Bearer': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6Ik1hbmRpb2NhIiwiZXhwIjoxNjY2NjQwODU2LCJyb2xlIjoiYWRtaW4ifQ.e5eTWGFPGQ7e87AJZRGd_8dkVNnpVlCH9T-4pxa4hXc'
+        'Bearer': `${userState.data?.access_token}`
       }
     }).then(res => {
       setUser(res.data);
@@ -48,8 +66,33 @@ export const UsersAdminEdit = () => {
 
     axios.patch(`${Constants.API_URL}users/${id}`, updatedUser, {
       headers: {
-        'Bearer': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6Ik1hbmRpb2NhIiwiZXhwIjoxNjY2NjQwODU2LCJyb2xlIjoiYWRtaW4ifQ.e5eTWGFPGQ7e87AJZRGd_8dkVNnpVlCH9T-4pxa4hXc'
+        'Bearer': `${userState.data?.access_token}`
       }
+    }).then((response) => {
+      toast.success('Conta editada!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored'
+        });
+        setTimeout(() => {
+          window.location.href = "/admin/users";
+        }, 2000)
+    }).catch((error) => {
+      toast.error('Erro ao editar conta!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
     })
   }
   
@@ -120,6 +163,7 @@ export const UsersAdminEdit = () => {
         </Box>
         ) : ("Carregando...")}
       </Box>
+      <ToastContainer />
     </Flex>
   )
 }

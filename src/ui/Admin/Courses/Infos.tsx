@@ -1,8 +1,11 @@
 import Constants from "@/application/common/Constants";
+import { ApplicationState } from "@/application/store";
+import { userProfile } from "@/application/store/profile/action";
 import { AspectRatio, Box, Button, Flex, Grid, GridItem, Heading, HStack, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Tooltip, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
-import { ArrowLeft, Eye, PencilLine, Plus, Trash } from "phosphor-react";
-import { useEffect, useRef, useState } from "react";
+import { Eye, PencilLine, Plus, Trash } from "phosphor-react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { BackButton } from "../Components/BackButton";
 import { Header } from "../Components/Header";
@@ -16,17 +19,35 @@ export const CourseAdminInfos = () => {
   const [classes, setClasses] = useState<any[]>([]);
   const [classToDelete, setClassToDelete] = useState<any>();
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const userState = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (profile && userState) {
+      if (userState.isLoggedIn && profile.role === "admin") {
+        dispatch(userProfile() as any);
+      } else if (profile.role === "user") {
+        window.location.href = "/";
+      } else if (!userState.isLoggedIn) {
+        window.location.href = "/";
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}`).then(res => {
       setCourse(res.data);
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}/classes`).then(res => {
       setClasses(res.data);
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [course])
 
   function handleDeleteClass(classe: any) {
@@ -70,7 +91,7 @@ export const CourseAdminInfos = () => {
             <Text>{course?.description}</Text>
           </Box>
           <Box>
-            <Text>Material de apoio</Text>
+            <Heading>Material de apoio</Heading>
             <InfosCreateMaterialAdmin />
           </Box>
           <Box py={8}>

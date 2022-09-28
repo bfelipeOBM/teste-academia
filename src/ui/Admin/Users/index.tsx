@@ -20,7 +20,7 @@ export const UsersAdminInfos = () => {
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (profile && userState) {
       if (userState.isLoggedIn && profile.role === "admin") {
@@ -58,7 +58,27 @@ export const UsersAdminInfos = () => {
     setUserToDelete(user);
     onOpen();
   }
-  
+
+  function handleDeleteUser() {
+    axios.delete(`${Constants.API_URL}users/${userToDelete?.id}`, {
+      headers: {
+        'Bearer': `${userState.data?.access_token}`
+      }
+    }).then(res => {
+      toast.success('Usuário deletado com sucesso!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
+      setUsers(users.filter(user => user.id !== userToDelete?.id));
+      onClose();
+    })
+  }
 
   return (
     <Flex w={"100%"}>
@@ -73,60 +93,60 @@ export const UsersAdminInfos = () => {
                 to="/admin/users/create/multiple"
                 colorScheme="blue"
                 size={"lg"}
-                leftIcon={<Plus /> }>
-                  Adicionar arquivos via CSV
+                leftIcon={<Plus />}>
+                Adicionar arquivos via CSV
               </Button>
               <Button
                 as={Link}
                 to="/admin/users/create"
                 colorScheme="green"
                 size={"lg"}
-                leftIcon={<Plus /> }>
-                  Adicionar um usuário
+                leftIcon={<Plus />}>
+                Adicionar um usuário
               </Button>
             </HStack>
           </HStack>
         </Header>
         <Box as="main" w={"100%"} maxW={1120} mx="auto">
-        <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-          {users.map(user => (
-            <GridItem
-              key={user.id}
-              w='100%'
-              bg='blue.500'
-              borderRadius="16px"
-              bgColor={"white"}
-              overflow={"hidden"}
-              border="1px solid #DCE2E6"
-              position="relative">
-            <AspectRatio ratio={16 / 9}>
-              <Image src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"} objectFit="cover"/>
-            </AspectRatio>
-            <Box p={8}>
-              <Heading size="lg">{user.name}</Heading>
-            </Box>
-            <Box position={"absolute"} top={4} right={4}>
-              <HStack>
-                <Tooltip label="Editar informações do usuário">
-                  <IconButton
-                    as={Link}
-                    to={`/admin/users/${user.id}/edit`}
-                    icon={<PencilLine size={30}/>}
-                    colorScheme={"gray"}
-                    aria-label="Editar usuário" />
-                </Tooltip>
-                <Tooltip label="Deletar usuário">
-                  <IconButton
-                    icon={<Trash size={30}/>}
-                    colorScheme={"red"}
-                    aria-label="Deletar usuário"
-                    onClick={() => handleDeleteButton(user)} />
-                </Tooltip>
-              </HStack>
-            </Box>
-          </GridItem>
-          ))}
-        </Grid>
+          <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+            {users.map(user => (
+              <GridItem
+                key={user.id}
+                w='100%'
+                bg='blue.500'
+                borderRadius="16px"
+                bgColor={"white"}
+                overflow={"hidden"}
+                border="1px solid #DCE2E6"
+                position="relative">
+                <AspectRatio ratio={16 / 9}>
+                  <Image src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"} objectFit="cover" />
+                </AspectRatio>
+                <Box p={8}>
+                  <Heading size="lg" noOfLines={[1, 2]}>{user.name}</Heading>
+                </Box>
+                <Box position={"absolute"} top={4} right={4}>
+                  <HStack>
+                    <Tooltip label="Editar informações do usuário">
+                      <IconButton
+                        as={Link}
+                        to={`/admin/users/${user.id}/edit`}
+                        icon={<PencilLine size={30} />}
+                        colorScheme={"gray"}
+                        aria-label="Editar usuário" />
+                    </Tooltip>
+                    <Tooltip label="Deletar usuário">
+                      <IconButton
+                        icon={<Trash size={30} />}
+                        colorScheme={"red"}
+                        aria-label="Deletar usuário"
+                        onClick={() => handleDeleteButton(user)} />
+                    </Tooltip>
+                  </HStack>
+                </Box>
+              </GridItem>
+            ))}
+          </Grid>
         </Box>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -141,7 +161,7 @@ export const UsersAdminInfos = () => {
               <Button variant="ghost" mr={3} onClick={onClose}>
                 Fechar
               </Button>
-              <Button colorScheme='red'>Deletar usuário</Button>
+              <Button colorScheme='red' onClick={handleDeleteUser}>Deletar usuário</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

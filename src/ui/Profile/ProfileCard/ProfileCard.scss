@@ -1,0 +1,96 @@
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 396px;
+
+  &__user-info {
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      background-color: #002a5b;
+      width: 100%;
+      height: 163px;
+      z-index: 2;
+
+      &-edit-button {
+        font-size: 12px;
+        margin-top: 17px;
+        margin-right: 19px;
+        color: #fff;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+
+    &__avatar {
+      margin-top: -113.5px;
+      z-index: 3;
+
+      img {
+        width: 227px;
+        height: 227px;
+        border-radius: 50%;
+        background-color: #f5f4f7;
+      }
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      align-content: flex-end;
+      width: 100%;
+      margin-top: 25px;
+      margin-bottom: 25px;
+
+      .user-name {
+        font-size: 27px;
+        font-weight: bold;
+        color: #000;
+      }
+
+      .user-email {
+        font-size: 21px;
+        color: #000;
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 24px;
+
+    &__button {
+      width: 100%;
+      height: 60px;
+      border: none;
+      background-color: #fff;
+      color: #141b23;
+      font-size: 16px;
+      text-transform: uppercase;
+      margin-bottom: 19px;
+      cursor: pointer;
+    }
+
+    &__button.current-page {
+      background-color: #ef7f00;
+      color: #fff;
+    }
+
+    &__button:hover {
+      background-color: #002a5b;
+      color: #fff;
+    }
+  }
+}

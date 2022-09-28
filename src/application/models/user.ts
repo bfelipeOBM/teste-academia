@@ -2,10 +2,10 @@ export type User = {
   id?: number;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   document?: string;
   phone: string;
-  accept_receive_news: boolean;
+  accept_receive_news?: boolean;
   active?: boolean;
   role?: string;
   occupation?: string;

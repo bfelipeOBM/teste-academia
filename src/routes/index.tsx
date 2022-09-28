@@ -18,6 +18,7 @@ import RecoverMethod from "@/ui/ForgotPassword/RecoverMethod/RecoverMethod";
 import Token from "@/ui/ForgotPassword/Token/Token";
 import Home from "@/ui/Home/Home";
 import Login from "@/ui/Login/Login";
+import Profile from "@/ui/Profile/Profile";
 import Register from "@/ui/Register/Register";
 import { ChakraProvider } from "@chakra-ui/react";
 import { motion } from "framer-motion";
@@ -78,20 +79,119 @@ const RouteWrapper = () => {
           <Route path="/token" element={<Token />} />
           <Route path="/recovermethod" element={<RecoverMethod />} />
           <Route path="/course/:id" element={<Course />} />
-          <Route path="/admin" element={<ChakraProvider> <Admin /></ChakraProvider>} />
-          <Route path="/admin/users/" element={<ChakraProvider> <UsersAdminInfos /></ChakraProvider> } />
-          <Route path="/admin/users/create" element={<ChakraProvider> <UsersAdminCreate /></ChakraProvider> } />
-          <Route path="/admin/users/create/multiple" element={<ChakraProvider> <UsersAdminMultiple /></ChakraProvider> } />
-          <Route path="/admin/users/:id/edit" element={<ChakraProvider> <UsersAdminEdit /></ChakraProvider> } />
-          <Route path="/admin/courses/:id" element={<ChakraProvider> <CourseAdminInfos /></ChakraProvider>} />
-          <Route path="/admin/courses/:id/class/:class_id" element={<ChakraProvider> <ClassesInfoAdmin /></ChakraProvider>} />
-          <Route path="/admin/courses/:id/edit" element={<ChakraProvider> <EditCourseAdmin /></ChakraProvider>} />
-          <Route path="/admin/courses/create" element={<ChakraProvider> <CreateCourseAdmin /></ChakraProvider>} />
-          <Route path="/admin/courses/:id/classes/create" element={<ChakraProvider> <CreateClassAdmin /></ChakraProvider>} />
-          <Route path="/admin/courses/:id/classes/:class_id/edit" element={<ChakraProvider> <EditClassAdmin /></ChakraProvider>} />
-          <Route path="/admin/courses/:id/material" element={<ChakraProvider> <CreateCourseMaterialAdmin /></ChakraProvider>} />
-          <Route path="/admin/banners" element={<ChakraProvider> <BannersInfoAdmin /></ChakraProvider>} />
-          <Route path="/admin/banners/create" element={<ChakraProvider> <CreateBannerAdmin /></ChakraProvider>} />
+          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/admin"
+            element={
+              <ChakraProvider>
+                <Admin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/users/"
+            element={
+              <ChakraProvider>
+                <UsersAdminInfos />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/users/create"
+            element={
+              <ChakraProvider>
+                <UsersAdminCreate />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/users/create/multiple"
+            element={
+              <ChakraProvider>
+                <UsersAdminMultiple />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/users/:id/edit"
+            element={
+              <ChakraProvider>
+                <UsersAdminEdit />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/:id"
+            element={
+              <ChakraProvider>
+                <CourseAdminInfos />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/:id/class/:class_id"
+            element={
+              <ChakraProvider>
+                <ClassesInfoAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/:id/edit"
+            element={
+              <ChakraProvider>
+                <EditCourseAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/create"
+            element={
+              <ChakraProvider>
+                <CreateCourseAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/:id/classes/create"
+            element={
+              <ChakraProvider>
+                <CreateClassAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/:id/classes/:class_id/edit"
+            element={
+              <ChakraProvider>
+                <EditClassAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/:id/material"
+            element={
+              <ChakraProvider>
+                <CreateCourseMaterialAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/banners"
+            element={
+              <ChakraProvider>
+                <BannersInfoAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/banners/create"
+            element={
+              <ChakraProvider>
+                <CreateBannerAdmin />
+              </ChakraProvider>
+            }
+          />
         </Route>
       </Routes>
     </Router>

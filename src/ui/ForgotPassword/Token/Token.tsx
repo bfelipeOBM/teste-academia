@@ -127,13 +127,27 @@ const Token = () => {
           </p>
           <form className="token__form" onSubmit={handleSubmit}>
             <div className="token__form__inputs-group">
-              <label className="token__form__title" htmlFor="tokenNumber">
-                O código enviado expira em{" "}
-                <span className="token__form__title__counter">
-                  {twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}
-                </span>{" "}
-                {twoDigits(minutesToDisplay) === "00" ? "segundos" : "minutos"}
-              </label>
+              {secondsRemaining > 0 && (
+                <label className="token__form__title" htmlFor="tokenNumber">
+                  O código enviado expira em{" "}
+                  <span className="token__form__title__counter">
+                    {twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}
+                  </span>{" "}
+                  {twoDigits(minutesToDisplay) === "00"
+                    ? "segundos"
+                    : "minutos"}
+                </label>
+              )}
+              {secondsRemaining === 0 && (
+                <label className="token__form__title" htmlFor="tokenNumber">
+                  O código enviado expirou. Clique em{" "}
+                  <span className="token__form__resend__title__link">
+                    Reenviar
+                  </span>{" "}
+                  para receber um novo código.
+                </label>
+              )}
+
               <AuthCode
                 inputClassName="token__form__input"
                 length={4}

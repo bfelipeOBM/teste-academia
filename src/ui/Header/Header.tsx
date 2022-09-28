@@ -15,7 +15,6 @@ const Header = () => {
 
   const user = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -164,6 +163,14 @@ const Header = () => {
                     <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
                       <span>Minha conta</span>
                     </div>
+
+                    {profile?.role === "admin" && (
+                      <a href="/admin">
+                        <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
+                          <span>Painel de Admin</span>
+                        </div>
+                      </a>
+                    )}
 
                     <div
                       className="header__items__login__info__username-dropdown-menu__menu__items__item"

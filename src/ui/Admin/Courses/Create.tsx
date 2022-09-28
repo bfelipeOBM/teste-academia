@@ -2,7 +2,7 @@ import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
 import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from '@chakra-ui/react';
-import {  Plus } from 'phosphor-react';
+import { Plus } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BackButton } from '../Components/BackButton';
@@ -11,7 +11,7 @@ import { Sidebar } from '../Components/Sidebar';
 
 export const CreateCourseAdmin = () => {
   const options = ["Eletricista", "Pedreiro", "Mestre de Obras", "Encanador", "Empreiteiro", "Técnico em construção civil/edificações", "Hidráulico", "Azulejista", "Arquiteto", "Assentador de pisos", "Marceneiro", "Pintor", "Engenheiro"]
-  
+
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [specialty, setSpecialty] = useState("")
@@ -21,7 +21,7 @@ export const CreateCourseAdmin = () => {
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (profile && userState) {
       if (userState.isLoggedIn && profile.role === "admin") {
@@ -32,7 +32,7 @@ export const CreateCourseAdmin = () => {
         window.location.href = "/";
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState.isLoggedIn, dispatch]);
 
 
@@ -51,7 +51,7 @@ export const CreateCourseAdmin = () => {
 
   function handleCreateCourse(e: any) {
     e.preventDefault()
-    
+
     const form = new FormData();
     form.append("name", name);
     form.append("description", description);
@@ -73,14 +73,14 @@ export const CreateCourseAdmin = () => {
       <Sidebar />
       <Box w="100%">
         <Header>
-        <HStack justifyContent="space-between">
-          <BackButton />
-          <Box>
-            <Button colorScheme="green" size={"lg"} leftIcon={<Plus />}>Adicionar uma turma</Button>
-          </Box>
-        </HStack>
+          <HStack justifyContent="space-between">
+            <BackButton />
+            <Box>
+              <Button colorScheme="green" size={"lg"} leftIcon={<Plus />}>Adicionar uma turma</Button>
+            </Box>
+          </HStack>
         </Header>
-        
+
         <Box w="100%" maxW={1120} mx="auto">
           <Box py={8}>
             <Text fontSize={"2xl"}>Criar um novo curso</Text>
@@ -101,12 +101,12 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Especialidade</FormLabel>
-                <Input type="text" onChange={(e) => setSpecialty(e.target.value)} required/>
+                <Input type="text" onChange={(e) => setSpecialty(e.target.value)} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-                <FormLabel>Categoria</FormLabel>
-                <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+              <FormLabel>Categoria</FormLabel>
+              <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {options.map((value) => (
                   <Checkbox
                     value={value}
@@ -118,13 +118,13 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Link do vídeo</FormLabel>
-                <Input type="text" onChange={(e) => setVideo(e.target.value)} required placeholder='Link do vídeo no youtube'/>
+                <Input type="text" onChange={(e) => setVideo(e.target.value)} required placeholder='Link do vídeo no youtube' />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Imagem do curso (apenas PNG, GIF, JPEG e JPG)</FormLabel>
-                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required accept="image/png, image/gif, image/jpeg, image/jpg "/>
+                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required accept="image/png, image/gif, image/jpeg, image/jpg" />
               </FormControl>
             </Box>
             <Button
@@ -132,7 +132,7 @@ export const CreateCourseAdmin = () => {
               colorScheme="green"
               w={"full"}
               size={"lg"}
-              onClick={(e) => {handleCreateCourse(e)}}
+              onClick={(e) => { handleCreateCourse(e) }}
             >Criar curso</Button>
           </VStack>
         </Box>

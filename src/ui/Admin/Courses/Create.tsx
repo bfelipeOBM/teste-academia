@@ -124,7 +124,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Imagem do curso (apenas PNG, GIF, JPEG e JPG)</FormLabel>
-                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required accept="image/png, image/gif, image/jpeg, image/jpg" />
+                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required />
               </FormControl>
             </Box>
             <Button

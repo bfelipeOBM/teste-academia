@@ -1,7 +1,7 @@
-import MyCertificates from "@/ui/Certificate/MyCertificates/MyCertificates";
-import MyCourses from "@/ui/Courses/MyCourses/MyCourses";
 import Footer from "@/ui/Footer/Footer";
 import Header from "@/ui/Header/Header";
+import MyCertificates from "@/ui/Profile/MyCertificates/MyCertificates";
+import MyCourses from "@/ui/Profile/MyCourses/MyCourses";
 import { useState } from "react";
 import "./Profile.scss";
 import ProfileCard from "./ProfileCard/ProfileCard";

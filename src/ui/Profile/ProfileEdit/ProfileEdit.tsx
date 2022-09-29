@@ -81,6 +81,7 @@ const ProfileEdit = () => {
     { value: "pintor", label: "Pintor" },
   ];
 
+  //TODO: get user data from api
   const userInfoMock = {
     name: "John Doe",
     description: "Mil e uma utilidade da resina acrílica na obra",

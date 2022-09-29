@@ -10,6 +10,7 @@
   margin-right: 8px;
   margin-left: 9px;
   margin-bottom: 19px;
+  cursor: pointer;
 
   &__header {
     display: flex;
@@ -75,5 +76,9 @@
       color: #fff;
       margin: 0 30px 26px 18px;
     }
+  }
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   }
 }

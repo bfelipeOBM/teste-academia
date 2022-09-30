@@ -34,14 +34,3 @@ export const schema = Yup.object().shape({
   occupation: Yup.string().required("*Profissão é obrigatória"),
   acceptReceiveNews: Yup.boolean().notRequired(),
 });
-
-//TODO: Refactor this initial values
-export const formInitialState = {
-  name: "John Doe",
-  email: "john.doe@email.com",
-  document: "48149466002",
-  password: "",
-  confirmPassword: "",
-  whatsapp: "11991234567",
-  occupation: "eletricista",
-};

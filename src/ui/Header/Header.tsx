@@ -8,6 +8,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.scss";
 
+const CategoryListLeft = [
+  { title: "Eletricista", link: "/" },
+  { title: "Pedreiro", link: "/" },
+  { title: "Mestre de Obras", link: "/" },
+  { title: "Encanador", link: "/" },
+  { title: "Jardineiro", link: "/" },
+  { title: "Empreiteiro", link: "/" },
+  { title: "Azulejista", link: "/" },
+  { title: "Hidráulico", link: "/" },
+];
+
+const CategoryListRight = [
+  { title: "Técnico em construção civil/edificações", link: "/" },
+  { title: "Arquiteto", link: "/" },
+  { title: "Assentador de pisos", link: "/" },
+  { title: "Marceneiro", link: "/" },
+  { title: "Pintor", link: "/" },
+  { title: "Engenheiro", link: "/" },
+];
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -56,48 +76,39 @@ const Header = () => {
           <i className="material-icons ">
             {!isMenuOpen ? "expand_more" : "expand_less"}
           </i>
+
+          {isMenuOpen && (
+            <div
+              className={`header__items__categories__dropdown-menu__menu ${
+                isMenuOpen ? "active" : ""
+              }`}
+            >
+              <div className="header__items__categories__dropdown-menu__menu__items__left">
+                {CategoryListLeft.map((category, index) => (
+                  <div
+                    key={index}
+                    className="header__items__categories__dropdown-menu__menu__items__left__item"
+                    onClick={() => handleMenuItemClick(category.link)}
+                  >
+                    <span>{category.title}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="header__items__categories__dropdown-menu__menu__items__right">
+                {CategoryListRight.map((category, index) => (
+                  <div
+                    key={index}
+                    className="header__items__categories__dropdown-menu__menu__items__right__item"
+                    onClick={() => handleMenuItemClick(category.link)}
+                  >
+                    <span>{category.title}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-        {/* <div
-            className={`header__right__menu__items ${
-              isMenuOpen ? "header__right__menu__items--open" : ""
-            }`}
-          >
-            <div
-              className="header__right__menu__items__item"
-              onClick={() => handleMenuItemClick("/")}
-            >
-              <span className="material-icons">home</span>
-              <span>Home</span>
-            </div>
-            <div
-              className="header__right__menu__items__item"
-              onClick={() => handleMenuItemClick("/about")}
-            >
-              <span className="material-icons">info</span>
-              <span>About</span>
-            </div>
-            <div
-              className="header__right__menu__items__item"
-              onClick={() => handleMenuItemClick("/contact")}
-            >
-              <span className="material-icons">contact_mail</span>
-              <span>Contact</span>
-            </div>
-            <div
-              className="header__right__menu__items__item"
-              onClick={() => handleMenuItemClick("/login")}
-            >
-              <span className="material-icons">account_circle</span>
-              <span>Login</span>
-            </div>
-            <div
-              className="header__right__menu__items__item"
-              onClick={() => handleMenuItemClick("/register")}
-            >
-              <span className="material-icons">person_add</span>
-              <span>Register</span>
-            </div>
-          </div> */}
 
         <div className="header__items__search">
           <form className="header__items__search__form">
@@ -160,7 +171,10 @@ const Header = () => {
                   }`}
                 >
                   <div className="header__items__login__info__username-dropdown-menu__menu__items">
-                    <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
+                    <div
+                      className="header__items__login__info__username-dropdown-menu__menu__items__item"
+                      onClick={() => navigate("/profile")}
+                    >
                       <span>Minha conta</span>
                     </div>
 

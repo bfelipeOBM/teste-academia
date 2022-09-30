@@ -1,17 +1,16 @@
 import { cpfOrCnpjMask, phoneMask } from "@/application/common/Utils";
 import { User } from "@/application/models/user";
-import { ApplicationState } from "@/application/store";
+import { updateProfile } from "@/application/store/profile/action";
 import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
 import ImageUpload from "@/ui/ImageUpload/ImageUpload";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
 import "./ProfileEdit.scss";
-import { formInitialState, schema } from "./ProfileEditForm";
+import { schema } from "./ProfileEditForm";
 
 interface ProfileEditForm {
   name: string;
@@ -23,25 +22,34 @@ interface ProfileEditForm {
   occupation: string;
 }
 
-const ProfileEdit = () => {
+interface ProfileEditProps {
+  userInfo: User;
+}
+
+const ProfileEdit = (props: ProfileEditProps) => {
+  const { userInfo } = props;
   const [loading, setLoading] = useState(false);
-  const [userImage, setUserImage] = useState("https://i.pravatar.cc/300");
-  const [userImageFile, setUserImageFile] = useState<File>();
-  const acceptFileThumbs = "image/png,image/jpeg";
-
-  const user = useSelector((state: ApplicationState) => state.user);
-  const { profile: userInfo } = useSelector(
-    (state: ApplicationState) => state.profile
+  const [userImage, setUserImage] = useState(
+    userInfo.image || "https://i.pravatar.cc/300"
   );
+  const [userImageFile, setUserImageFile] = useState<File>();
+  const dispatch = useDispatch();
 
-  const navigate = useNavigate();
-
-  const initialFormValues: ProfileEditForm = formInitialState;
+  const initialFormValues: ProfileEditForm = {
+    name: userInfo.name,
+    email: userInfo.email,
+    document: userInfo.document || "",
+    password: "",
+    confirmPassword: "",
+    whatsapp: userInfo.phone,
+    occupation: userInfo.occupation || "",
+  };
 
   const handleSubmit = async (values: ProfileEditForm) => {
     try {
       setLoading(true);
       const profileData: User = {
+        id: userInfo.id,
         name: values.name,
         email: values.email,
         password: values.password,
@@ -50,7 +58,9 @@ const ProfileEdit = () => {
         occupation: values.occupation,
       };
 
-      //await dispatch(register(registerData) as any);
+      console.log(profileData);
+
+      await dispatch(updateProfile(profileData) as any);
     } catch {
       alert("Falha atualizar dados!");
     }
@@ -87,18 +97,14 @@ const ProfileEdit = () => {
     description: "Mil e uma utilidade da resina acrílica na obra",
   };
 
-  useEffect(() => {
-    if (!user.isLoggedIn) {
-      // navigate("/");
-    }
-  }, []);
+  console.log(userInfo);
 
   return (
     <div className="profile-edit">
       <div className="profile-edit__header">
         <span className="profile-edit__header__title">Meus Dados</span>
         <span className="profile-edit__header__description">
-          Olá {userInfoMock.name}, o curso{" "}
+          Olá {userInfo.name}, o curso{" "}
           <strong>{userInfoMock.description}</strong> inicia em breve
         </span>
       </div>

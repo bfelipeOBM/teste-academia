@@ -40,6 +40,10 @@ export const CreateClassAdmin = () => {
       date,
       max_students: maxStudents,
       location_id: locationId,
+    }, {
+      headers: {
+        "Bearer": `${userState.data?.access_token}`
+      }
     }).then((response) => {
       toast.success('Turma criada!', {
           position: "top-right",

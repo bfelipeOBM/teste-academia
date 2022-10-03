@@ -39,17 +39,21 @@ export const CreateBannerAdmin = () => {
   }
 
   function handleCreateBanner(e: any) {
-    axios.post(`${Constants.API_URL}banners`, {
-      file: image,
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        Bearer: `${userState.data?.access_token}`
+    const data = JSON.stringify({"file": image})
+    
+    const xhr = new XMLHttpRequest();
+    
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === this.DONE) {
+        console.log(this.responseText);
       }
-    }
-    ).then(res => {
-      console.log(res)
-    })
+    });
+    
+    xhr.open("POST", `${Constants.API_URL}banners/`);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+    
+    xhr.send(data);
   }
 
 

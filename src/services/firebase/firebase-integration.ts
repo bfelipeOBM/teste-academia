@@ -2,7 +2,6 @@ import Constants from '@/application/common/Constants';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
-import { useNavigate } from 'react-router';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA2krKgcFDm7vv6GrSdcTZRthWF9vd_JB4",

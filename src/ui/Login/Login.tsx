@@ -25,7 +25,7 @@ type LocationState = {
 };
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [userLoginData, setUserLoginData] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -57,9 +57,10 @@ const Login = () => {
     try {
       setLoading(true);
       const loginData: UserLogin = {
-        email,
+        login: userLoginData,
         password,
       };
+      console.log(loginData)
       dispatch(login(loginData) as any);
     } catch {
       alert("Falha ao fazer login");
@@ -132,8 +133,8 @@ const Login = () => {
                 type="text"
                 id="user"
                 placeholder="Seu e-mail ou CPF/CNPJ"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={userLoginData}
+                onChange={(e) => setUserLoginData(e.target.value)}
                 required
               />
             </div>

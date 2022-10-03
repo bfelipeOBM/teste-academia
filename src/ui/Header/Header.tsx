@@ -1,4 +1,4 @@
-import { getFirstAndLastName } from "@/application/common/Utils";
+import { getFirstAndLastName, useWindowSize } from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
 import headerLogo from "@/assets/logo-PB@2x.png";
@@ -39,6 +39,7 @@ const Header = () => {
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { width } = useWindowSize();
 
   const handleMenuItemClick = (path: string) => {
     setIsMenuOpen(false);
@@ -144,7 +145,16 @@ const Header = () => {
 
           <div className="header__items__all-courses">Todos os cursos</div>
 
-          <div className="header__items__login__info">
+          <div
+            className="header__items__login__info"
+            onClick={() =>
+              user.isLoggedIn && width > 768
+                ? setIsUserMenuOpen(!isUserMenuOpen)
+                : user.isLoggedIn
+                ? navigate("/profile")
+                : navigate("/login")
+            }
+          >
             <div className="header__items__login__info__avatar">
               <i className="material-icons">account_circle</i>
             </div>
@@ -172,10 +182,7 @@ const Header = () => {
 
             {user?.isLoggedIn && (
               <div className="header__items__login__info__username-dropdown-menu">
-                <div
-                  className="header__items__login__info__username-dropdown-menu__username"
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                >
+                <div className="header__items__login__info__username-dropdown-menu__username">
                   <span>{getFirstAndLastName(profile?.name)}</span>
                   <i className="material-icons">
                     {!isUserMenuOpen ? "expand_more" : "expand_less"}

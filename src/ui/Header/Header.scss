@@ -436,22 +436,7 @@
           cursor: pointer;
 
           &__username {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            span {
-              font-size: 16px;
-              font-weight: bold;
-              color: #ef7f00;
-              text-align: left;
-            }
-
-            i {
-              margin-left: 20px;
-              font-size: 26px;
-              color: #ef7f00;
-            }
+            display: none;
           }
 
           &__menu.active {

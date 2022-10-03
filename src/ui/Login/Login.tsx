@@ -44,8 +44,6 @@ const Login = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    console.log(width);
-
     if (location?.state) {
       const { toast } = location?.state as LocationState;
       setHasToast(toast);

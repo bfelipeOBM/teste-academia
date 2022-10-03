@@ -31,15 +31,6 @@ const CertificateCard = (props: CertificateCardProps) => {
             <span>Baixar certificado</span>
           </span>
           <div className="social-buttons">
-            {/* <span className="social-buttons__linkedin">
-              <i className="">linkedin</i>
-            </span>
-            <span className="social-buttons__facebook">
-              <i className="">facebook</i>
-            </span>
-            <span className="social-buttons__whatsapp">
-              <i className="">whatsapp</i>
-            </span> */}
             <span className="social-buttons__images">
               <img
                 src="https://www.obramax.com.br/media/wysiwyg/icon_linkedin.png"

@@ -7,6 +7,7 @@ import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import loginImg from "@/assets/login_sideimage.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
+import { signInWithFacebook, signInWithGoogle } from "@/services/firebase/firebase-integration";
 import Toast from "@/ui/Toast/Toast";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,18 +72,17 @@ const Login = () => {
     try {
       switch (currentLoginType) {
         case LOGIN_TYPE.FACEBOOK:
-          // await loginWithFacebook();
+          await signInWithFacebook();
           break;
         case LOGIN_TYPE.GOOGLE:
-          // await loginWithGoogle();
+          await signInWithGoogle();
           break;
         case LOGIN_TYPE.OBRAMAX:
-          // await loginWithObramax();
+          await signInWithGoogle();
           break;
         default:
           break;
       }
-      navigate("/");
     } catch {
       alert("Falha ao fazer login");
     }

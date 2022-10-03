@@ -1,27 +1,18 @@
 import footerLogo from "@/assets/logo.png";
-import { ChangeEvent, useState } from "react";
 import "./Footer.scss";
 
 const Footer = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [menuIcon, setMenuIcon] = useState("expand_more");
-  const [searchValue, setSearchValue] = useState("");
-
-  const handleMenuClick = () => {
-    setIsMenuOpen(!isMenuOpen);
-    setMenuIcon(!isMenuOpen ? "expand_more" : "expand_less");
-  };
-
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
-
   return (
     <footer className="footer">
       <div className="footer__items">
         <div className="footer__items__up">
           <div className="footer__items__up__logo">
-            <img src={footerLogo} width="260" height="84" alt="footer logo" />
+            <img
+              src={footerLogo}
+              width="100%"
+              height="100%"
+              alt="footer logo"
+            />
           </div>
 
           <div className="footer__items__up__about">
@@ -47,20 +38,20 @@ const Footer = () => {
               <img
                 src="https://www.obramax.com.br/media/wysiwyg/selo_ra_1000.png"
                 alt="reclame aqui"
-                width={81}
-                height={81}
+                width="100%"
+                height="100%"
               />
               <img
                 src="https://www.obramax.com.br/media/wysiwyg/SELO_EBIT_BOA_BRONZE.png"
                 alt="ebit"
-                width={81}
-                height={81}
+                width="100%"
+                height="100%"
               />
               <img
                 src="https://www.obramax.com.br/media/wysiwyg/selos-google-43.png"
                 alt="google rating"
-                width={260}
-                height={100}
+                width="100%"
+                height="100%"
               />
             </span>
           </div>

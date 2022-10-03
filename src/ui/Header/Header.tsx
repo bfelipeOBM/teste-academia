@@ -7,6 +7,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.scss";
+import SideBar from "./SideBar/SideBar";
 
 const CategoryListLeft = [
   { title: "Eletricista", link: "/" },
@@ -29,6 +30,7 @@ const CategoryListRight = [
 ];
 
 const Header = () => {
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -60,146 +62,163 @@ const Header = () => {
   }, [user.isLoggedIn, dispatch]);
 
   return (
-    <header className="header">
-      <div className="header__items">
-        <div className="header__items__logo">
-          <Link to="/">
-            <img src={headerLogo} width="159" height="40" alt="header logo" />
-          </Link>
-        </div>
-
-        <div
-          className="header__items__categories"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <span className="header__items__categories__title">Categorias</span>
-          <i className="material-icons ">
-            {!isMenuOpen ? "expand_more" : "expand_less"}
-          </i>
-
-          {isMenuOpen && (
-            <div
-              className={`header__items__categories__dropdown-menu__menu ${
-                isMenuOpen ? "active" : ""
-              }`}
-            >
-              <div className="header__items__categories__dropdown-menu__menu__items__left">
-                {CategoryListLeft.map((category, index) => (
-                  <div
-                    key={index}
-                    className="header__items__categories__dropdown-menu__menu__items__left__item"
-                    onClick={() => handleMenuItemClick(category.link)}
-                  >
-                    <span>{category.title}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="header__items__categories__dropdown-menu__menu__items__right">
-                {CategoryListRight.map((category, index) => (
-                  <div
-                    key={index}
-                    className="header__items__categories__dropdown-menu__menu__items__right__item"
-                    onClick={() => handleMenuItemClick(category.link)}
-                  >
-                    <span>{category.title}</span>
-                  </div>
-                ))}
-              </div>
+    <>
+      <SideBar isSideBarOpen={isSideBarOpen}></SideBar>
+      <header className="header">
+        <div className="header__items">
+          <div
+            className="header__items__menu"
+            onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+          >
+            <div className="header__items__menu__icon">
+              <span className="material-icons">menu</span>
             </div>
-          )}
-        </div>
-
-        <div className="header__items__search">
-          <form className="header__items__search__form">
-            <i className="material-icons">search</i>
-            <input
-              type="search"
-              className="header__items__search__form__input"
-              placeholder="Pesquise por qualquer coisa"
-              spellCheck={false}
-              value={searchValue}
-              onChange={handleSearch}
-            />
-          </form>
-        </div>
-
-        <div className="header__items__all-courses">Todos os cursos</div>
-
-        <div className="header__items__login__info">
-          <div className="header__items__login__info__avatar">
-            <i className="material-icons">account_circle</i>
           </div>
 
-          {!user?.isLoggedIn && (
-            <div className="header__items__login__info__buttons">
-              <Link
-                to="/login"
-                className="header__items__login__info__buttons__button"
-              >
-                <span>Entre</span>{" "}
-                <span className="header__items__login__info__buttons__or__text">
-                  ou
-                </span>
-              </Link>
+          <div className="header__items__logo">
+            <Link to="/">
+              <img
+                src={headerLogo}
+                width="100%"
+                height="100%"
+                alt="header logo"
+              />
+            </Link>
+          </div>
 
-              <Link
-                to="/register"
-                className="header__items__login__info__buttons__button"
-              >
-                <span>Cadastre-se</span>
-              </Link>
-            </div>
-          )}
+          <div
+            className="header__items__categories"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className="header__items__categories__title">Categorias</span>
+            <i className="material-icons ">
+              {!isMenuOpen ? "expand_more" : "expand_less"}
+            </i>
 
-          {user?.isLoggedIn && (
-            <div className="header__items__login__info__username-dropdown-menu">
+            {isMenuOpen && (
               <div
-                className="header__items__login__info__username-dropdown-menu__username"
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className={`header__items__categories__dropdown-menu__menu ${
+                  isMenuOpen ? "active" : ""
+                }`}
               >
-                <span>{getFirstAndLastName(profile?.name)}</span>
-                <i className="material-icons">
-                  {!isUserMenuOpen ? "expand_more" : "expand_less"}
-                </i>
-              </div>
-
-              {isUserMenuOpen && (
-                <div
-                  className={`header__items__login__info__username-dropdown-menu__menu ${
-                    isUserMenuOpen ? "active" : ""
-                  }`}
-                >
-                  <div className="header__items__login__info__username-dropdown-menu__menu__items">
+                <div className="header__items__categories__dropdown-menu__menu__items__left">
+                  {CategoryListLeft.map((category, index) => (
                     <div
-                      className="header__items__login__info__username-dropdown-menu__menu__items__item"
-                      onClick={() => navigate("/profile")}
+                      key={index}
+                      className="header__items__categories__dropdown-menu__menu__items__left__item"
+                      onClick={() => handleMenuItemClick(category.link)}
                     >
-                      <span>Minha conta</span>
+                      <span>{category.title}</span>
                     </div>
+                  ))}
+                </div>
 
-                    {profile?.role === "admin" && (
-                      <a href="/admin">
-                        <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
-                          <span>Painel de Admin</span>
-                        </div>
-                      </a>
-                    )}
-
+                <div className="header__items__categories__dropdown-menu__menu__items__right">
+                  {CategoryListRight.map((category, index) => (
                     <div
-                      className="header__items__login__info__username-dropdown-menu__menu__items__item"
-                      onClick={() => logOut()}
+                      key={index}
+                      className="header__items__categories__dropdown-menu__menu__items__right__item"
+                      onClick={() => handleMenuItemClick(category.link)}
                     >
-                      <span>Sair</span>
+                      <span>{category.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="header__items__search">
+            <form className="header__items__search__form">
+              <i className="material-icons">search</i>
+              <input
+                type="search"
+                className="header__items__search__form__input"
+                placeholder="Pesquise por qualquer coisa"
+                spellCheck={false}
+                value={searchValue}
+                onChange={handleSearch}
+              />
+            </form>
+          </div>
+
+          <div className="header__items__all-courses">Todos os cursos</div>
+
+          <div className="header__items__login__info">
+            <div className="header__items__login__info__avatar">
+              <i className="material-icons">account_circle</i>
+            </div>
+
+            {!user?.isLoggedIn && (
+              <div className="header__items__login__info__buttons">
+                <Link
+                  to="/login"
+                  className="header__items__login__info__buttons__button"
+                >
+                  <span>Entre</span>{" "}
+                  <span className="header__items__login__info__buttons__or__text">
+                    ou
+                  </span>
+                </Link>
+
+                <Link
+                  to="/register"
+                  className="header__items__login__info__buttons__button"
+                >
+                  <span>Cadastre-se</span>
+                </Link>
+              </div>
+            )}
+
+            {user?.isLoggedIn && (
+              <div className="header__items__login__info__username-dropdown-menu">
+                <div
+                  className="header__items__login__info__username-dropdown-menu__username"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                >
+                  <span>{getFirstAndLastName(profile?.name)}</span>
+                  <i className="material-icons">
+                    {!isUserMenuOpen ? "expand_more" : "expand_less"}
+                  </i>
+                </div>
+
+                {isUserMenuOpen && (
+                  <div
+                    className={`header__items__login__info__username-dropdown-menu__menu ${
+                      isUserMenuOpen ? "active" : ""
+                    }`}
+                  >
+                    <div className="header__items__login__info__username-dropdown-menu__menu__items">
+                      <div
+                        className="header__items__login__info__username-dropdown-menu__menu__items__item"
+                        onClick={() => navigate("/profile")}
+                      >
+                        <span>Minha conta</span>
+                      </div>
+
+                      {profile?.role === "admin" && (
+                        <a href="/admin">
+                          <div className="header__items__login__info__username-dropdown-menu__menu__items__item">
+                            <span>Painel de Admin</span>
+                          </div>
+                        </a>
+                      )}
+
+                      <div
+                        className="header__items__login__info__username-dropdown-menu__menu__items__item"
+                        onClick={() => logOut()}
+                      >
+                        <span>Sair</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 

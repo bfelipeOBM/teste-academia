@@ -101,7 +101,7 @@ const CourseCategory = () => {
                 <i className="material-icons ">{categoryIcon}</i>
               </div>
 
-              <div className="item-category" onClick={handleTypesClick}>
+              <div className="item-type" onClick={handleTypesClick}>
                 <span className="title">Tipos</span>
                 <i className="material-icons ">{typesIcon}</i>
               </div>

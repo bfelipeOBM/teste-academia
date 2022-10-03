@@ -12,7 +12,7 @@ import { Sidebar } from '../../Components/Sidebar';
 export const CreateCourseMaterialAdmin = () => {
   const {id} = useParams();
   const [filesInput, setFilesInput] = useState<any[]>([])
-  const [files, setFiles] = useState<string[]>([])
+  const [files, setFiles] = useState<any[]>([])
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -31,7 +31,13 @@ export const CreateCourseMaterialAdmin = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   function handleAddFile(e: any) { 
-    setFiles(previouState => [...previouState, e.target.files[0]])
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      setFiles(previouState => [...previouState, reader.result])
+    }
+    reader.readAsDataURL(file);
+    
   }
 
   function handleAddFileInput(e: any) {

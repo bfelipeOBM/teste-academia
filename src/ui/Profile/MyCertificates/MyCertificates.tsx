@@ -1,8 +1,8 @@
-import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
-import { ChangeEvent, useState } from "react";
-import "./CourseCategory.scss";
+import CertificateCard from "@/ui/Certificate/CertificateCard/CertificateCard";
+import React, { useState } from "react";
+import "./MyCertificates.scss";
 
-const CourseCategory = () => {
+const MyCertificates = () => {
   const [searchValue, setSearchValue] = useState("");
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [categoryIcon, setCategoryIcon] = useState("expand_more");
@@ -11,7 +11,7 @@ const CourseCategory = () => {
   const [isTypesOpen, setIsTypesOpen] = useState(false);
   const [typesIcon, setTypesIcon] = useState("expand_more");
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
@@ -30,54 +30,45 @@ const CourseCategory = () => {
     setLocationIcon(!isLocationOpen ? "expand_more" : "expand_less");
   };
 
-  const courses = [
+  const certificates = [
     {
       id: 1,
-      title: "Mofo e bolor na parede como resolver antes da pintura",
-      description:
-        "Aprenda como eliminar o mofo e bolor da parede e conheça as soluções de tintas que auxiliam na impermeabilização de paredes, muros e telhados. Uma parceria da Academia de Profissionais e Bautech.",
+      title: "Curso de pintura",
       image: "https://picsum.photos/674/364/",
-      tags: ["Online", "Pintura"],
-      nextClass: "13/10/2022",
     },
     {
       id: 2,
-      title: "Mofo e bolor na parede como resolver antes da pintura",
-      description:
-        "Participe e aprenda como utilizar de forma correta a resina acrílica e traga durabilidade para o seu projeto. Nossa live e aprenda como utilizar de forma correta a resina acrílica. Uma parceria da Academia de Profissionais e Drylevis",
+      title: "CMil e uma utilidade da resina acrílica na obra",
       image: "https://picsum.photos/674/364/",
-      tags: ["Online", "Acabamento"],
-      nextClass: "13/10/2022",
     },
     {
       id: 3,
-      title: "Preparação de superfície - Pintura em parede interna",
-      description:
-        "Conheça na prática as melhores dicas para preparação de superfície e pintura de paredes internas. Uma parceria da Academia de Profissionais e Coral + Tigre.",
+      title: "Curso de acabamento",
       image: "https://picsum.photos/674/364/",
-      tags: ["Online", "Pintura", "Acabamento"],
-      nextClass: "13/10/2022",
     },
   ];
 
+  //TODO: get user data from api
+  const userInfoMock = {
+    name: "John Doe",
+    description: "Mil e uma utilidade da resina acrílica na obra",
+  };
+
   return (
     <>
-      <div className="course-category">
-        <div className="course-category__content">
-          <div className="content__title">
-            <h1>CURSOS E CAPACITAÇÕES</h1>
-          </div>
-          <div className="content__description">
-            <p>
-              A Academia de Profissionais oferece diversos cursos e aulas para
-              capacitar você, profissional da construção! Em parceria com
-              grandes nomes da indústria promovemos a troca de conhecimento e
-              ensinamos boas práticas, dicas e tudo que você precisa saber para
-              se manter sempre atualizado!
-            </p>
-          </div>
+      <div className="my-certificates">
+        <div className="my-certificates__header">
+          <span className="my-certificates__header__title">
+            Meus Certificados
+          </span>
+          <span className="my-certificates__header__description">
+            Olá {userInfoMock.name}, o curso{" "}
+            <strong>{userInfoMock.description}</strong> inicia em breve
+          </span>
+        </div>
 
-          <div className="content__search-bar__and__filters">
+        <div className="my-certificates__content">
+          <div className="search-bar__and__filters">
             <div className="search">
               <form className="search__form">
                 <i className="material-icons">search</i>
@@ -93,7 +84,7 @@ const CourseCategory = () => {
             </div>
             <div className="filters">
               <div className="filter__title">
-                <span>Filtre cursos por:</span>
+                <span>Filtre por:</span>
               </div>
 
               <div className="item-category" onClick={handleCategoryClick}>
@@ -101,7 +92,7 @@ const CourseCategory = () => {
                 <i className="material-icons ">{categoryIcon}</i>
               </div>
 
-              <div className="item-type" onClick={handleTypesClick}>
+              <div className="item-category" onClick={handleTypesClick}>
                 <span className="title">Tipos</span>
                 <i className="material-icons ">{typesIcon}</i>
               </div>
@@ -113,12 +104,15 @@ const CourseCategory = () => {
             </div>
           </div>
 
-          <div className="content__divider"></div>
+          <div className="my-certificates__content__divider"></div>
 
-          <div className="content__courses">
+          <div className="my-certificates__content__certificates">
             <div className="cards">
-              {courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+              {certificates.map((certificate) => (
+                <CertificateCard
+                  key={certificate.id}
+                  certificate={certificate}
+                ></CertificateCard>
               ))}
             </div>
           </div>
@@ -128,4 +122,4 @@ const CourseCategory = () => {
   );
 };
 
-export default CourseCategory;
+export default MyCertificates;

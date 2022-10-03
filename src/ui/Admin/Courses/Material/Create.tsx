@@ -9,10 +9,14 @@ import { BackButton } from '../../Components/BackButton';
 import { Header } from '../../Components/Header';
 import { Sidebar } from '../../Components/Sidebar';
 
+interface DataObject {
+  [key: string]: any
+}
+
 export const CreateCourseMaterialAdmin = () => {
   const {id} = useParams();
   const [filesInput, setFilesInput] = useState<any[]>([])
-  const [files, setFiles] = useState<string[]>([])
+  const [files, setFiles] = useState<any[]>([])
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -31,7 +35,13 @@ export const CreateCourseMaterialAdmin = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   function handleAddFile(e: any) { 
-    setFiles(previouState => [...previouState, e.target.files[0]])
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      setFiles(previouState => [...previouState, reader.result])
+    }
+    reader.readAsDataURL(file);
+    
   }
 
   function handleAddFileInput(e: any) {
@@ -49,15 +59,26 @@ export const CreateCourseMaterialAdmin = () => {
 
   function handleCreateCourseMaterial(e: any) {
     e.preventDefault();
-    const form = new FormData();
+    const data: DataObject = {};
     files.forEach((file, index) => {
-      form.append(`file-${index}`, file);
+      data[`file-${index}`] =  file;
     })
-    let request = new XMLHttpRequest();
+
+    const sendData = JSON.stringify(data);
+
+    setTimeout(() => {
+      let xhr = new XMLHttpRequest();
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+          console.log(this.responseText);
+        }
+      });
+      xhr.open('POST', `${Constants.API_URL}courses/${id}/material/`);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+      xhr.send(sendData);
+    }, 5000)
     
-    request.open('POST', `${Constants.API_URL}courses/${id}/material`);
-    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-    request.send(form);
   }
 
 

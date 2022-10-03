@@ -1,17 +1,20 @@
-import { cpfOrCnpjMask, phoneMask } from "@/application/common/Utils";
+import {
+  cpfOrCnpjMask,
+  phoneMask,
+  useWindowSize,
+} from "@/application/common/Utils";
 import { User } from "@/application/models/user";
-import { ApplicationState } from "@/application/store";
+import { updateProfile } from "@/application/store/profile/action";
 import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
 import ImageUpload from "@/ui/ImageUpload/ImageUpload";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
 import "./ProfileEdit.scss";
-import { formInitialState, schema } from "./ProfileEditForm";
+import { schema } from "./ProfileEditForm";
 
 interface ProfileEditForm {
   name: string;
@@ -23,25 +26,35 @@ interface ProfileEditForm {
   occupation: string;
 }
 
-const ProfileEdit = () => {
+interface ProfileEditProps {
+  userInfo: User;
+}
+
+const ProfileEdit = (props: ProfileEditProps) => {
+  const { userInfo } = props;
   const [loading, setLoading] = useState(false);
-  const [userImage, setUserImage] = useState("https://i.pravatar.cc/300");
-  const [userImageFile, setUserImageFile] = useState<File>();
-  const acceptFileThumbs = "image/png,image/jpeg";
-
-  const user = useSelector((state: ApplicationState) => state.user);
-  const { profile: userInfo } = useSelector(
-    (state: ApplicationState) => state.profile
+  const [userImage, setUserImage] = useState(
+    userInfo.image || "https://i.pravatar.cc/300"
   );
+  const [userImageFile, setUserImageFile] = useState<File>();
+  const dispatch = useDispatch();
+  const { width } = useWindowSize();
 
-  const navigate = useNavigate();
-
-  const initialFormValues: ProfileEditForm = formInitialState;
+  const initialFormValues: ProfileEditForm = {
+    name: userInfo.name,
+    email: userInfo.email,
+    document: userInfo.document || "",
+    password: "",
+    confirmPassword: "",
+    whatsapp: userInfo.phone,
+    occupation: userInfo.occupation || "",
+  };
 
   const handleSubmit = async (values: ProfileEditForm) => {
     try {
       setLoading(true);
       const profileData: User = {
+        id: userInfo.id,
         name: values.name,
         email: values.email,
         password: values.password,
@@ -50,7 +63,7 @@ const ProfileEdit = () => {
         occupation: values.occupation,
       };
 
-      //await dispatch(register(registerData) as any);
+      await dispatch(updateProfile(profileData) as any);
     } catch {
       alert("Falha atualizar dados!");
     }
@@ -81,27 +94,85 @@ const ProfileEdit = () => {
     { value: "pintor", label: "Pintor" },
   ];
 
+  //TODO: get user data from api
   const userInfoMock = {
     name: "John Doe",
     description: "Mil e uma utilidade da resina acrílica na obra",
   };
-
-  useEffect(() => {
-    if (!user.isLoggedIn) {
-      // navigate("/");
-    }
-  }, []);
 
   return (
     <div className="profile-edit">
       <div className="profile-edit__header">
         <span className="profile-edit__header__title">Meus Dados</span>
         <span className="profile-edit__header__description">
-          Olá {userInfoMock.name}, o curso{" "}
+          Olá {userInfo.name}, o curso{" "}
           <strong>{userInfoMock.description}</strong> inicia em breve
         </span>
       </div>
       <div className="profile-edit__form">
+        {width < 769 && (
+          <div className="profile-edit__form__avatar-upload">
+            <div className="profile-edit__form__avatar-upload__title">
+              <span>Imagem de Perfil</span>
+            </div>
+            <div className="profile-edit__form__avatar-upload__image">
+              <ImageUpload src={userImage} onChange={photoUpload}></ImageUpload>
+            </div>
+            <div className="profile-edit__form__avatar-upload__button">
+              <button
+                type="button"
+                className="profile-edit__form__avatar-upload__button-button"
+                onClick={() => {}}
+                disabled={loading || !userImageFile}
+              >
+                Enviar Imagem
+              </button>
+            </div>
+            <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
+              <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
+                Vincular conta:
+              </span>
+
+              <div className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons">
+                <div
+                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                  onClick={() => {}}
+                >
+                  <img
+                    src={obramaxLogo}
+                    alt="obramax"
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
+
+                <div
+                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                  onClick={() => {}}
+                >
+                  <img
+                    src={facebookLogo}
+                    alt="facebook"
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
+
+                <div
+                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                  onClick={() => {}}
+                >
+                  <img
+                    src={googleLogo}
+                    alt="google"
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <form
           className="form"
           onSubmit={(e) => {
@@ -308,62 +379,69 @@ const ProfileEdit = () => {
             {loading ? "Carregando..." : "Atualizar Dados"}
           </button>
         </form>
-        <div className="profile-edit__form__avatar-upload">
-          <div className="profile-edit__form__avatar-upload__title">
-            <span>Imagem de Perfil</span>
-          </div>
-          <div className="profile-edit__form__avatar-upload__image">
-            <ImageUpload src={userImage} onChange={photoUpload}></ImageUpload>
-          </div>
-          <div className="profile-edit__form__avatar-upload__button">
-            <button
-              type="button"
-              className="profile-edit__form__avatar-upload__button-button"
-              onClick={() => {}}
-              disabled={loading || !userImageFile}
-            >
-              Enviar Imagem
-            </button>
-          </div>
-          <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
-            <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
-              Vincular conta:
-            </span>
-
-            <div className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons">
-              <div
-                className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+        {width > 769 && (
+          <div className="profile-edit__form__avatar-upload">
+            <div className="profile-edit__form__avatar-upload__title">
+              <span>Imagem de Perfil</span>
+            </div>
+            <div className="profile-edit__form__avatar-upload__image">
+              <ImageUpload src={userImage} onChange={photoUpload}></ImageUpload>
+            </div>
+            <div className="profile-edit__form__avatar-upload__button">
+              <button
+                type="button"
+                className="profile-edit__form__avatar-upload__button-button"
                 onClick={() => {}}
+                disabled={loading || !userImageFile}
               >
-                <img
-                  src={obramaxLogo}
-                  alt="obramax"
-                  width="100%"
-                  height="100%"
-                />
-              </div>
+                Enviar Imagem
+              </button>
+            </div>
+            <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
+              <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
+                Vincular conta:
+              </span>
 
-              <div
-                className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                onClick={() => {}}
-              >
-                <img
-                  src={facebookLogo}
-                  alt="facebook"
-                  width="100%"
-                  height="100%"
-                />
-              </div>
+              <div className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons">
+                <div
+                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                  onClick={() => {}}
+                >
+                  <img
+                    src={obramaxLogo}
+                    alt="obramax"
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
 
-              <div
-                className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                onClick={() => {}}
-              >
-                <img src={googleLogo} alt="google" width="100%" height="100%" />
+                <div
+                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                  onClick={() => {}}
+                >
+                  <img
+                    src={facebookLogo}
+                    alt="facebook"
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
+
+                <div
+                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                  onClick={() => {}}
+                >
+                  <img
+                    src={googleLogo}
+                    alt="google"
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

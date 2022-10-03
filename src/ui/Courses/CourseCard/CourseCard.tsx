@@ -28,12 +28,7 @@ const CourseCard = (props: Props) => {
   return (
     <div className="course-card">
       <div className="course-card__image">
-        <img
-          src={course.image}
-          alt={course.title}
-          width="674px"
-          height="100%"
-        />
+        <img src={course.image} alt={course.title} width="100%" height="100%" />
       </div>
       <div className="course-card__content">
         <div className="course-card__content__header">

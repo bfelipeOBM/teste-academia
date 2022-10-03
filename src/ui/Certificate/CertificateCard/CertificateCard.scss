@@ -1,0 +1,113 @@
+.certificate-card {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 443px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease-in-out;
+  margin-right: 8px;
+  margin-left: 9px;
+  margin-bottom: 19px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 55%;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+
+    &__image {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 2;
+    }
+  }
+
+  &__content {
+    background-color: #002a5b;
+    width: 100%;
+    height: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0 24px 20px;
+
+    &__title {
+      font-size: 22px;
+      font-weight: 600;
+      text-align: left;
+      color: #fff;
+      margin-bottom: 31px;
+    }
+
+    &__buttons {
+      width: 100%;
+      height: 45px;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      .download-button {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        cursor: pointer;
+
+        i {
+          font-size: 25px;
+          margin-right: 10px;
+        }
+
+        span {
+          font-size: 16px;
+          text-underline-offset: 7px;
+          text-decoration: underline;
+        }
+
+        &:hover {
+          color: #ef7f00;
+        }
+      }
+
+      .social-buttons {
+        display: flex;
+
+        &__images {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 11px;
+            cursor: pointer;
+          }
+
+          img:last-child {
+            margin-right: 0;
+          }
+
+          img:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 0 10px #000;
+  }
+}

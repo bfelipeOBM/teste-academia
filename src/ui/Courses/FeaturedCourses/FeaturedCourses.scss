@@ -1,51 +1,104 @@
 .featured-courses {
-  width: 1640px;
-  height: 471px;
-  position: relative;
-  margin: 83px 0 79px 0;
+  @media only screen and (min-width: 1200px) {
+    width: 1640px;
+    height: 471px;
+    position: relative;
+    margin: 83px 0 79px 0;
 
-  &__title {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 48px;
-    margin-left: 140px;
+    &__title {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 48px;
+      margin-left: 140px;
 
-    h1 {
-      letter-spacing: 0.58px;
-      color: #141b23;
-      text-transform: uppercase;
-      font-size: 32px;
-      font-weight: bold;
-    }
-  }
-
-  &__content {
-    height: 364px;
-    margin-left: 140px;
-    width: 100%;
-
-    .carousel {
-      height: 100%;
-    }
-
-    .carousel-indicators {
-      justify-content: flex-end;
-      margin-bottom: -21px;
-      margin-left: 0;
-      margin-right: -8px;
-
-      button {
-        width: 122px !important;
-        height: 8px !important;
-        background-color: #b9bbbe !important;
-        opacity: 1;
-        border: none;
-        margin: 0 8px !important;
+      h1 {
+        letter-spacing: 0.58px;
+        color: #141b23;
+        text-transform: uppercase;
+        font-size: 32px;
+        font-weight: bold;
       }
     }
 
-    .carousel-indicators .active {
-      background-color: #ef7f00 !important;
+    &__content {
+      height: 364px;
+      margin-left: 140px;
+      width: 100%;
+
+      .carousel {
+        height: 100%;
+      }
+
+      .carousel-indicators {
+        justify-content: flex-end;
+        margin-bottom: -21px;
+        margin-left: 0;
+        margin-right: -8px;
+
+        button {
+          width: 122px !important;
+          height: 8px !important;
+          background-color: #b9bbbe !important;
+          opacity: 1;
+          border: none;
+          margin: 0 8px !important;
+        }
+      }
+
+      .carousel-indicators .active {
+        background-color: #ef7f00 !important;
+      }
+    }
+  }
+
+  @media (min-width: 320px) and (max-width: 767.98px) {
+    width: 100%;
+    height: 398px;
+    position: relative;
+    margin-top: 30px;
+    padding: 0 16px;
+
+    &__title {
+      display: flex;
+      align-items: flex-start;
+
+      h1 {
+        margin-bottom: 30px;
+        letter-spacing: 0.58px;
+        color: #141b23;
+        text-transform: uppercase;
+        font-size: 22px;
+        font-weight: bold;
+      }
+    }
+
+    &__content {
+      height: 100%;
+      width: 100%;
+
+      .carousel {
+        height: 100%;
+      }
+
+      .carousel-indicators {
+        width: 100%;
+        justify-content: flex-end;
+        margin-bottom: -45px;
+        margin-left: 0;
+        margin-right: 0;
+
+        button {
+          width: 122px !important;
+          height: 8px !important;
+          background-color: #b9bbbe !important;
+          opacity: 1;
+          border: none;
+        }
+      }
+
+      .carousel-indicators .active {
+        background-color: #ef7f00 !important;
+      }
     }
   }
 }

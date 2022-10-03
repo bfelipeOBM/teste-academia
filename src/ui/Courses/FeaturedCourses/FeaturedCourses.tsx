@@ -73,12 +73,7 @@ const FeaturedCourses = () => {
       </div>
 
       <div className="featured-courses__content">
-        <Carousel
-          fade
-          activeIndex={activeIndex}
-          next={next}
-          previous={previous}
-        >
+        <Carousel activeIndex={activeIndex} next={next} previous={previous}>
           <CarouselIndicators
             items={courses}
             activeIndex={activeIndex}

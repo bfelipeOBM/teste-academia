@@ -1,5 +1,5 @@
 .profile-edit {
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 769px) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -168,44 +168,6 @@
         border: 1px solid #dce6f4;
       }
 
-      &__checkbox {
-        &__title {
-          display: flex;
-          align-items: center;
-          position: relative;
-          height: 22px;
-          text-align: left;
-          font-size: 16px;
-          font-weight: bold;
-          letter-spacing: 0px;
-          color: #000000;
-        }
-
-        &__title > input[type="checkbox"] {
-          display: block;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          margin: -0.5rem;
-          cursor: pointer;
-          opacity: 0;
-          z-index: 666;
-        }
-
-        &__title > input[type="checkbox"] + span {
-          display: inline-block;
-          width: 1rem;
-          height: 1rem;
-          margin-right: 0.5rem;
-          outline: #ef7f00 solid 1px;
-        }
-
-        &__title > input[type="checkbox"]:checked + span {
-          background-color: #ef7f00;
-          border: 2px solid #fff;
-        }
-      }
-
       &__avatar-upload {
         margin-left: 73px;
         display: flex;
@@ -256,8 +218,8 @@
             }
 
             &:disabled {
-              background: #dce6f4 0% 0% no-repeat padding-box;
-              opacity: 0.5;
+              background: #ef7f00 0% 0% no-repeat padding-box;
+              opacity: 0.3;
               cursor: not-allowed;
             }
           }
@@ -326,8 +288,8 @@
         }
 
         &:disabled {
-          background: #dce6f4 0% 0% no-repeat padding-box;
-          opacity: 0.5;
+          background: #ef7f00 0% 0% no-repeat padding-box;
+          opacity: 0.3;
           cursor: not-allowed;
         }
       }
@@ -347,7 +309,30 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
+
+    &__header {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 17px 20px 24px 16px;
+      background-color: #fff;
+      margin-bottom: 5px;
+
+      &__title {
+        margin-bottom: 12px;
+        font-size: 22px;
+        font-weight: bold;
+        text-transform: capitalize;
+        color: #000;
+      }
+
+      &__description {
+        font-size: 14px;
+        color: #141b23;
+      }
+    }
 
     &__form {
       display: flex;
@@ -355,7 +340,13 @@
       align-items: flex-start;
       justify-content: center;
       background-color: #fff;
+      border-top: #ef7f00 5px solid;
+      padding: 30px 18px 25px 25px;
       width: 100%;
+
+      .form {
+        width: 100%;
+      }
 
       &__inputs-group {
         display: flex;
@@ -480,87 +471,104 @@
         border: 1px solid #dce6f4;
       }
 
-      &__checkbox {
-        display: flex;
-        align-self: flex-start;
-        margin-top: 10px;
-        margin-bottom: 20px;
-
-        &__title {
-          display: flex;
-          align-items: center;
-          position: relative;
-          height: 22px;
-          text-align: left;
-          font-size: 16px;
-          font-weight: bold;
-          letter-spacing: 0px;
-          color: #000000;
-        }
-
-        &__title > input[type="checkbox"] {
-          display: block;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          margin: -0.5rem;
-          cursor: pointer;
-          opacity: 0;
-          z-index: 666;
-        }
-
-        &__title > input[type="checkbox"] + span {
-          display: inline-block;
-          width: 1rem;
-          height: 1rem;
-          margin-right: 0.5rem;
-          outline: #ef7f00 solid 1px;
-        }
-
-        &__title > input[type="checkbox"]:checked + span {
-          background-color: #ef7f00;
-          border: 2px solid #fff;
-        }
-      }
-
-      &__register__buttons {
+      &__avatar-upload {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        align-self: flex-start;
+        align-items: center;
+        margin-bottom: 24px;
 
-        &__socialregister {
+        &__title {
+          width: 100%;
+          height: 21px;
+          text-align: left;
+          font-size: 16px;
+          letter-spacing: 0px;
+          color: #000000;
+          margin-bottom: 20px;
+        }
+
+        &__image {
+          width: 100%;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+          align-self: flex-start;
+        }
 
-          &__title {
+        &__button {
+          width: 100%;
+          margin-top: 30px;
+          margin-bottom: 20px;
+
+          &-button {
+            border: none;
+            color: #fff;
             font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 0px;
-            color: #000000;
-            margin-bottom: 11px;
-          }
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            height: 50px;
+            background: #ef7f00 0% 0% no-repeat padding-box;
+            border: 1px solid #ef7f00;
 
-          &__buttons {
-            display: flex;
-            flex-direction: row;
+            &:hover {
+              background: #002a5b 0% 0% no-repeat padding-box;
+              transition: ease-in-out 0.3s;
+              animation: forwards;
+              border: 1px solid #002a5b;
+            }
 
-            &__icon {
-              margin-right: 25px;
-              width: 50px;
-              height: 50px;
+            &:active {
+              background: #002a5b 0% 0% no-repeat padding-box;
+              border: 1px solid #002a5b;
+            }
+
+            &:disabled {
+              background: #ef7f00 0% 0% no-repeat padding-box;
+              opacity: 0.3;
+              cursor: not-allowed;
             }
           }
+        }
 
-          &__buttons > *:last-child {
-            margin-right: 0;
+        &__register__buttons {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          &__socialregister {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+
+            &__title {
+              font-size: 16px;
+              font-weight: bold;
+              letter-spacing: 0px;
+              color: #000000;
+            }
+
+            &__buttons {
+              display: flex;
+              flex-direction: row;
+
+              &__icon {
+                margin-right: 11px;
+                width: 33px;
+                height: 33px;
+              }
+            }
+
+            &__buttons > *:last-child {
+              margin-right: 0;
+            }
           }
         }
       }
 
       &__button {
-        margin-top: 30px;
-        margin-bottom: 60px;
         border: none;
         color: #fff;
         font-size: 16px;
@@ -584,8 +592,8 @@
         }
 
         &:disabled {
-          background: #dce6f4 0% 0% no-repeat padding-box;
-          opacity: 0.5;
+          background: #ef7f00 0% 0% no-repeat padding-box;
+          opacity: 0.3;
           cursor: not-allowed;
         }
       }

@@ -94,6 +94,29 @@ const Course = () => {
               <div className="description">
                 <p>{course.description}</p>
               </div>
+              <div className="share">
+                <span className="share__title">Compartilhar: </span>
+                <span className="share__images">
+                  <img
+                    src="https://www.obramax.com.br/media/wysiwyg/icon_linkedin.png"
+                    alt="linkedin"
+                    width="100%"
+                    height="100%"
+                  />
+                  <img
+                    src="https://www.obramax.com.br/media/wysiwyg/icon_facebook.png"
+                    alt="facebook"
+                    width="100%"
+                    height="100%"
+                  />
+                  <img
+                    src="https://www.obramax.com.br/media/wysiwyg/icon-whatsapp.png"
+                    alt="twitter"
+                    width="100%"
+                    height="100%"
+                  />
+                </span>
+              </div>
             </div>
           </div>
 

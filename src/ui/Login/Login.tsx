@@ -45,8 +45,6 @@ const Login = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    console.log(width);
-
     if (location?.state) {
       const { toast } = location?.state as LocationState;
       setHasToast(toast);
@@ -92,7 +90,7 @@ const Login = () => {
 
   return (
     <>
-      {width > 1199 && (
+      {width > 769 && (
         <div className="login-watermark-image">
           <img src={waterMark} alt="login" />
         </div>

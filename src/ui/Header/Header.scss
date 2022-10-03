@@ -1,5 +1,5 @@
 .header {
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 769px) {
     position: absolute;
     top: 0;
     left: 0;
@@ -20,6 +20,10 @@
       width: 100%;
       height: 100%;
       padding: 0 140px;
+
+      &__menu {
+        display: none;
+      }
 
       &__logo {
         display: flex;
@@ -50,6 +54,78 @@
           font-size: 26px;
           color: #ef7f00;
           align-self: baseline;
+        }
+
+        &__dropdown-menu {
+          margin-left: 10px;
+          position: relative;
+          display: inline-block;
+
+          &__menu.active {
+            display: flex;
+          }
+
+          &__menu {
+            width: 702px;
+            height: 600px;
+            display: none;
+            position: absolute;
+            z-index: 9999;
+            margin-left: 31%;
+            top: 69px;
+            background: #002a5b 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 6px #00000029;
+            padding-top: 30px;
+            padding-bottom: 88px;
+            flex-direction: row;
+            color: #fff;
+            cursor: auto;
+
+            &__items__left {
+              width: 277px;
+              display: flex;
+              flex-direction: column;
+              background: #002a5b;
+
+              &__item {
+                width: 100%;
+                height: 60px;
+                padding: 10px 30px 30px 50px;
+                font-size: 16px;
+                font-weight: bold;
+                text-align: left;
+                text-decoration: none;
+                display: block;
+                cursor: pointer;
+
+                &:hover {
+                  background: #ef7f00 0% 0% no-repeat padding-box;
+                }
+              }
+            }
+
+            &__items__right {
+              display: flex;
+              flex-direction: column;
+              background: #002a5b;
+
+              &__item {
+                width: 100%;
+                height: 60px;
+                padding: 10px 30px 30px 15px;
+                font-size: 16px;
+                font-weight: bold;
+                text-align: left;
+                text-decoration: none;
+                display: block;
+                cursor: pointer;
+
+                &:hover {
+                  background: #ef7f00 0% 0% no-repeat padding-box;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -239,28 +315,39 @@
     left: 0;
     right: 0;
     width: 100%;
-    height: 25%;
+    height: 132px;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 1rem;
+    padding: 1.25rem 1rem 0.5rem;
     background: #002a5b 0% 0% no-repeat padding-box;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1080;
 
     &__items {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
       width: 100%;
       height: 100%;
 
+      &__menu {
+        color: #fff;
+        font-size: 28px;
+      }
+
       &__logo {
+        flex: 2;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 119px;
         height: 30px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        margin-right: 68px;
+        margin-right: 50px;
+
+        img {
+          width: 119px;
+          height: 30px;
+        }
       }
 
       &__categories {
@@ -321,9 +408,8 @@
 
       &__login__info {
         height: 40px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
+        position: absolute;
+        right: 5px;
 
         &__buttons {
           display: none;
@@ -350,22 +436,7 @@
           cursor: pointer;
 
           &__username {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            span {
-              font-size: 16px;
-              font-weight: bold;
-              color: #ef7f00;
-              text-align: left;
-            }
-
-            i {
-              margin-left: 20px;
-              font-size: 26px;
-              color: #ef7f00;
-            }
+            display: none;
           }
 
           &__menu.active {

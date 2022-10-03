@@ -6,7 +6,12 @@ const SupportMaterial = () => {
     <div className="support-material">
       <div className="support-material__content">
         <div className="support-material__content__img">
-          <img src={supMaterialImg} alt="Material de apoio" />
+          <img
+            src={supMaterialImg}
+            width="100%"
+            height="100%"
+            alt="Material de apoio"
+          />
         </div>
         <div className="support-material__content__info">
           <span className="title">Material de apoio</span>

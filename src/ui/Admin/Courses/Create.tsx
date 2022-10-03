@@ -17,9 +17,10 @@ export const CreateCourseAdmin = () => {
   const [specialty, setSpecialty] = useState("")
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [video, setVideo] = useState("")
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState<any>("")
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const [loadingCreateCourse, setLoadingCreateCourse] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,25 +47,46 @@ export const CreateCourseAdmin = () => {
   }
 
   function handleAddImage(e: any) {
-    setImage(e.target.files[0])
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      setImage(reader.result)
+    }
+    reader.readAsDataURL(file);
   }
 
-  function handleCreateCourse(e: any) {
+  async function handleCreateCourse(e: any) {
     e.preventDefault()
 
-    const form = new FormData();
-    form.append("name", name);
-    form.append("description", description);
-    form.append("image", image);
-    form.append("video", video);
-    form.append("short_video", "Banana");
-    form.append("specialty", specialty);
-    form.append("category", selectedOptions.join(","));
-    form.append("active", "true");
-    let request = new XMLHttpRequest();
-    request.open('POST', `${Constants.API_URL}courses`);
-    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-    request.send(form);
+    const data = JSON.stringify({
+      "name": name,
+      "description": description,
+      "image": image,
+      "video": video,
+      "specialty": specialty,
+      "category": selectedOptions,
+      "location_id": 1,
+      "active": true
+    });
+
+    setLoadingCreateCourse(true)
+
+    setTimeout(() => {
+      const xhr = new XMLHttpRequest();
+      
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+          console.log(this.responseText);
+        }
+      });
+  
+      xhr.open('POST', `${Constants.API_URL}courses/`);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+
+      xhr.send(data);
+      setLoadingCreateCourse(false)
+    }, 10000);
   }
 
 
@@ -124,7 +146,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Imagem do curso (apenas PNG, GIF, JPEG e JPG)</FormLabel>
-                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required accept="image/png, image/gif, image/jpeg, image/jpg" />
+                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required />
               </FormControl>
             </Box>
             <Button
@@ -132,8 +154,9 @@ export const CreateCourseAdmin = () => {
               colorScheme="green"
               w={"full"}
               size={"lg"}
+              disabled={loadingCreateCourse}
               onClick={(e) => { handleCreateCourse(e) }}
-            >Criar curso</Button>
+            >{loadingCreateCourse ? "Criando curso..." : "Criar curso"}</Button>
           </VStack>
         </Box>
       </Box>

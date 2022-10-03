@@ -5,6 +5,8 @@ import {
   GET_PROFILE_FAIL,
   GET_PROFILE_SUCCESS,
   ProfileState,
+  UPDATE_PROFILE_FAIL,
+  UPDATE_PROFILE_SUCCESS,
 } from "./types";
 
 const initialState: ProfileState = {
@@ -24,6 +26,16 @@ const reducer: Reducer<ProfileState> = (
         profile: payload.data,
       };
     case GET_PROFILE_FAIL:
+      return {
+        ...state,
+        profile: null,
+      };
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        profile: payload.data,
+      };
+    case UPDATE_PROFILE_FAIL:
       return {
         ...state,
         profile: null,

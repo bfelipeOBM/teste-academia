@@ -2,6 +2,7 @@ import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
 import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BackButton } from '../Components/BackButton';
@@ -10,11 +11,11 @@ import { Sidebar } from '../Components/Sidebar';
 
 
 export const CreateBannerAdmin = () => {
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState<any>("")
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (profile && userState) {
       if (userState.isLoggedIn && profile.role === "admin") {
@@ -29,19 +30,30 @@ export const CreateBannerAdmin = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   function handleAddImage(e: any) {
-    setImage(e.target.files[0])
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      setImage(reader.result)
+    }
+    reader.readAsDataURL(file);
   }
 
-  function handleCreateCourse(e: any) {
-    e.preventDefault()
+  function handleCreateBanner(e: any) {
+    const data = JSON.stringify({"file": image})
     
-    const form = new FormData();
-    form.append("file", image);
-
-    let request = new XMLHttpRequest();
-    request.open('POST', `${Constants.API_URL}banners`);
-    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-    request.send(form);
+    const xhr = new XMLHttpRequest();
+    
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === this.DONE) {
+        console.log(this.responseText);
+      }
+    });
+    
+    xhr.open("POST", `${Constants.API_URL}banners/`);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+    
+    xhr.send(data);
   }
 
 
@@ -50,11 +62,11 @@ export const CreateBannerAdmin = () => {
       <Sidebar />
       <Box w="100%">
         <Header>
-        <HStack justifyContent="space-between">
-          <BackButton />
-        </HStack>
+          <HStack justifyContent="space-between">
+            <BackButton />
+          </HStack>
         </Header>
-        
+
         <Box w="100%" maxW={1120} mx="auto">
           <Box py={8}>
             <Text fontSize={"2xl"}>Adicionar banner</Text>
@@ -63,7 +75,7 @@ export const CreateBannerAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Banner (apenas PNG, GIF, JPEG e JPG)</FormLabel>
-                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required accept="image/png, image/gif, image/jpeg, image/jpg "/>
+                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required />
               </FormControl>
             </Box>
             <Button
@@ -71,7 +83,7 @@ export const CreateBannerAdmin = () => {
               colorScheme="green"
               w={"full"}
               size={"lg"}
-              onClick={(e) => {handleCreateCourse(e)}}
+              onClick={(e) => { handleCreateBanner(e) }}
             >Adicionar banner</Button>
           </VStack>
         </Box>

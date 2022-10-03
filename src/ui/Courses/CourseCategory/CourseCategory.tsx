@@ -1,5 +1,9 @@
+import { Course } from "@/application/models/course";
+import { ApplicationState } from "@/application/store";
+import { clearCourses, getCourses } from "@/application/store/courses/action";
 import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./CourseCategory.scss";
 
 const CourseCategory = () => {
@@ -10,6 +14,10 @@ const CourseCategory = () => {
   const [locationIcon, setLocationIcon] = useState("expand_more");
   const [isTypesOpen, setIsTypesOpen] = useState(false);
   const [typesIcon, setTypesIcon] = useState("expand_more");
+
+  const { courses } = useSelector((state: ApplicationState) => state.courses);
+
+  const dispatch = useDispatch();
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -30,35 +38,13 @@ const CourseCategory = () => {
     setLocationIcon(!isLocationOpen ? "expand_more" : "expand_less");
   };
 
-  const courses = [
-    {
-      id: 1,
-      title: "Mofo e bolor na parede como resolver antes da pintura",
-      description:
-        "Aprenda como eliminar o mofo e bolor da parede e conheça as soluções de tintas que auxiliam na impermeabilização de paredes, muros e telhados. Uma parceria da Academia de Profissionais e Bautech.",
-      image: "https://picsum.photos/674/364/",
-      tags: ["Online", "Pintura"],
-      nextClass: "13/10/2022",
-    },
-    {
-      id: 2,
-      title: "Mofo e bolor na parede como resolver antes da pintura",
-      description:
-        "Participe e aprenda como utilizar de forma correta a resina acrílica e traga durabilidade para o seu projeto. Nossa live e aprenda como utilizar de forma correta a resina acrílica. Uma parceria da Academia de Profissionais e Drylevis",
-      image: "https://picsum.photos/674/364/",
-      tags: ["Online", "Acabamento"],
-      nextClass: "13/10/2022",
-    },
-    {
-      id: 3,
-      title: "Preparação de superfície - Pintura em parede interna",
-      description:
-        "Conheça na prática as melhores dicas para preparação de superfície e pintura de paredes internas. Uma parceria da Academia de Profissionais e Coral + Tigre.",
-      image: "https://picsum.photos/674/364/",
-      tags: ["Online", "Pintura", "Acabamento"],
-      nextClass: "13/10/2022",
-    },
-  ];
+  useEffect(() => {
+    dispatch(getCourses() as any);
+
+    return () => {
+      dispatch(clearCourses() as any);
+    };
+  }, []);
 
   return (
     <>
@@ -117,7 +103,7 @@ const CourseCategory = () => {
 
           <div className="content__courses">
             <div className="cards">
-              {courses.map((course) => (
+              {courses?.map((course: Course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
             </div>

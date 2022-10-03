@@ -17,7 +17,7 @@ export const CreateCourseAdmin = () => {
   const [specialty, setSpecialty] = useState("")
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [video, setVideo] = useState("")
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState<any>("")
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -46,7 +46,12 @@ export const CreateCourseAdmin = () => {
   }
 
   function handleAddImage(e: any) {
-    setImage(e.target.files[0])
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      setImage(reader.result)
+    }
+    reader.readAsDataURL(file);
   }
 
   function handleCreateCourse(e: any) {
@@ -124,7 +129,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Imagem do curso (apenas PNG, GIF, JPEG e JPG)</FormLabel>
-                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required accept="image/png, image/gif, image/jpeg, image/jpg" />
+                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required />
               </FormControl>
             </Box>
             <Button

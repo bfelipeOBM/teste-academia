@@ -23,7 +23,7 @@ export const BannersInfoAdmin = () => {
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (profile && userState) {
       if (userState.isLoggedIn && profile.role === "admin") {
@@ -51,7 +51,7 @@ export const BannersInfoAdmin = () => {
         'Content-Type': 'application/json',
         Bearer: `${userState.data?.access_token}`
       },
-      data: {active: e.target.checked}
+      data: { active: e.target.checked }
     };
 
     axios.request(options)
@@ -71,7 +71,7 @@ export const BannersInfoAdmin = () => {
   }
 
   function handleDeleteBannerConfirm() {
-    axios.delete(`${Constants.API_URL}banners/${bannerToDeleteId}`,{
+    axios.delete(`${Constants.API_URL}banners/${bannerToDeleteId}`, {
       headers: {
         'Bearer': `${userState.data?.access_token}`
       }
@@ -86,21 +86,20 @@ export const BannersInfoAdmin = () => {
       <Sidebar />
       <Box w="100%">
         <Header>
-        <HStack justifyContent="space-between">
-        <Heading>Banners</Heading>
-          <Box>
-            <Button
-              as={Link}
-              to="/admin/banners/create"
-              colorScheme="green"
-              size={"lg"}
-              leftIcon={<Plus />}>Adicionar Banner</Button>
-          </Box>
-        </HStack>
+          <HStack justifyContent="space-between">
+            <Heading>Banners</Heading>
+            <Box>
+              <Button
+                as={Link}
+                to="/admin/banners/create"
+                colorScheme="green"
+                size={"lg"}
+                leftIcon={<Plus />}>Adicionar Banner</Button>
+            </Box>
+          </HStack>
         </Header>
         <Box w="100%" maxW={1120} mx="auto">
           <Box py={8}>
-            <Heading fontSize={"4xl"}>Banners</Heading>
             <Grid templateColumns='repeat(2, 1fr)' gap={6}>
               {banners?.map(banner => (
                 <GridItem
@@ -113,25 +112,25 @@ export const BannersInfoAdmin = () => {
                   border="1px solid #DCE2E6"
                   position="relative">
                   <AspectRatio ratio={16 / 9}>
-                    <Image src={banner.url} objectFit="cover"/>
+                    <Image src={banner.url} objectFit="cover" />
                   </AspectRatio>
                   <Box p={8}>
                     <Text as="span">Ativo: </Text>
                     <Checkbox mt={4}
-                      defaultChecked={banner.active} 
+                      defaultChecked={banner.active}
                       onChange={(e) => handleUpdateBannerActive(e, banner.id)} />
                   </Box>
                   <Box position={"absolute"} top={4} right={4}>
-                  <HStack>
-                    <Tooltip label="Deletar turma">
-                      <IconButton
-                        icon={<Trash size={30}/>}
-                        colorScheme={"red"}
-                        onClick={() => {handleDeleteBanner(banner.id)}}
-                        aria-label="Deletar turma" />
-                    </Tooltip>
-                  </HStack>
-                </Box>
+                    <HStack>
+                      <Tooltip label="Deletar turma">
+                        <IconButton
+                          icon={<Trash size={30} />}
+                          colorScheme={"red"}
+                          onClick={() => { handleDeleteBanner(banner.id) }}
+                          aria-label="Deletar turma" />
+                      </Tooltip>
+                    </HStack>
+                  </Box>
                 </GridItem>
               ))}
 

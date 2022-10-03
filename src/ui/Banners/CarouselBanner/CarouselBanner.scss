@@ -1,5 +1,5 @@
 .carousel-banner {
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 769px) {
     width: 100%;
     height: 723px;
     position: relative;
@@ -32,7 +32,7 @@
 }
 
 .carousel-indicators {
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 769px) {
     justify-content: flex-end;
     margin-bottom: -10px;
     margin-left: 0;

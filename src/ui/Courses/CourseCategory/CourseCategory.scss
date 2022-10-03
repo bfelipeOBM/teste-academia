@@ -1,11 +1,11 @@
 .course-category {
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 769px) {
     margin-top: 60px;
-    width: 1640px;
+    width: 100%;
+    padding-left: 140px;
 
     &__content {
       width: 100%;
-      margin-left: 140px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;

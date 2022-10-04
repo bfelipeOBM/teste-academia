@@ -1,7 +1,7 @@
 import Constants from "@/application/common/Constants"
 import { ApplicationState } from "@/application/store"
 import { userProfile } from "@/application/store/profile/action"
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Checkbox, Select } from "@chakra-ui/react"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Checkbox, Select, FormHelperText, FormErrorMessage } from "@chakra-ui/react"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -22,6 +22,9 @@ export const UsersAdminCreate = () => {
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
+  const emailError = email === "" || email.length < 5 || !email.includes("@") || !email.includes(".");
+
+  console.log(emailError)
 
   useEffect(() => {
     if (profile && userState) {
@@ -47,6 +50,8 @@ export const UsersAdminCreate = () => {
       accept_receive_news: acceptReceiveNews,
       active
     }
+
+    // console.log({createUser})
 
     axios.post(`${Constants.API_URL}users/`, createUser).then((response) => {
       toast.success('Conta criada!', {
@@ -90,27 +95,28 @@ export const UsersAdminCreate = () => {
           <Box py={8}>
             <Text fontSize={"2xl"}>Criar usuário</Text>
           </Box>
-          <VStack as="form" spacing={6}>
+          <VStack as="form" spacing={6} onSubmit={(e) => { handleCreateUser(e) }}>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
                 <Input type="text" onChange={(e) => setName(e.target.value)} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input type="email" onChange={(e) => setEmail(e.target.value)} required />
+                
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>CPF/CNPJ</FormLabel>
-                <Input type="text" onChange={(e) => setDocument(e.target.value)} required />
+                <Input type="text" onChange={(e) => setDocument(e.target.value)} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Número</FormLabel>
                 <Input type="text" onChange={(e) => setPhone(e.target.value)} required />
               </FormControl>
@@ -142,11 +148,10 @@ export const UsersAdminCreate = () => {
               </FormControl>
             </Box>
             <Button
-              type='button'
+              type='submit'
               colorScheme="green"
               w={"full"}
               size={"lg"}
-              onClick={(e) => { handleCreateUser(e) }}
             >Criar usuário</Button>
           </VStack>
         </Box>

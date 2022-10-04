@@ -68,6 +68,7 @@ export const CreateCourseMaterialAdmin = () => {
     })
 
     const sendData = JSON.stringify(data);
+    // console.log(sendData)
     setLoading(true);
     setTimeout(() => {
       let xhr = new XMLHttpRequest();

@@ -28,16 +28,14 @@ export const CreateCourseAdmin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (profile && userState) {
-      if (userState.isLoggedIn && profile.role === "admin") {
-        dispatch(userProfile() as any);
-      } else if (profile.role === "user") {
-        window.location.href = "/";
-      } else if (!userState.isLoggedIn) {
+    if (userState.isLoggedIn) {
+      dispatch(userProfile() as any);
+      if (profile.role !== "admin") {
         window.location.href = "/";
       }
+    } else {
+      window.location.href = "/";
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState.isLoggedIn, dispatch]);
 
 

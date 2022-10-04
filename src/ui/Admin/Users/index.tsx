@@ -22,14 +22,13 @@ export const UsersAdminInfos = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (profile && userState) {
-      if (userState.isLoggedIn && profile.role === "admin") {
-        dispatch(userProfile() as any);
-      } else if (profile.role === "user") {
-        window.location.href = "/";
-      } else if (!userState.isLoggedIn) {
+    if (userState.isLoggedIn) {
+      dispatch(userProfile() as any);
+      if (profile.role !== "admin") {
         window.location.href = "/";
       }
+    } else {
+      window.location.href = "/";
     }
   }, [userState.isLoggedIn, dispatch]);
 

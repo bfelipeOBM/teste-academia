@@ -19,16 +19,14 @@ export const ClassesInfoAdmin = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    if (profile && userState) {
-      if (userState.isLoggedIn && profile.role === "admin") {
-        dispatch(userProfile() as any);
-      } else if (profile.role === "user") {
-        window.location.href = "/";
-      } else if (!userState.isLoggedIn) {
+    if (userState.isLoggedIn) {
+      dispatch(userProfile() as any);
+      if (profile.role !== "admin") {
         window.location.href = "/";
       }
+    } else {
+      window.location.href = "/";
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
@@ -59,13 +57,20 @@ export const ClassesInfoAdmin = () => {
     setUsers(updatedUsers)
   }
 
+  console.log(classe)
+
   return (
     <Flex w="100%">
       <Sidebar />
       <Box w="100%">
         <Header>
         <HStack justifyContent="space-between">
+        <Box>
         <Heading>Turma { classe && new Intl.DateTimeFormat('pt-BR').format(new Date(classe?.date))}</Heading>
+        
+        <Heading fontSize={"2xl"}>Quantidade de inscritos: {classe?.students_count} / {classe?.max_students}</Heading>
+        </Box>
+        <Heading fontSize={"2xl"}>Parceiro: {classe?.partner}</Heading>
           <Box>
             <Button colorScheme="green" size={"lg"} leftIcon={<Plus />}>Adicionar aluno a turma</Button>
           </Box>
@@ -99,7 +104,7 @@ export const ClassesInfoAdmin = () => {
                   </Box>
                 </GridItem>
               ))}
-          <GridItem
+          {/* <GridItem
                   // key={user.id}
                   w='100%'
                   bg='blue.500'
@@ -116,7 +121,7 @@ export const ClassesInfoAdmin = () => {
                     <Text>Banana@email.com</Text>
                     <Text>Banana</Text>
                   </Box>
-                </GridItem>
+                </GridItem> */}
 
             </Grid>
           </Box>

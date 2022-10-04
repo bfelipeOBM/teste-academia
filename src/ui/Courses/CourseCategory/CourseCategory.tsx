@@ -1,6 +1,9 @@
 import { Course } from "@/application/models/course";
 import { ApplicationState } from "@/application/store";
-import { clearCourses, getCourses } from "@/application/store/courses/action";
+import {
+  clearCourses,
+  getAllCourses,
+} from "@/application/store/courses/action";
 import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +42,7 @@ const CourseCategory = () => {
   };
 
   useEffect(() => {
-    dispatch(getCourses() as any);
+    dispatch(getAllCourses() as any);
 
     return () => {
       dispatch(clearCourses() as any);

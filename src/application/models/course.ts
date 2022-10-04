@@ -8,7 +8,7 @@ export type Course = {
   specialty?: string;
   category?: string[];
   tags?: string[];
-  upcoming_classes?: string;
+  upcoming_classes?: string[];
   active?: boolean;
   status?: string;
   inserted_at?: string;

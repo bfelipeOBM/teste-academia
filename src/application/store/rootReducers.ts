@@ -1,5 +1,9 @@
 import { combineReducers } from "redux";
-import { default as courses, default as mycourses } from "./courses";
+import {
+  default as course,
+  default as courses,
+  default as mycourses,
+} from "./courses";
 import message from "./message";
 import profile from "./profile";
 import user from "./user";
@@ -10,4 +14,5 @@ export default combineReducers({
   profile,
   courses,
   mycourses,
+  course,
 });

@@ -1,7 +1,7 @@
 import { Course } from "@/application/models/course";
 import { ApplicationState } from "@/application/store";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./CourseCard.scss";
 
 interface Props {
@@ -37,7 +37,7 @@ const CourseCard = (props: Props) => {
               {course?.upcoming_classes && (
                 <>
                   próxima turma:{" "}
-                  <span className="date">{course.upcoming_classes}</span>
+                  <span className="date">{course.upcoming_classes[0]}</span>
                 </>
               )}
             </span>
@@ -51,13 +51,11 @@ const CourseCard = (props: Props) => {
           <button className="goto__button" onClick={goToCourse}>
             Quero Participar
           </button>
-
-          <Link
-            className="learn-more"
-            to={user.isLoggedIn ? `/course/${course.id}` : `/login`}
-          >
-            <span>mais informações</span>
-          </Link>
+          {/* {course?.workload && (
+            <div className="workload">
+              Carga horária: <span>{course?.workload}</span>
+            </div>
+          )} */}
         </div>
       </div>
     </div>

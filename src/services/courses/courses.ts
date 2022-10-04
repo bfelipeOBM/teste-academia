@@ -3,7 +3,12 @@ import { User } from "@/application/models/user";
 import authHeader from "@/services/auth-header";
 import axios, { AxiosRequestHeaders } from "axios";
 
-const getCourses = async () => {
+const getCourse = async (id: number) => {
+  const response = await axios.get(Constants.API_URL + `courses/${id}`);
+  return response.data;
+};
+
+const getAllCourses = async () => {
   const response = await axios.get(Constants.API_URL + "courses/");
   return response.data;
 };
@@ -19,6 +24,7 @@ const getEnrolledCourses = async ({ id }: User) => {
 };
 
 export default {
-  getCourses,
+  getCourse,
+  getAllCourses,
   getEnrolledCourses,
 };

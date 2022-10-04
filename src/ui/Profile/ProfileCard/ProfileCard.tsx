@@ -33,14 +33,14 @@ const ProfileCard = (props: ProfileCardProps) => {
       </div>
 
       <div className="profile-card__buttons">
-        <button
+        {/* <button
           className={`profile-card__buttons__button ${
             currentPage === "certificates" ? "current-page" : ""
           }`}
           onClick={() => handlePageChange("certificates")}
         >
           Meus Certificados
-        </button>
+        </button> */}
         <button
           className={`profile-card__buttons__button ${
             currentPage === "courses" ? "current-page" : ""

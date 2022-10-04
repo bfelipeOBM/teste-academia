@@ -159,7 +159,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Carga horária</FormLabel>
-                <Input type="number" name="workload" onChange={(e) => setWorkload(e.target.value)} required />
+                <Input type="number" name="workload" min={0} onChange={(e) => setWorkload(+e.target.value)} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

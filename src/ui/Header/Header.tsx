@@ -57,11 +57,11 @@ const Header = () => {
   };
 
   const handleAvatarClick = () => {
-    if (user.isLoggedIn && width > 768) {
+    if (user.isLoggedIn && width > 783) {
       setIsUserMenuOpen(!isUserMenuOpen);
     }
 
-    if (width < 768) {
+    if (width <= 783) {
       user.isLoggedIn ? navigate("/profile") : navigate("/login");
     }
   };

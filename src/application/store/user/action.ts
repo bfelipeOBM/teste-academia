@@ -58,6 +58,8 @@ export const login = (user: UserLogin) => (dispatch: Dispatch) => {
       const message =
         error?.response?.data || error.message || error.toString();
 
+      alert(message.detail);
+
       dispatch({
         type: LOGIN_FAIL,
       });

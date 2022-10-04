@@ -1,5 +1,6 @@
 import { cpfOrCnpjMask, phoneMask } from "@/application/common/Utils";
 import { User } from "@/application/models/user";
+import { ApplicationState } from "@/application/store";
 import { register } from "@/application/store/user/action";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import facebookLogo from "@/assets/facebook@2x.png";
@@ -8,7 +9,7 @@ import registerImg from "@/assets/login_sideimage.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import "./Register.scss";
@@ -36,6 +37,10 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { data: message } = useSelector(
+    (state: ApplicationState) => state.message
+  );
+
   const initialFormValues: RegisterForm = formInitialState;
 
   const handleSubmit = async (values: RegisterForm) => {
@@ -54,7 +59,7 @@ const Register = () => {
       await dispatch(register(registerData) as any);
       navigate("/");
     } catch {
-      alert("Falha ao se registrar!");
+      alert(message.detail);
     }
 
     setLoading(false);

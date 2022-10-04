@@ -28,11 +28,7 @@ export const register = (user: User) => (dispatch: Dispatch) => {
     },
     (error) => {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        error?.response?.data || error.message || error.toString();
 
       dispatch({
         type: REGISTER_FAIL,
@@ -60,11 +56,7 @@ export const login = (user: UserLogin) => (dispatch: Dispatch) => {
     },
     (error) => {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        error?.response?.data || error.message || error.toString();
 
       dispatch({
         type: LOGIN_FAIL,

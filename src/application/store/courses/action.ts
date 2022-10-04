@@ -53,7 +53,7 @@ export const getAllCourses = () => (dispatch: Dispatch) => {
     },
     (error) => {
       const message =
-        error?.response?.data?.message || error?.message || error.toString();
+        error?.response?.data || error?.message || error.toString();
 
       dispatch({
         type: GET_COURSES_FAIL,
@@ -81,7 +81,7 @@ export const getMyCourses = (user: User) => (dispatch: Dispatch) => {
     },
     (error) => {
       const message =
-        error?.response?.data?.message || error?.message || error.toString();
+        error?.response?.data || error?.message || error.toString();
 
       dispatch({
         type: GET_MYCOURSES_FAIL,

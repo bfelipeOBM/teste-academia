@@ -4,7 +4,8 @@ import { userProfile } from '@/application/store/profile/action';
 import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack} from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { BackButton } from '../../Components/BackButton';
 import { Header } from '../../Components/Header';
 import { Sidebar } from '../../Components/Sidebar';
@@ -20,6 +21,8 @@ export const CreateCourseMaterialAdmin = () => {
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     if (profile && userState) {
@@ -65,12 +68,38 @@ export const CreateCourseMaterialAdmin = () => {
     })
 
     const sendData = JSON.stringify(data);
-
+    setLoading(true);
     setTimeout(() => {
       let xhr = new XMLHttpRequest();
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-          console.log(this.responseText);
+          setLoading(false)
+          if (this.status === 201) {
+            toast.success('Materiais adicionados!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+            setTimeout(() => {
+              navigate(-1);
+            }, 3000)
+          } else {
+            toast.error('Erro ao adicionar materiais!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+          }
         }
       });
       xhr.open('POST', `${Constants.API_URL}courses/${id}/material/`);
@@ -103,11 +132,13 @@ export const CreateCourseMaterialAdmin = () => {
               colorScheme="green"
               w={"full"}
               size={"lg"}
+              disabled={loading}
               onClick={(e) => {handleCreateCourseMaterial(e)}}
-            >Criar turma</Button>
+            >{loading ? "Fazendo upload" : "Adicionar material"}</Button>
           </VStack>
         </Box>
       </Box>
+      <ToastContainer />
     </Flex>
   );
 }

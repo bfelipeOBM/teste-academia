@@ -23,11 +23,7 @@ export const userProfile = () => (dispatch: Dispatch) => {
     },
     (error) => {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        error?.response?.data || error.message || error.toString();
 
       dispatch({
         type: GET_PROFILE_FAIL,
@@ -55,11 +51,7 @@ export const updateProfile = (data: User) => (dispatch: Dispatch) => {
     },
     (error) => {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        error?.response?.data || error.message || error.toString();
 
       dispatch({
         type: UPDATE_PROFILE_FAIL,

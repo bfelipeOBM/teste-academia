@@ -4,6 +4,7 @@ import {
   useWindowSize,
 } from "@/application/common/Utils";
 import { User } from "@/application/models/user";
+import { ApplicationState } from "@/application/store";
 import { updateProfile } from "@/application/store/profile/action";
 import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
@@ -11,7 +12,7 @@ import obramaxLogo from "@/assets/obramax@2x.png";
 import ImageUpload from "@/ui/ImageUpload/ImageUpload";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import "./ProfileEdit.scss";
 import { schema } from "./ProfileEditForm";
@@ -40,6 +41,10 @@ const ProfileEdit = (props: ProfileEditProps) => {
   const dispatch = useDispatch();
   const { width } = useWindowSize();
 
+  const { data: message } = useSelector(
+    (state: ApplicationState) => state.message
+  );
+
   const initialFormValues: ProfileEditForm = {
     name: userInfo.name,
     email: userInfo.email,
@@ -65,7 +70,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
 
       await dispatch(updateProfile(profileData) as any);
     } catch {
-      alert("Falha atualizar dados!");
+      alert(message.detail);
     }
 
     setLoading(false);

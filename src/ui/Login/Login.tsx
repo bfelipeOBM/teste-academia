@@ -7,7 +7,10 @@ import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import loginImg from "@/assets/login_sideimage.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
-import { signInWithFacebook, signInWithGoogle } from "@/services/firebase/firebase-integration";
+import {
+  signInWithFacebook,
+  signInWithGoogle,
+} from "@/services/firebase/firebase-integration";
 import Toast from "@/ui/Toast/Toast";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +38,9 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: ApplicationState) => state.user);
+  const { data: message } = useSelector(
+    (state: ApplicationState) => state.message
+  );
 
   const { width } = useWindowSize();
 
@@ -60,10 +66,10 @@ const Login = () => {
         login: userLoginData,
         password,
       };
-      console.log(loginData)
+      console.log(loginData);
       dispatch(login(loginData) as any);
     } catch {
-      alert("Falha ao fazer login");
+      alert(message);
     }
 
     setLoading(false);

@@ -41,10 +41,6 @@ const MyCourses = () => {
     setLocationIcon(!isLocationOpen ? "expand_more" : "expand_less");
   };
 
-  const handleTabChange = (tab: currentTabT) => {
-    setCurrentTab(tab);
-  };
-
   useEffect(() => {
     dispatch(getMyCourses(profile) as any);
 
@@ -52,12 +48,6 @@ const MyCourses = () => {
       dispatch(clearCourses() as any);
     };
   }, []);
-
-  //TODO: get user data from api
-  const userInfoMock = {
-    name: "John Doe",
-    description: "Mil e uma utilidade da resina acrílica na obra",
-  };
 
   return (
     <>
@@ -67,8 +57,7 @@ const MyCourses = () => {
             Cursos que estou inscrito
           </span>
           <span className="my-courses__header__description">
-            Olá {userInfoMock.name}, o curso{" "}
-            <strong>{userInfoMock.description}</strong> inicia em breve
+            Olá {profile.name}, aqui estão os cursos que você está inscrito.
           </span>
         </div>
 

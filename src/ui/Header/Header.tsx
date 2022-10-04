@@ -56,6 +56,16 @@ const Header = () => {
     navigate(0);
   };
 
+  const handleAvatarClick = () => {
+    if (user.isLoggedIn && width > 768) {
+      setIsUserMenuOpen(!isUserMenuOpen);
+    }
+
+    if (width < 768) {
+      user.isLoggedIn ? navigate("/profile") : navigate("/login");
+    }
+  };
+
   useEffect(() => {
     if (user.isLoggedIn) {
       dispatch(userProfile() as any);
@@ -147,13 +157,7 @@ const Header = () => {
 
           <div
             className="header__items__login__info"
-            onClick={() =>
-              user.isLoggedIn && width > 768
-                ? setIsUserMenuOpen(!isUserMenuOpen)
-                : user.isLoggedIn
-                ? navigate("/profile")
-                : navigate("/login")
-            }
+            onClick={() => handleAvatarClick()}
           >
             <div className="header__items__login__info__avatar">
               <i className="material-icons">account_circle</i>

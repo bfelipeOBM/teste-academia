@@ -44,8 +44,8 @@ export const CreateBannerAdmin = () => {
   function handleCreateBanner(e: any) {
     const data = JSON.stringify({"file": image})
     setLoading(true)
-    setTimeout(() => {
-      let xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
+    // setTimeout(() => {
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
           setLoading(false)
@@ -82,7 +82,7 @@ export const CreateBannerAdmin = () => {
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
       
       xhr.send(data);
-    }, 5000)
+    // }, 5000)
   }
 
 

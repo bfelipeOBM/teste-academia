@@ -69,7 +69,7 @@ const Login = () => {
       console.log(loginData);
       dispatch(login(loginData) as any);
     } catch {
-      alert(message);
+      alert(message.detail);
     }
 
     setLoading(false);

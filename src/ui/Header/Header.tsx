@@ -153,7 +153,8 @@ const Header = () => {
             </form>
           </div>
 
-          <div className="header__items__all-courses">Todos os cursos</div>
+          {/* TODO: Adicionar novamente quando tiver a página de Todos os cursos */}
+          {/* <div className="header__items__all-courses">Todos os cursos</div> */}
 
           <div
             className="header__items__login__info"

@@ -2,9 +2,10 @@ import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
 import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { BackButton } from '../Components/BackButton';
 import { Header } from '../Components/Header';
 import { Sidebar } from '../Components/Sidebar';
@@ -15,6 +16,8 @@ export const CreateBannerAdmin = () => {
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (profile && userState) {
@@ -40,20 +43,46 @@ export const CreateBannerAdmin = () => {
 
   function handleCreateBanner(e: any) {
     const data = JSON.stringify({"file": image})
-    
-    const xhr = new XMLHttpRequest();
-    
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === this.DONE) {
-        console.log(this.responseText);
-      }
-    });
-    
-    xhr.open("POST", `${Constants.API_URL}banners/`);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-    
-    xhr.send(data);
+    setLoading(true)
+    setTimeout(() => {
+      let xhr = new XMLHttpRequest();
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+          setLoading(false)
+          if (this.status === 201) {
+            toast.success('Banner adicionado!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+            setTimeout(() => {
+              navigate(-1);
+            }, 3000)
+          } else {
+            toast.error('Erro ao adicionar banner!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+          }
+        }
+      });
+      xhr.open("POST", `${Constants.API_URL}banners/`);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+      
+      xhr.send(data);
+    }, 5000)
   }
 
 
@@ -83,11 +112,13 @@ export const CreateBannerAdmin = () => {
               colorScheme="green"
               w={"full"}
               size={"lg"}
+              disabled={loading}
               onClick={(e) => { handleCreateBanner(e) }}
-            >Adicionar banner</Button>
+            >{loading ? "Fazendo upload" : "Adicionar banner"}</Button>
           </VStack>
         </Box>
       </Box>
+      <ToastContainer />
     </Flex>
   );
 }

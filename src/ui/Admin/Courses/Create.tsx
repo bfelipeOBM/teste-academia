@@ -5,6 +5,8 @@ import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textare
 import { Plus } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { BackButton } from '../Components/BackButton';
 import { Header } from '../Components/Header';
 import { Sidebar } from '../Components/Sidebar';
@@ -22,6 +24,7 @@ export const CreateCourseAdmin = () => {
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const [loadingCreateCourse, setLoadingCreateCourse] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (profile && userState) {
@@ -73,10 +76,36 @@ export const CreateCourseAdmin = () => {
 
     setTimeout(() => {
       const xhr = new XMLHttpRequest();
-      
+      setLoadingCreateCourse(true);
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-          console.log(this.responseText);
+          setLoadingCreateCourse(false)
+          if (this.status === 201) {
+            toast.success('Curso criado!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+            setTimeout(() => {
+              navigate(-1);
+            }, 4000)
+          } else {
+            toast.error('Erro ao criar curso!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+          }
         }
       });
   
@@ -85,7 +114,6 @@ export const CreateCourseAdmin = () => {
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
 
       xhr.send(data);
-      setLoadingCreateCourse(false)
     }, 10000);
   }
 
@@ -131,6 +159,7 @@ export const CreateCourseAdmin = () => {
               <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {options.map((value) => (
                   <Checkbox
+                    key={value}
                     value={value}
                     onChange={(e) => handleAddCategory(e)}
                   >{value}</Checkbox>
@@ -160,6 +189,7 @@ export const CreateCourseAdmin = () => {
           </VStack>
         </Box>
       </Box>
+      <ToastContainer />
     </Flex>
   );
 }

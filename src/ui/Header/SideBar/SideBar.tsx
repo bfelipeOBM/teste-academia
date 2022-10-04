@@ -35,8 +35,6 @@ const SideBar = (props: SideBarProps) => {
     }
   }, [user.isLoggedIn, dispatch]);
 
-  console.log(isSideBarOpen);
-
   return (
     <div className="sidebar">
       <ProSidebar toggled={isSideBarOpen}>

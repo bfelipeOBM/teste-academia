@@ -15,6 +15,7 @@ export interface ApplicationState {
   profile: ProfileState;
   courses: CoursesState;
   mycourses: CoursesState;
+  course: CoursesState;
 }
 
 const store: Store<ApplicationState> = createStore(

@@ -5,6 +5,8 @@ import {
   CoursesState,
   GET_COURSES_FAIL,
   GET_COURSES_SUCCESS,
+  GET_COURSE_FAIL,
+  GET_COURSE_SUCCESS,
   GET_MYCOURSES_FAIL,
   GET_MYCOURSES_SUCCESS,
 } from "./types";
@@ -12,6 +14,7 @@ import {
 const initialState: CoursesState = {
   courses: [] as Course[],
   mycourses: [] as Course[],
+  course: {} as Course,
 };
 
 const reducer: Reducer<CoursesState> = (
@@ -21,6 +24,16 @@ const reducer: Reducer<CoursesState> = (
   const { type, payload } = action;
 
   switch (type) {
+    case GET_COURSE_SUCCESS:
+      return {
+        ...state,
+        course: payload.data,
+      };
+    case GET_COURSE_FAIL:
+      return {
+        ...state,
+        course: null,
+      };
     case GET_COURSES_SUCCESS:
       return {
         ...state,
@@ -31,7 +44,6 @@ const reducer: Reducer<CoursesState> = (
         ...state,
         courses: [],
       };
-
     case GET_MYCOURSES_SUCCESS:
       return {
         ...state,

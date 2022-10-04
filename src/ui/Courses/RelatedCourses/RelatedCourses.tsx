@@ -1,5 +1,8 @@
 import { ApplicationState } from "@/application/store";
-import { clearCourses, getCourses } from "@/application/store/courses/action";
+import {
+  clearCourses,
+  getAllCourses,
+} from "@/application/store/courses/action";
 import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +47,7 @@ const RelatedCourses = () => {
   });
 
   useEffect(() => {
-    dispatch(getCourses() as any);
+    dispatch(getAllCourses() as any);
 
     return () => {
       dispatch(clearCourses() as any);

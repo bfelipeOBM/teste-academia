@@ -12,16 +12,17 @@ export const Admin = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    if (profile && user) {
-      if (user.isLoggedIn && profile.role === "admin") {
-        dispatch(userProfile() as any);
-      } else if (profile.role === "user") {
-        window.location.href = "/";
-      } else if (!user.isLoggedIn) {
+    if (user.isLoggedIn) {
+      dispatch(userProfile() as any);
+      if (profile.role !== "admin") {
         window.location.href = "/";
       }
+    } else {
+      window.location.href = "/";
     }
   }, [user.isLoggedIn, dispatch]);
+
+  console.log(profile)
 
   return (
     <Flex w="100%">

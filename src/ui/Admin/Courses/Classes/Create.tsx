@@ -5,7 +5,7 @@ import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack,
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { BackButton } from '../../Components/BackButton';
 import { Header } from '../../Components/Header';
@@ -16,22 +16,22 @@ export const CreateClassAdmin = () => {
   const {id} = useParams();
   const [date, setDate] = useState<Date>();
   const [maxStudents, setMaxStudents] = useState(0);
+  const [partner, setPartner] = useState("");
   const [locationId, setLocationId] = useState(1);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   useEffect(() => {
-    if (profile && userState) {
-      if (userState.isLoggedIn && profile.role === "admin") {
-        dispatch(userProfile() as any);
-      } else if (profile.role === "user") {
-        window.location.href = "/";
-      } else if (!userState.isLoggedIn) {
+    if (userState.isLoggedIn) {
+      dispatch(userProfile() as any);
+      if (profile.role !== "admin") {
         window.location.href = "/";
       }
+    } else {
+      window.location.href = "/";
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState.isLoggedIn, dispatch]);
 
   function handleCreateClass(e: any) {
@@ -40,6 +40,7 @@ export const CreateClassAdmin = () => {
       date,
       max_students: maxStudents,
       location_id: locationId,
+      partner: partner
     }, {
       headers: {
         "Bearer": `${userState.data?.access_token}`
@@ -56,7 +57,7 @@ export const CreateClassAdmin = () => {
           theme: 'colored'
         });
         setTimeout(() => {
-          window.location.href = "/admin/users";
+          navigate(-1);
         }, 2000)
     }).catch((error) => {
       toast.error('Erro ao criar turma!', {
@@ -90,6 +91,13 @@ export const CreateClassAdmin = () => {
               <FormControl>
                 <FormLabel>Data</FormLabel>
                 <Input type="date" required onChange={(e) => setDate(new Date(e.target.value))} />
+              </FormControl>
+            </Box>
+
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Parceiro</FormLabel>
+                <Input type="text" required onChange={(e) => setPartner(e.target.value)} />
               </FormControl>
             </Box>
             

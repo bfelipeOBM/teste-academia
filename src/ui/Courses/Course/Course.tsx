@@ -13,6 +13,7 @@ const Course = () => {
   const dispatch = useDispatch();
   const { course } = useSelector((state: ApplicationState) => state.course);
   const [loading, setLoading] = useState(false);
+  const [nextClassDate, setNextClassDate] = useState("");
 
   window.scrollTo(0, 0);
 
@@ -29,6 +30,20 @@ const Course = () => {
       loadCourse();
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      course?.upcoming_classes &&
+      course.upcoming_classes.length > 0 &&
+      course.upcoming_classes[0].date
+    ) {
+      setNextClassDate(
+        new Intl.DateTimeFormat("pt-BR").format(
+          new Date(course.upcoming_classes[0].date)
+        )
+      );
+    }
+  }, [course]);
 
   return (
     <>
@@ -98,13 +113,11 @@ const Course = () => {
                 </div>
                 <div className="details">
                   <div className="date">
-                    {/* Data: <span>{course.upcoming_classes[0]}</span> */}
-                    Data: <span>22/10/2022</span>
+                    Data: <span>{nextClassDate}</span>
                   </div>
 
                   <div className="workload">
-                    {/* Carga horária: <span>{course.workload}</span> */}
-                    Carga horária: <span>8 horas</span>
+                    Carga horária: <span>{course.workload}</span>
                   </div>
 
                   <div className="categories">
@@ -141,13 +154,14 @@ const Course = () => {
 
               <div className="course__details__next-dates">
                 <span className="title">Próximas datas</span>
-                {/* {course?.upcoming_classes!.map((item: any) => (
-                <div key={item.date} className="date">
-                  <span className="title">{item.date}</span>
-                  <div className="divider"></div>
-                  <span className="location">{item.location}</span>
-                </div>
-              ))} */}
+                {/* {course?.upcoming_classes?.length &&
+                  course?.upcoming_classes.map((item: any) => (
+                    <div key={item.date} className="date">
+                      <span className="title">{item.date}</span>
+                      <div className="divider"></div>
+                      <span className="location">{item.location}</span>
+                    </div>
+                  ))} */}
               </div>
             </div>
           </div>

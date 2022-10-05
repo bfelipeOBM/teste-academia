@@ -1,6 +1,7 @@
 import { Class } from "./class";
 
 export type Course = {
+  workload?: string;
   id?: number;
   name: string;
   description: string;

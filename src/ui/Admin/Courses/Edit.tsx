@@ -67,6 +67,7 @@ export const EditCourseAdmin = () => {
   }
 
   function handleUpdateCourse(e: any) {
+    e.preventDefault();
     setLoading(true)
     const updatedCourse: UpdatedCorse = {}
 
@@ -154,29 +155,29 @@ export const EditCourseAdmin = () => {
           <Box py={8}>
             <Text fontSize={"2xl"}>Criar um novo curso</Text>
           </Box>
-          <VStack as="form" spacing={6}>
+          <VStack as="form" spacing={6} onSubmit={(e) => {handleUpdateCourse(e)}}>
             {course && (
               <>
                 <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
                 <Input type="text" onChange={(e) => setName(e.target.value)} defaultValue={course?.name}/>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
-                <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={course?.description} />
+                <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={course?.description} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Especialidade</FormLabel>
                 <Input type="text" onChange={(e) => setSpecialty(e.target.value)} defaultValue={course?.specialty}/>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Carga horária</FormLabel>
                 <NumberInput defaultValue={course?.workload} precision={1} min={1} onChange={(value) => setWorkload(+value)} >
                   <NumberInputField />
@@ -230,12 +231,11 @@ export const EditCourseAdmin = () => {
               </FormControl>
             </Box>
             <Button
-              type='button'
+              type='submit'
               colorScheme="green"
               w={"full"}
               size={"lg"}
               disabled={loading}
-              onClick={(e) => {handleUpdateCourse(e)}}
             >{loading ? "Atualizando curso" : "Atualizar curso"}</Button>
               </>
             )}

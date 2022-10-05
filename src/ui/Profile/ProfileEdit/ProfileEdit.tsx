@@ -13,7 +13,8 @@ import ImageUpload from "@/ui/ImageUpload/ImageUpload";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import { OnChangeValue } from "react-select";
+import CreatableSelect from "react-select/creatable";
 import "./ProfileEdit.scss";
 import { schema } from "./ProfileEditForm";
 
@@ -31,6 +32,11 @@ interface ProfileEditProps {
   userInfo: User;
 }
 
+interface Option {
+  value: string;
+  label: string;
+}
+
 const ProfileEdit = (props: ProfileEditProps) => {
   const { userInfo } = props;
   const [loading, setLoading] = useState(false);
@@ -40,6 +46,20 @@ const ProfileEdit = (props: ProfileEditProps) => {
   const [userImageFile, setUserImageFile] = useState<string>();
   const dispatch = useDispatch();
   const { width } = useWindowSize();
+  const [options, setOptions] = useState([
+    { value: "pedreiro", label: "Pedreiro" },
+    { value: "encanador", label: "Encanador" },
+    { value: "eletricista", label: "Eletricista" },
+    { value: "marceneiro", label: "Marceneiro" },
+    { value: "pintor", label: "Pintor" },
+    { value: "serralheiro", label: "Serralheiro" },
+    { value: "gesseiro", label: "Gesseiro" },
+    { value: "aplicadordedrywall", label: "Aplicador de drywall" },
+    { value: "maridodealuguel", label: "Marido de aluguel" },
+    { value: "mestredeobras", label: "Mestre de obras" },
+    { value: "DIGITE OUTRA PROFISSÃO", label: "DIGITE OUTRA PROFISSÃO" },
+  ]);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
   const { data: message } = useSelector(
     (state: ApplicationState) => state.message
@@ -99,6 +119,25 @@ const ProfileEdit = (props: ProfileEditProps) => {
     }
   };
 
+  const createOption = (inputValue: string) => {
+    return {
+      value: inputValue.toLowerCase().replace(/\W/g, ""),
+      label: inputValue,
+    };
+  };
+
+  const handleOptionChange = (newValue: OnChangeValue<Option, false>) => {
+    formik.setFieldValue("occupation", newValue?.value);
+    setSelectedOption(newValue);
+  };
+
+  const handleCreate = (inputValue: string) => {
+    const newOption = createOption(inputValue);
+    setOptions((oldOption) => [...oldOption, newOption]);
+    formik.setFieldValue("occupation", inputValue);
+    setSelectedOption(newOption);
+  };
+
   const formik = useFormik({
     initialValues: initialFormValues,
     validationSchema: schema,
@@ -107,12 +146,11 @@ const ProfileEdit = (props: ProfileEditProps) => {
     },
   });
 
-  const options = [
-    { value: "eletricista", label: "Eletricista" },
-    { value: "pedreiro", label: "Pedreiro" },
-    { value: "encanador", label: "Encanador" },
-    { value: "pintor", label: "Pintor" },
-  ];
+  const otherOccupationStyle = () => {
+    return formik.values.occupation === "DIGITE OUTRA PROFISSÃO"
+      ? "other-occupation"
+      : "";
+  };
 
   return (
     <div className="profile-edit">
@@ -256,22 +294,21 @@ const ProfileEdit = (props: ProfileEditProps) => {
               <label className="profile-edit__form__title" htmlFor="profession">
                 Profissão
               </label>
-              <Select
+              <CreatableSelect
                 id="occupation"
-                onChange={(e) => {
-                  formik.setFieldValue("occupation", e?.value as string);
-                }}
+                onChange={(e) => handleOptionChange(e)}
                 onBlur={formik.handleBlur}
                 placeholder="Selecione sua profissão"
-                className={`profile-edit__form__input-profession ${
+                className={`register__form__input-profession ${
                   formik.errors.occupation ? "error" : ""
-                }`}
+                }${otherOccupationStyle()}`}
                 classNamePrefix="react-select"
+                createOptionPosition="first"
+                onCreateOption={(e) => handleCreate(e)}
+                formatCreateLabel={(e) => `Selecionar "${e}"`}
                 options={options}
-                value={options?.find(
-                  (option) => option.value === formik.values.occupation
-                )}
-              ></Select>
+                value={selectedOption}
+              ></CreatableSelect>
               {formik.errors.occupation && (
                 <span className="profile-edit__form__error">
                   {formik.errors.occupation}

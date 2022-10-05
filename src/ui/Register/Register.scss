@@ -214,6 +214,10 @@
               box-shadow: 0 0 0 0.1rem hsla(0, 0%, 70%, 0.25);
             }
           }
+
+          &__menu {
+            z-index: 999;
+          }
         }
       }
 
@@ -566,6 +570,12 @@
               box-shadow: 0 0 0 0.1rem hsla(0, 0%, 70%, 0.25);
             }
           }
+        }
+      }
+
+      &__input-profession.other-occupation {
+        .react-select__single-value {
+          color: hsl(0, 0%, 70%) !important;
         }
       }
 

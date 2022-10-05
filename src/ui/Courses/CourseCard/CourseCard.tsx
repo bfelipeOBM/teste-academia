@@ -37,7 +37,9 @@ const CourseCard = (props: Props) => {
               {course?.upcoming_classes && (
                 <>
                   próxima turma:{" "}
-                  <span className="date">{course.upcoming_classes[0]}</span>
+                  <span className="date">
+                    {course.upcoming_classes[0].date}
+                  </span>
                 </>
               )}
             </span>

@@ -4,6 +4,8 @@ import {
   GET_PROFILE_FAIL,
   GET_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
+  UPDATE_PROFILE_IMAGE_FAIL,
+  UPDATE_PROFILE_IMAGE_SUCCESS,
   UPDATE_PROFILE_SUCCESS,
 } from "./types";
 
@@ -66,6 +68,35 @@ export const updateProfile = (data: User) => (dispatch: Dispatch) => {
     }
   );
 };
+
+export const updatePhoto =
+  (image: string, user: User) => (dispatch: Dispatch) => {
+    return UserService.updatePhoto(image, user).then(
+      (data) => {
+        dispatch({
+          type: UPDATE_PROFILE_IMAGE_SUCCESS,
+          payload: { data },
+        });
+
+        return Promise.resolve();
+      },
+      (error) => {
+        const message =
+          error?.response?.data || error.message || error.toString();
+
+        dispatch({
+          type: UPDATE_PROFILE_IMAGE_FAIL,
+        });
+
+        dispatch({
+          type: SET_MESSAGE,
+          payload: message,
+        });
+
+        return Promise.reject();
+      }
+    );
+  };
 
 export const clearProfile = () => (dispatch: Dispatch) => {
   dispatch({

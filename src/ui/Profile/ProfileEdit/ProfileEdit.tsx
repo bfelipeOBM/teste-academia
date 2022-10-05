@@ -5,7 +5,7 @@ import {
 } from "@/application/common/Utils";
 import { User } from "@/application/models/user";
 import { ApplicationState } from "@/application/store";
-import { updateProfile } from "@/application/store/profile/action";
+import { updatePhoto, updateProfile } from "@/application/store/profile/action";
 import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
@@ -37,7 +37,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
   const [userImage, setUserImage] = useState(
     userInfo.profile_image || "https://i.pravatar.cc/300"
   );
-  const [userImageFile, setUserImageFile] = useState<File>();
+  const [userImageFile, setUserImageFile] = useState<string>();
   const dispatch = useDispatch();
   const { width } = useWindowSize();
 
@@ -78,9 +78,24 @@ const ProfileEdit = (props: ProfileEditProps) => {
 
   const changePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    const reader = new FileReader();
     if (e.target.files && e.target.files[0]) {
-      setUserImageFile(e.target.files[0]);
-      setUserImage(URL.createObjectURL(e.target.files[0]));
+      const file = e.target.files[0];
+      reader.onload = () => {
+        setUserImageFile(reader?.result as string);
+      };
+      reader.readAsDataURL(file);
+      setUserImage(URL.createObjectURL(file));
+    }
+  };
+
+  const uploadProfileImage = async () => {
+    try {
+      if (userImageFile) {
+        await dispatch(updatePhoto(userImageFile, userInfo) as any);
+      }
+    } catch {
+      alert(message.detail);
     }
   };
 
@@ -120,7 +135,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
               <button
                 type="button"
                 className="profile-edit__form__avatar-upload__button-button"
-                onClick={() => {}}
+                onClick={uploadProfileImage}
                 disabled={loading || !userImageFile}
               >
                 Enviar Imagem
@@ -389,7 +404,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
               <button
                 type="button"
                 className="profile-edit__form__avatar-upload__button-button"
-                onClick={() => {}}
+                onClick={uploadProfileImage}
                 disabled={loading || !userImageFile}
               >
                 Enviar Imagem

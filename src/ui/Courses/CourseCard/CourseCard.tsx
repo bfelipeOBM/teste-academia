@@ -1,5 +1,6 @@
 import { Course } from "@/application/models/course";
 import { ApplicationState } from "@/application/store";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./CourseCard.scss";
@@ -10,12 +11,25 @@ interface Props {
 
 const CourseCard = (props: Props) => {
   const { course } = props;
+  const [nextClassDate, setNextClassDate] = useState("");
   const navigate = useNavigate();
   const user = useSelector((state: ApplicationState) => state.user);
 
   const goToCourse = () => {
     user.isLoggedIn ? navigate(`/course/${course.id}`) : navigate(`/login`);
   };
+
+  useEffect(() => {
+    if (course?.upcoming_classes && course.upcoming_classes.length > 0) {
+      course.upcoming_classes[0].date
+        ? setNextClassDate(
+            new Intl.DateTimeFormat("pt-BR").format(
+              new Date(course.upcoming_classes[0].date)
+            )
+          )
+        : setNextClassDate("");
+    }
+  }, [course]);
 
   return (
     <div className="course-card">
@@ -36,10 +50,7 @@ const CourseCard = (props: Props) => {
             <span className="title">
               {course?.upcoming_classes && (
                 <>
-                  próxima turma:{" "}
-                  <span className="date">
-                    {course.upcoming_classes[0].date}
-                  </span>
+                  próxima turma: <span className="date">{nextClassDate}</span>
                 </>
               )}
             </span>
@@ -53,11 +64,11 @@ const CourseCard = (props: Props) => {
           <button className="goto__button" onClick={goToCourse}>
             Quero Participar
           </button>
-          {/* {course?.workload && (
+          {course?.workload && (
             <div className="workload">
               Carga horária: <span>{course?.workload}</span>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </div>

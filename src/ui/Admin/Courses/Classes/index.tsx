@@ -1,7 +1,7 @@
 import Constants from "@/application/common/Constants";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
-import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, Image, Text } from "@chakra-ui/react";
+import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, Image, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { Plus } from "phosphor-react";
 import { useEffect, useState } from "react";
@@ -9,10 +9,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
+import { User } from "../../interface/user";
 
 export const ClassesInfoAdmin = () => {
   const {id, class_id} = useParams();
-  const [users, setUsers] = useState<any[]>();
+  const [users, setUsers] = useState<any[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [classe, setClasse] = useState<any>();
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
@@ -39,9 +41,22 @@ export const ClassesInfoAdmin = () => {
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments`).then((res) => {
       setUsers(res.data);
+      setFilteredUsers(res.data);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classe])
+
+  function searchUser(e: any) {
+    const search = e.target.value;
+    const searchUsers: any = [];
+
+    users.filter(user => {
+      if (user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || user.document?.toLowerCase().includes(search.toLowerCase()) || user.phone?.toLowerCase().includes(search.toLowerCase())) {
+        searchUsers.push(user);
+      }
+    })
+    setFilteredUsers(searchUsers);
+  }
 
   function handleUpdateUserParticipated(e: any, user_id: number) {
     axios.patch(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments/${user_id}`, {
@@ -54,7 +69,7 @@ export const ClassesInfoAdmin = () => {
       }
       return user
     })
-    setUsers(updatedUsers)
+    setFilteredUsers(updatedUsers)
   }
 
   console.log(classe)
@@ -79,8 +94,18 @@ export const ClassesInfoAdmin = () => {
         <Box w="100%" maxW={1120} mx="auto">
           <Box py={8}>
             <Heading fontSize={"4xl"}>Alunos inscritos</Heading>
+            <Input
+              w={"100%"}
+              maxW={1120}
+              mx="auto"
+              mt={4}
+              mb={4}
+              bg="white"
+              placeholder="Pesquisar usuário"
+              onChange={searchUser}
+            />
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-              {users?.map(user => (
+              {filteredUsers?.map(user => (
                 <GridItem
                   key={user.id}
                   w='100%'

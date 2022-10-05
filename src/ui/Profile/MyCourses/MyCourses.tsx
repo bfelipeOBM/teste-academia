@@ -79,7 +79,7 @@ const MyCourses = () => {
             onClick={() => setCurrentTab("in-progress")}
           >
             <span className="my-courses__tabs__tab__in-progress">
-              <i className="material-icons">circle</i> Cursos a conluir
+              <i className="material-icons">circle</i> Cursos a concluir
             </span>
           </div>
           <div

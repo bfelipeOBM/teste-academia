@@ -141,7 +141,7 @@ export const UsersAdminEdit = () => {
               <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
                 <FormControl>
                   <FormLabel>Permissão</FormLabel>
-                  <Select onChange={(e) => setRole(e.target.value)} defaultValue={"user"} >
+                  <Select onChange={(e) => setRole(e.target.value)} defaultValue={user.role} >
                     <option value={"user"}>Usuário</option>
                     <option value={"admin"}>Administrador</option>
                   </Select>

@@ -17,6 +17,7 @@ export const EditClassAdmin = () => {
   const [locationId, setLocationId] = useState<number>();
   const [classe, setClasse] = useState<any>();
   const [partner, setPartner] = useState<string>();
+  const [sympla, setSympla] = useState<any>(null)
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -45,7 +46,8 @@ export const EditClassAdmin = () => {
       date,
       max_students: maxStudents,
       location_id: locationId,
-      partner: partner
+      partner: partner,
+      sympla_url: sympla
     })
   }
 
@@ -81,6 +83,13 @@ export const EditClassAdmin = () => {
             <FormControl>
                 <FormLabel>Parceiro</FormLabel>
                 <Input type="text" defaultValue={classe?.partner} onChange={(e) => setPartner(e.target.value)} />
+              </FormControl>
+            </Box>
+
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Link do Sympla</FormLabel>
+                <Input type="text" defaultValue={classe?.sympla_url} onChange={(e) => setSympla(e.target.value)} />
               </FormControl>
             </Box>
             

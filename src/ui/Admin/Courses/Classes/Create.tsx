@@ -18,6 +18,7 @@ export const CreateClassAdmin = () => {
   const [maxStudents, setMaxStudents] = useState(0);
   const [partner, setPartner] = useState("");
   const [locationId, setLocationId] = useState(1);
+  const [sympla, setSympla] = useState<any>(null);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -40,7 +41,8 @@ export const CreateClassAdmin = () => {
       date,
       max_students: maxStudents,
       location_id: locationId,
-      partner: partner
+      partner: partner,
+      sympla_url: sympla
     }, {
       headers: {
         "Bearer": `${userState.data?.access_token}`
@@ -98,6 +100,12 @@ export const CreateClassAdmin = () => {
               <FormControl>
                 <FormLabel>Parceiro</FormLabel>
                 <Input type="text" required onChange={(e) => setPartner(e.target.value)} />
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Link do Sympla</FormLabel>
+                <Input type="text" onChange={(e) => setSympla(e.target.value)} />
               </FormControl>
             </Box>
             

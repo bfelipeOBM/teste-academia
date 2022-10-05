@@ -1,7 +1,7 @@
 import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from '@chakra-ui/react';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
 import { Plus } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -125,9 +125,6 @@ export const CreateCourseAdmin = () => {
         <Header>
           <HStack justifyContent="space-between">
             <BackButton />
-            <Box>
-              <Button colorScheme="green" size={"lg"} leftIcon={<Plus />}>Adicionar uma turma</Button>
-            </Box>
           </HStack>
         </Header>
 
@@ -157,7 +154,13 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Carga horária</FormLabel>
-                <Input type="number" name="workload" min={0} onChange={(e) => setWorkload(+e.target.value)} required />
+                <NumberInput defaultValue={1} precision={1} min={1} onChange={(value) => setWorkload(+value)} >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

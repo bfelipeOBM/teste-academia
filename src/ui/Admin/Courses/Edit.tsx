@@ -1,12 +1,12 @@
 import Constants from "@/application/common/Constants"
 import { ApplicationState } from "@/application/store"
 import { userProfile } from "@/application/store/profile/action"
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, Link } from "@chakra-ui/react"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Image } from "@chakra-ui/react"
 import axios from "axios"
 import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
@@ -77,61 +77,44 @@ export const EditCourseAdmin = () => {
     if (workload !== 0.0) updatedCourse.workload = workload;
     updatedCourse.category = selectedOptions;
     updatedCourse.active = active;
-
-    // setTimeout(() => {
-    //   const xhr = new XMLHttpRequest();
-    //   xhr.addEventListener("readystatechange", function () {
-    //     if (this.readyState === this.DONE) {
-    //       if (this.status === 201) {
-    //         toast.success('Curso editado!', {
-    //           position: "top-right",
-    //           autoClose: 5000,
-    //           hideProgressBar: false,
-    //           closeOnClick: true,
-    //           pauseOnHover: true,
-    //           draggable: true,
-    //           progress: undefined,
-    //           theme: 'colored'
-    //         });
-    //         setTimeout(() => {
-    //           navigate(-1);
-    //         }, 4000)
-    //       } else {
-    //         toast.error('Erro ao editar curso!', {
-    //           position: "top-right",
-    //           autoClose: 5000,
-    //           hideProgressBar: false,
-    //           closeOnClick: true,
-    //           pauseOnHover: true,
-    //           draggable: true,
-    //           progress: undefined,
-    //           theme: 'colored'
-    //         });
-    //       }
-    //     }
-    //   });
+    const xhr = new XMLHttpRequest();
+    setTimeout(() => {
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+          if (this.status === 201) {
+            toast.success('Curso editado!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+            setTimeout(() => {
+              navigate(-1);
+            }, 4000)
+          } else {
+            toast.error('Erro ao editar curso!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+          }
+        }
+      });
   
-    //   xhr.open('PATCH', `${Constants.API_URL}courses/${id}`);
-    //   xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-    //   xhr.send(data);
-
-    //   // xhr.send(data);
-    // }, 10000);
-    // e.preventDefault()
-    
-    // const form = new FormData();
-    // if (name !== "") form.append("name", name);
-    // if (description !== "") form.append("description", description);
-    // if (image !== "") form.append("image", image);
-    // if (video !== "") form.append("video", video);
-    // if (specialty !== "") form.append("specialty", specialty);
-    // form.append("category", selectedOptions.join(","));
-    // form.append("active", active ? "1" : "0");
-
-    // let request = new XMLHttpRequest();
-    // request.open('PATCH', `${Constants.API_URL}courses/${id}`);
-    // request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-    // request.send(form);
+      xhr.open('PATCH', `${Constants.API_URL}courses/${id}`);
+      xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+      const updatedCourseString = JSON.stringify(updatedCourse);
+      xhr.send(updatedCourseString);
+    }, 10000);
   }
 
   function handleAddImage(e: any) {
@@ -143,6 +126,8 @@ export const EditCourseAdmin = () => {
     reader.readAsDataURL(file);
   }
   
+  console.log(course?.workload)
+
   return (
     <Flex w="100%">
       <Sidebar />
@@ -167,7 +152,9 @@ export const EditCourseAdmin = () => {
             <Text fontSize={"2xl"}>Criar um novo curso</Text>
           </Box>
           <VStack as="form" spacing={6}>
-            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+            {course && (
+              <>
+                <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Nome</FormLabel>
                 <Input type="text" onChange={(e) => setName(e.target.value)} defaultValue={course?.name}/>
@@ -188,7 +175,13 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Carga horária</FormLabel>
-                <Input type="number" onChange={(e) => setWorkload(+e.target.value)} defaultValue={course?.workload}/>
+                <NumberInput defaultValue={course?.workload} precision={1} min={1} onChange={(value) => setWorkload(+value)} >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
@@ -218,6 +211,9 @@ export const EditCourseAdmin = () => {
                   name="file"
                   onChange={(e) => handleAddImage(e)}
                   accept="image/png, image/gif, image/jpeg, image/jpg "/>
+                  <Box>
+                    <Image src={course.image} alt='Dan Abramov' />
+                  </Box>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
@@ -237,6 +233,8 @@ export const EditCourseAdmin = () => {
               size={"lg"}
               onClick={(e) => {handleUpdateCourse(e)}}
             >Atualizar curso</Button>
+              </>
+            )}
           </VStack>
         </Box>
       </Box>

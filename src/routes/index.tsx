@@ -13,6 +13,7 @@ import { UsersAdminCreate } from "@/ui/Admin/Users/Create";
 import { UsersAdminEdit } from "@/ui/Admin/Users/Edit";
 import { UsersAdminMultiple } from "@/ui/Admin/Users/Multiple";
 import Course from "@/ui/Courses/Course/Course";
+import ChangePassword from "@/ui/ForgotPassword/Change/ChangePassword";
 import ForgotPassword from "@/ui/ForgotPassword/ForgotPassword";
 import RecoverMethod from "@/ui/ForgotPassword/RecoverMethod/RecoverMethod";
 import Token from "@/ui/ForgotPassword/Token/Token";
@@ -78,6 +79,7 @@ const RouteWrapper = () => {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/token" element={<Token />} />
           <Route path="/recovermethod" element={<RecoverMethod />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/course/:id" element={<Course />} />
           <Route path="/profile" element={<Profile />} />
           <Route

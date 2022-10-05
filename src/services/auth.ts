@@ -49,6 +49,13 @@ const sendRecoveryCode = async (userDocument: string, code: string) => {
   return response.data;
 };
 
+const changePassword = async (userDocument: string, password: string) => {
+  const response = await axios.post(`${API_URL}users/${userDocument}/recovery/password`, {
+    password,
+  });
+  return response.data;
+}
+
 const logout = () => {
   localStorage.clear();
 };
@@ -60,4 +67,5 @@ export default {
   resetPassword,
   recoverPasswordMethod,
   sendRecoveryCode,
+  changePassword
 };

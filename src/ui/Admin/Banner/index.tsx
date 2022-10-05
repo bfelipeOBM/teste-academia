@@ -120,12 +120,12 @@ export const BannersInfoAdmin = () => {
                   </Box>
                   <Box position={"absolute"} top={4} right={4}>
                     <HStack>
-                      <Tooltip label="Deletar turma">
+                      <Tooltip label="Deletar banner">
                         <IconButton
                           icon={<Trash size={30} />}
                           colorScheme={"red"}
                           onClick={() => { handleDeleteBanner(banner.id) }}
-                          aria-label="Deletar turma" />
+                          aria-label="Deletar banner" />
                       </Tooltip>
                     </HStack>
                   </Box>

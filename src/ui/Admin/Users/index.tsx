@@ -1,7 +1,7 @@
 import Constants from "@/application/common/Constants";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
-import { Box, Button, Grid, GridItem, Image, Heading, HStack, Text, VStack, IconButton, AspectRatio, Tooltip, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Flex } from "@chakra-ui/react"
+import { Box, Button, Grid, GridItem, Image, Heading, HStack, Text, VStack, IconButton, AspectRatio, Tooltip, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Flex, Input } from "@chakra-ui/react"
 import axios from "axios"
 import { PencilLine, Plus, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const UsersAdminInfos = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [userToDelete, setUserToDelete] = useState<User>();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const userState = useSelector((state: ApplicationState) => state.user);
@@ -39,6 +40,7 @@ export const UsersAdminInfos = () => {
       }
     }).then(res => {
       setUsers(res.data);
+      setFilteredUsers(res.data);
     }).catch((error) => {
       toast.error('Erro exibir todos os usuários!', {
         position: "top-right",
@@ -58,6 +60,8 @@ export const UsersAdminInfos = () => {
     onOpen();
   }
 
+  console.log(users)
+
   function handleDeleteUser() {
     axios.delete(`${Constants.API_URL}users/${userToDelete?.id}`, {
       headers: {
@@ -74,9 +78,20 @@ export const UsersAdminInfos = () => {
         progress: undefined,
         theme: 'colored'
       });
-      setUsers(users.filter(user => user.id !== userToDelete?.id));
+      setFilteredUsers(filteredUsers.filter(user => user.id !== userToDelete?.id));
       onClose();
     })
+  }
+  function searchUser(e: any) {
+    const search = e.target.value;
+    const searchUsers: any = [];
+
+    users.filter(user => {
+      if (user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || user.document?.toLowerCase().includes(search.toLowerCase()) || user.phone?.toLowerCase().includes(search.toLowerCase())) {
+        searchUsers.push(user);
+      }
+    })
+    setFilteredUsers(searchUsers);
   }
 
   return (
@@ -107,8 +122,18 @@ export const UsersAdminInfos = () => {
           </HStack>
         </Header>
         <Box as="main" w={"100%"} maxW={1120} mx="auto">
+          <Input
+            w={"100%"}
+            maxW={1120}
+            mx="auto"
+            mt={4}
+            mb={4}
+            bg="white"
+            placeholder="Pesquisar usuário"
+            onChange={searchUser}
+          />
           <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-            {users.map(user => (
+            {filteredUsers.map(user => (
               <GridItem
                 key={user.id}
                 w='100%'

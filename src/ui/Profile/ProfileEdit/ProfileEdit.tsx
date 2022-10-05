@@ -35,7 +35,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
   const { userInfo } = props;
   const [loading, setLoading] = useState(false);
   const [userImage, setUserImage] = useState(
-    userInfo.image || "https://i.pravatar.cc/300"
+    userInfo.profile_image || "https://i.pravatar.cc/300"
   );
   const [userImageFile, setUserImageFile] = useState<File>();
   const dispatch = useDispatch();
@@ -76,7 +76,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
     setLoading(false);
   };
 
-  const photoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       setUserImageFile(e.target.files[0]);
@@ -99,19 +99,12 @@ const ProfileEdit = (props: ProfileEditProps) => {
     { value: "pintor", label: "Pintor" },
   ];
 
-  //TODO: get user data from api
-  const userInfoMock = {
-    name: "John Doe",
-    description: "Mil e uma utilidade da resina acrílica na obra",
-  };
-
   return (
     <div className="profile-edit">
       <div className="profile-edit__header">
         <span className="profile-edit__header__title">Meus Dados</span>
         <span className="profile-edit__header__description">
-          Olá {userInfo.name}, o curso{" "}
-          <strong>{userInfoMock.description}</strong> inicia em breve
+          Olá {userInfo.name}, aqui você pode editar seus dados.
         </span>
       </div>
       <div className="profile-edit__form">
@@ -121,7 +114,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
               <span>Imagem de Perfil</span>
             </div>
             <div className="profile-edit__form__avatar-upload__image">
-              <ImageUpload src={userImage} onChange={photoUpload}></ImageUpload>
+              <ImageUpload src={userImage} onChange={changePhoto}></ImageUpload>
             </div>
             <div className="profile-edit__form__avatar-upload__button">
               <button
@@ -390,7 +383,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
               <span>Imagem de Perfil</span>
             </div>
             <div className="profile-edit__form__avatar-upload__image">
-              <ImageUpload src={userImage} onChange={photoUpload}></ImageUpload>
+              <ImageUpload src={userImage} onChange={changePhoto}></ImageUpload>
             </div>
             <div className="profile-edit__form__avatar-upload__button">
               <button

@@ -13,7 +13,7 @@ import ProfileEdit from "./ProfileEdit/ProfileEdit";
 type ProfileCardPropsT = {
   name: string;
   email: string;
-  image: string;
+  profile_image: string;
   onEdit: () => void;
   currentPage: "profile" | "courses" | "certificates";
   handlePageChange: (page: "profile" | "courses" | "certificates") => void;
@@ -26,7 +26,7 @@ const Profile = () => {
   const [ProfileCardProps, setProfileCardProps] = useState<ProfileCardPropsT>({
     name: "",
     email: "",
-    image: "",
+    profile_image: "",
     onEdit: () => {},
     currentPage: "profile",
     handlePageChange: () => {},
@@ -36,7 +36,7 @@ const Profile = () => {
 
   const user = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
-  const { name, email, image } = profile;
+  const { name, email, profile_image } = profile;
 
   const handlePageChange = (page: "profile" | "courses" | "certificates") => {
     setCurrentPage(page);
@@ -52,7 +52,7 @@ const Profile = () => {
     setProfileCardProps({
       name,
       email,
-      image: image || "https://i.pravatar.cc/300",
+      profile_image: profile_image || "https://i.pravatar.cc/300",
       onEdit: () => {
         setCurrentPage("profile");
       },

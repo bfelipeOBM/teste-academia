@@ -3,14 +3,15 @@ import "./ProfileCard.scss";
 interface ProfileCardProps {
   name: string;
   email: string;
-  image: string;
+  profile_image: string;
   onEdit: () => void;
   currentPage: "profile" | "courses" | "certificates";
   handlePageChange: (page: "profile" | "courses" | "certificates") => void;
 }
 
 const ProfileCard = (props: ProfileCardProps) => {
-  const { name, email, image, onEdit, currentPage, handlePageChange } = props;
+  const { name, email, profile_image, onEdit, currentPage, handlePageChange } =
+    props;
 
   return (
     <div className="profile-card">
@@ -24,7 +25,7 @@ const ProfileCard = (props: ProfileCardProps) => {
           </span>
         </div>
         <div className="profile-card__user-info__avatar">
-          <img src={image} alt="profile" />
+          <img src={profile_image} alt="profile" />
         </div>
         <div className="profile-card__user-info__info">
           <span className="user-name">{name}</span>

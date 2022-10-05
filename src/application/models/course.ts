@@ -1,3 +1,5 @@
+import { Class } from "./class";
+
 export type Course = {
   id?: number;
   name: string;
@@ -8,7 +10,7 @@ export type Course = {
   specialty?: string;
   category?: string[];
   tags?: string[];
-  upcoming_classes?: string[];
+  upcoming_classes?: Class[];
   active?: boolean;
   status?: string;
   inserted_at?: string;

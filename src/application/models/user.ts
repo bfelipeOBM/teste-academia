@@ -9,7 +9,7 @@ export type User = {
   active?: boolean;
   role?: string;
   occupation?: string;
-  image?: string;
+  profile_image?: string;
 };
 
 export type UserLogin = {

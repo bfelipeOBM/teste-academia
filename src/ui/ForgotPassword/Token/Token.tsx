@@ -82,7 +82,7 @@ const Token = () => {
       setError("");
       setLoading(true);
       await AuthService.sendRecoveryCode(userDocument, tokenNumber);
-      navigate("/login", { state: { toast: true } });
+      navigate("/change-password", { state: { toast: true } });
     } catch {
       setError("Falha ao recuperar senha");
     }

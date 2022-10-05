@@ -6,7 +6,8 @@ export interface Course {
   image: string,
   video: string,
   short_video: string,
-  category: string[]
+  category: string[],
+  workload: number,
   active: boolean,
   specialty: string,
   inserted_at: string,

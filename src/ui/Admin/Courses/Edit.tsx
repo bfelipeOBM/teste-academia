@@ -1,30 +1,37 @@
 import Constants from "@/application/common/Constants"
 import { ApplicationState } from "@/application/store"
 import { userProfile } from "@/application/store/profile/action"
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid } from "@chakra-ui/react"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, Link } from "@chakra-ui/react"
 import axios from "axios"
 import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
 import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
 import { Sidebar } from "../Components/Sidebar"
 import { Course } from "../interface/course"
 
+type UpdatedCorse = {
+  [key: string]: any;
+}
+
 export const EditCourseAdmin = () => {
-  const options = ["Eletricista", "Pedreiro", "Mestre de Obras", "Encanador", "Empreiteiro", "Técnico em construção civil/edificações", "Hidráulico", "Azulejista", "Arquiteto", "Assentador de pisos", "Marceneiro", "Pintor", "Engenheiro"]
+  const options = ["Pedreiro", "Encanador", "Eletricista", "Marceneiro", "Pintor", "Serralheiro", "Gesseiro", "Aplicador de drywall", "Marido de aluguel", "Mestre de obras"];
   
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [specialty, setSpecialty] = useState("")
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [video, setVideo] = useState("")
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState<any>("")
   const [active, setActive] = useState<boolean>()
+  const [workload, setWorkload] = useState(0.0);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (userState.isLoggedIn) {
@@ -43,7 +50,7 @@ export const EditCourseAdmin = () => {
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}`).then(res => {
       setCourse(res.data);
-      setSelectedOptions(res.data.category[0].split(","));
+      setSelectedOptions(res.data.category  );
       setActive(res.data.active);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,25 +66,81 @@ export const EditCourseAdmin = () => {
   }
 
   function handleUpdateCourse(e: any) {
-    e.preventDefault()
-    
-    const form = new FormData();
-    if (name !== "") form.append("name", name);
-    if (description !== "") form.append("description", description);
-    if (image !== "") form.append("image", image);
-    if (video !== "") form.append("video", video);
-    if (specialty !== "") form.append("specialty", specialty);
-    form.append("category", selectedOptions.join(","));
-    form.append("active", active ? "1" : "0");
 
-    let request = new XMLHttpRequest();
-    request.open('PATCH', `${Constants.API_URL}courses/${id}`);
-    request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-    request.send(form);
+    const updatedCourse: UpdatedCorse = {}
+
+    if (name !== "") updatedCourse.name = name;
+    if (description !== "") updatedCourse.description = description;
+    if (image !== "") updatedCourse.image = image;
+    if (video !== "") updatedCourse.video = video;
+    if (specialty !== "") updatedCourse.specialty = specialty;
+    if (workload !== 0.0) updatedCourse.workload = workload;
+    updatedCourse.category = selectedOptions;
+    updatedCourse.active = active;
+
+    // setTimeout(() => {
+    //   const xhr = new XMLHttpRequest();
+    //   xhr.addEventListener("readystatechange", function () {
+    //     if (this.readyState === this.DONE) {
+    //       if (this.status === 201) {
+    //         toast.success('Curso editado!', {
+    //           position: "top-right",
+    //           autoClose: 5000,
+    //           hideProgressBar: false,
+    //           closeOnClick: true,
+    //           pauseOnHover: true,
+    //           draggable: true,
+    //           progress: undefined,
+    //           theme: 'colored'
+    //         });
+    //         setTimeout(() => {
+    //           navigate(-1);
+    //         }, 4000)
+    //       } else {
+    //         toast.error('Erro ao editar curso!', {
+    //           position: "top-right",
+    //           autoClose: 5000,
+    //           hideProgressBar: false,
+    //           closeOnClick: true,
+    //           pauseOnHover: true,
+    //           draggable: true,
+    //           progress: undefined,
+    //           theme: 'colored'
+    //         });
+    //       }
+    //     }
+    //   });
+  
+    //   xhr.open('PATCH', `${Constants.API_URL}courses/${id}`);
+    //   xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+    //   xhr.send(data);
+
+    //   // xhr.send(data);
+    // }, 10000);
+    // e.preventDefault()
+    
+    // const form = new FormData();
+    // if (name !== "") form.append("name", name);
+    // if (description !== "") form.append("description", description);
+    // if (image !== "") form.append("image", image);
+    // if (video !== "") form.append("video", video);
+    // if (specialty !== "") form.append("specialty", specialty);
+    // form.append("category", selectedOptions.join(","));
+    // form.append("active", active ? "1" : "0");
+
+    // let request = new XMLHttpRequest();
+    // request.open('PATCH', `${Constants.API_URL}courses/${id}`);
+    // request.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+    // request.send(form);
   }
 
   function handleAddImage(e: any) {
-    setImage(e.target.files[0])
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      setImage(reader.result)
+    }
+    reader.readAsDataURL(file);
   }
   
   return (
@@ -88,7 +151,13 @@ export const EditCourseAdmin = () => {
         <HStack justifyContent="space-between">
           <BackButton />
           <Box>
-            <Button colorScheme="green" size={"lg"} leftIcon={<Plus />}>Adicionar uma turma</Button>
+            <Button
+              as={Link}
+              to={`/admin/courses/${id}/classes/create`}
+              colorScheme="green"
+              size={"lg"}
+              leftIcon={<Plus />}
+              >Adicionar uma turma</Button>
           </Box>
         </HStack>
         </Header>
@@ -101,19 +170,25 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Nome</FormLabel>
-                <Input type="text" onChange={(e) => setName(e.target.value)} placeholder={course?.name}/>
+                <Input type="text" onChange={(e) => setName(e.target.value)} defaultValue={course?.name}/>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Descrição</FormLabel>
-                <Textarea onChange={(e) => setDescription(e.target.value)} placeholder={course?.description} />
+                <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={course?.description} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Especialidade</FormLabel>
-                <Input type="text" onChange={(e) => setSpecialty(e.target.value)} placeholder={course?.specialty}/>
+                <Input type="text" onChange={(e) => setSpecialty(e.target.value)} defaultValue={course?.specialty}/>
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Carga horária</FormLabel>
+                <Input type="number" onChange={(e) => setWorkload(+e.target.value)} defaultValue={course?.workload}/>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
@@ -132,7 +207,7 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Link do vídeo</FormLabel>
-                <Input type="text" onChange={(e) => setVideo(e.target.value)} placeholder={course?.video}/>
+                <Input type="text" onChange={(e) => setVideo(e.target.value)} defaultValue={course?.video}/>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
@@ -142,7 +217,6 @@ export const EditCourseAdmin = () => {
                   type="file"
                   name="file"
                   onChange={(e) => handleAddImage(e)}
-                  placeholder={course?.image}
                   accept="image/png, image/gif, image/jpeg, image/jpg "/>
               </FormControl>
             </Box>

@@ -28,6 +28,7 @@ import { Eye, PencilLine, Plus, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { Header } from "../Components/Header";
 import { Course } from "../interface/course";
 
@@ -69,11 +70,33 @@ export const Courses = () => {
         },
       })
       .then((res) => {
+        toast.success('Curso deletado!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored'
+        });
         setCourses(
           courses.filter((course) => course.id !== courseToDelete?.id)
         );
         onClose();
-      });
+      }).catch(() => {
+        toast.error('O curso não pode ser deletado pois possui turmas ativas!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored'
+        });
+        onClose();
+      })
   }
 
   return (
@@ -171,6 +194,7 @@ export const Courses = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <ToastContainer />
     </VStack>
   );
 };

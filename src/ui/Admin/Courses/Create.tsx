@@ -12,7 +12,7 @@ import { Header } from '../Components/Header';
 import { Sidebar } from '../Components/Sidebar';
 
 export const CreateCourseAdmin = () => {
-  const options = ["Eletricista", "Pedreiro", "Mestre de Obras", "Encanador", "Empreiteiro", "Técnico em construção civil/edificações", "Hidráulico", "Azulejista", "Arquiteto", "Assentador de pisos", "Marceneiro", "Pintor", "Engenheiro"]
+  const options = ["Pedreiro", "Encanador", "Eletricista", "Marceneiro", "Pintor", "Serralheiro", "Gesseiro", "Aplicador de drywall", "Marido de aluguel", "Mestre de obras"]
 
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -161,7 +161,7 @@ export const CreateCourseAdmin = () => {
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormLabel>Categoria</FormLabel>
+              <FormLabel>Profissão</FormLabel>
               <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {options.map((value) => (
                   <Checkbox

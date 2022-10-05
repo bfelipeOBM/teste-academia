@@ -28,6 +28,7 @@ export const EditCourseAdmin = () => {
   const [image, setImage] = useState<any>("")
   const [active, setActive] = useState<boolean>()
   const [workload, setWorkload] = useState(0.0);
+  const [loading, setLoading] = useState(false)
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ export const EditCourseAdmin = () => {
   }
 
   function handleUpdateCourse(e: any) {
-
+    setLoading(true)
     const updatedCourse: UpdatedCorse = {}
 
     if (name !== "") updatedCourse.name = name;
@@ -80,6 +81,7 @@ export const EditCourseAdmin = () => {
     const xhr = new XMLHttpRequest();
     setTimeout(() => {
       xhr.addEventListener("readystatechange", function () {
+        setLoading(false)
         if (this.readyState === this.DONE) {
           if (this.status === 201) {
             toast.success('Curso editado!', {
@@ -111,6 +113,7 @@ export const EditCourseAdmin = () => {
       });
   
       xhr.open('PATCH', `${Constants.API_URL}courses/${id}`);
+      xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
       const updatedCourseString = JSON.stringify(updatedCourse);
       xhr.send(updatedCourseString);
@@ -231,8 +234,9 @@ export const EditCourseAdmin = () => {
               colorScheme="green"
               w={"full"}
               size={"lg"}
+              disabled={loading}
               onClick={(e) => {handleUpdateCourse(e)}}
-            >Atualizar curso</Button>
+            >{loading ? "Atualizando curso" : "Atualizar curso"}</Button>
               </>
             )}
           </VStack>

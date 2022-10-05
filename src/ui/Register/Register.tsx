@@ -11,7 +11,8 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Select from "react-select";
+import { OnChangeValue } from "react-select";
+import CreatableSelect from "react-select/creatable";
 import "./Register.scss";
 import { formInitialState, schema } from "./RegisterForm";
 
@@ -32,10 +33,29 @@ interface RegisterForm {
   acceptReceiveNews: boolean;
 }
 
+interface Option {
+  value: string;
+  label: string;
+}
+
 const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [options, setOptions] = useState([
+    { value: "pedreiro", label: "Pedreiro" },
+    { value: "encanador", label: "Encanador" },
+    { value: "eletricista", label: "Eletricista" },
+    { value: "marceneiro", label: "Marceneiro" },
+    { value: "pintor", label: "Pintor" },
+    { value: "serralheiro", label: "Serralheiro" },
+    { value: "gesseiro", label: "Gesseiro" },
+    { value: "aplicadordedrywall", label: "Aplicador de drywall" },
+    { value: "maridodealuguel", label: "Marido de aluguel" },
+    { value: "mestredeobras", label: "Mestre de obras" },
+    { value: "DIGITE OUTRA PROFISSÃO", label: "DIGITE OUTRA PROFISSÃO" },
+  ]);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
   const { data: message } = useSelector(
     (state: ApplicationState) => state.message
@@ -85,12 +105,24 @@ const Register = () => {
     }
   };
 
-  const options = [
-    { value: "eletricista", label: "Eletricista" },
-    { value: "pedreiro", label: "Pedreiro" },
-    { value: "encanador", label: "Encanador" },
-    { value: "pintor", label: "Pintor" },
-  ];
+  const createOption = (inputValue: string) => {
+    return {
+      value: inputValue.toLowerCase().replace(/\W/g, ""),
+      label: inputValue,
+    };
+  };
+
+  const handleOptionChange = (newValue: OnChangeValue<Option, false>) => {
+    formik.setFieldValue("occupation", newValue?.value);
+    setSelectedOption(newValue);
+  };
+
+  const handleCreate = (inputValue: string) => {
+    const newOption = createOption(inputValue);
+    setOptions((oldOption) => [...oldOption, newOption]);
+    formik.setFieldValue("occupation", inputValue);
+    setSelectedOption(newOption);
+  };
 
   const formik = useFormik({
     initialValues: initialFormValues,
@@ -99,6 +131,12 @@ const Register = () => {
       handleSubmit(values);
     },
   });
+
+  const otherOccupationStyle = () => {
+    return formik.values.occupation === "DIGITE OUTRA PROFISSÃO"
+      ? "other-occupation"
+      : "";
+  };
 
   return (
     <>
@@ -218,19 +256,21 @@ const Register = () => {
                 <label className="register__form__title" htmlFor="profession">
                   Profissão
                 </label>
-                <Select
+                <CreatableSelect
                   id="occupation"
-                  onChange={(e) => {
-                    formik.setFieldValue("occupation", e?.value as string);
-                  }}
+                  onChange={(e) => handleOptionChange(e)}
                   onBlur={formik.handleBlur}
                   placeholder="Selecione sua profissão"
                   className={`register__form__input-profession ${
                     formik.errors.occupation ? "error" : ""
-                  }`}
+                  }${otherOccupationStyle()}`}
                   classNamePrefix="react-select"
+                  createOptionPosition="first"
+                  onCreateOption={(e) => handleCreate(e)}
+                  formatCreateLabel={(e) => `Selecionar "${e}"`}
                   options={options}
-                ></Select>
+                  value={selectedOption}
+                ></CreatableSelect>
                 {formik.errors.occupation && (
                   <span className="register__form__error">
                     {formik.errors.occupation}

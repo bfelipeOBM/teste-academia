@@ -224,21 +224,13 @@ const ProfileEdit = (props: ProfileEditProps) => {
                 E-mail
               </label>
               <input
+                disabled
                 placeholder="Seu e-mail"
-                className={`profile-edit__form__input ${
-                  formik.touched.email && formik.errors.email ? "error" : ""
-                }`}
+                className="profile-edit__form__input"
                 type="email"
                 id="email"
                 value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
               />
-              {formik.touched.email && formik.errors.email && (
-                <span className="profile-edit__form__error">
-                  {formik.errors.email}
-                </span>
-              )}
             </div>
 
             <div className="profile-edit__form__input-row-group-right">
@@ -249,29 +241,14 @@ const ProfileEdit = (props: ProfileEditProps) => {
                 CPF/CNPJ
               </label>
               <input
+                disabled
                 placeholder="Seu CPF ou CNPJ"
-                className={`profile-edit__form__input ${
-                  formik.touched.document && formik.errors.document
-                    ? "error"
-                    : ""
-                }`}
+                className="profile-edit__form__input"
                 type="text"
                 id="document"
                 maxLength={18}
-                value={formik.values.document}
-                onBlur={formik.handleBlur}
-                onChange={(e) =>
-                  formik.setFieldValue(
-                    "document",
-                    cpfOrCnpjMask(e.target.value)
-                  )
-                }
+                value={cpfOrCnpjMask(formik.values.document)}
               />
-              {formik.touched.document && formik.errors.document && (
-                <span className="profile-edit__form__error">
-                  {formik.errors.document}
-                </span>
-              )}
             </div>
           </div>
           <div className="profile-edit__form__inputs-row-direction">

@@ -136,7 +136,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Nome</FormLabel>
-                <Input type="text" onChange={(e) => setName(e.target.value)} required />
+                <Input type="text" onChange={(e) => setName(e.target.value)} maxLength={105} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

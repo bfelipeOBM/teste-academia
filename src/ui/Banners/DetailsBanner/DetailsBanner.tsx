@@ -1,8 +1,13 @@
+import Constants from "@/application/common/Constants";
+import { navigateToExternalUrl } from "@/application/common/Utils";
 import "./DetailsBanner.scss";
 
 const DetailsBanner = () => {
   return (
-    <div className="details-banner">
+    <div
+      className="details-banner"
+      onClick={() => navigateToExternalUrl(Constants.YOUTUBE_URL)}
+    >
       <div className="details-banner__content">
         <img
           width="100%"

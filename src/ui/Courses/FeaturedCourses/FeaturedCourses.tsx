@@ -34,7 +34,10 @@ const FeaturedCourses = () => {
     setActiveIndex(newIndex);
   };
 
-  const slides = courses?.map((item, index) => {
+  // TODO: Melhorar isso ou usar slides infinitos
+  const limitedCourses = courses.slice(0, 6);
+
+  const slides = limitedCourses?.map((item, index) => {
     return (
       <CarouselItem
         onExiting={() => setAnimating(true)}
@@ -63,7 +66,7 @@ const FeaturedCourses = () => {
       <div className="featured-courses__content">
         <Carousel activeIndex={activeIndex} next={next} previous={previous}>
           <CarouselIndicators
-            items={courses || []}
+            items={limitedCourses || []}
             activeIndex={activeIndex}
             onClickHandler={goToIndex}
           />

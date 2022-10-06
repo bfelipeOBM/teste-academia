@@ -17,6 +17,14 @@ import Header from "@/ui/Header/Header";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from "react-share";
 import { toast, ToastContainer } from "react-toastify";
 import RelatedCourses from "../RelatedCourses/RelatedCourses";
 import "./Course.scss";
@@ -184,25 +192,31 @@ const Course = () => {
                 </div>
                 <div className="share">
                   <span className="share__title">Compartilhar: </span>
-                  <span className="share__images">
-                    <img
-                      src="https://www.obramax.com.br/media/wysiwyg/icon_linkedin.png"
-                      alt="linkedin"
-                      width="100%"
-                      height="100%"
-                    />
-                    <img
-                      src="https://www.obramax.com.br/media/wysiwyg/icon_facebook.png"
-                      alt="facebook"
-                      width="100%"
-                      height="100%"
-                    />
-                    <img
-                      src="https://www.obramax.com.br/media/wysiwyg/icon-whatsapp.png"
-                      alt="twitter"
-                      width="100%"
-                      height="100%"
-                    />
+                  <span className="share__buttons">
+                    <LinkedinShareButton
+                      url={window.location.href}
+                      title={course.name}
+                      summary={course.description}
+                      source="https://academiadeprofissionais.obramax.com.br"
+                      className="share__button"
+                    >
+                      <LinkedinIcon size={32} round />
+                    </LinkedinShareButton>
+
+                    <FacebookShareButton
+                      url={window.location.href}
+                      quote={course.name}
+                      className="share__button"
+                    >
+                      <FacebookIcon size={32} round />
+                    </FacebookShareButton>
+                    <WhatsappShareButton
+                      url={window.location.href}
+                      title={course.name}
+                      className="share__button"
+                    >
+                      <WhatsappIcon size={32} round />
+                    </WhatsappShareButton>
                   </span>
                 </div>
               </div>

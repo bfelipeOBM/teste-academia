@@ -2,7 +2,6 @@ import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
 import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
-import { Plus } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -48,6 +47,14 @@ export const CreateCourseAdmin = () => {
     }
   }
 
+  function handleAddAllCategories(e: any) {
+    if (e.target.checked) {
+      setSelectedOptions(options)
+    } else {
+      setSelectedOptions([])
+    }
+  }
+
   function handleAddImage(e: any) {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -72,12 +79,15 @@ export const CreateCourseAdmin = () => {
       "active": true
     });
 
+    console.log(data)
+
     setLoadingCreateCourse(true)
 
     setTimeout(() => {
       const xhr = new XMLHttpRequest();
-      setLoadingCreateCourse(true);
+      setLoadingCreateCourse(false);
       xhr.addEventListener("readystatechange", function () {
+        console.log(this.readyState)
         if (this.readyState === this.DONE) {
           setLoadingCreateCourse(false)
           if (this.status === 201) {
@@ -166,11 +176,16 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormLabel>Profissão</FormLabel>
               <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                <Checkbox
+                  value="Todos"
+                  onChange={(e) => {handleAddAllCategories(e)}}
+                  >Todos</Checkbox>
                 {options.map((value) => (
                   <Checkbox
                     key={value}
                     value={value}
                     onChange={(e) => handleAddCategory(e)}
+                    isChecked={selectedOptions.includes(value)}
                   >{value}</Checkbox>
                 ))}
               </Grid>

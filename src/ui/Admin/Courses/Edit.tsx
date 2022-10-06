@@ -33,6 +33,14 @@ export const EditCourseAdmin = () => {
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  function handleAddAllCategories(e: any) {
+    if (e.target.checked) {
+      setSelectedOptions(options)
+    } else {
+      setSelectedOptions([])
+    }
+  }
   
   useEffect(() => {
     if (userState.isLoggedIn) {
@@ -51,7 +59,7 @@ export const EditCourseAdmin = () => {
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}`).then(res => {
       setCourse(res.data);
-      setSelectedOptions(res.data.category  );
+      setSelectedOptions(res.data.category);
       setActive(res.data.active);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,6 +198,11 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
                 <FormLabel>Categoria</FormLabel>
                 <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                <Checkbox
+                  value="Todos"
+                  onChange={(e) => {handleAddAllCategories(e)}}
+                  isChecked={selectedOptions.length === options.length}
+                  >Todos</Checkbox>
                 {options.map((value) => (
                   <Checkbox
                     value={value}

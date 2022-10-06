@@ -228,6 +228,13 @@ const Course = () => {
                   <span>DETALHES DO CURSO</span>
                 </div>
                 <div className="details">
+                  <div className="partner">
+                    Parceiro:{" "}
+                    {classes.length > 0 && classes[0]?.partner && (
+                      <span>{classes[0].partner} </span>
+                    )}
+                  </div>
+
                   <div className="date">
                     Data: <span>{nextClassDate}</span>
                   </div>
@@ -281,7 +288,7 @@ const Course = () => {
                         {FormatToBrazilianDate(item.date)}
                       </span>
                       <div className="divider"></div>
-                      <span className="location">{item?.location_id}</span>
+                      <span className="location">{item?.location_name}</span>
                     </div>
                   ))}
               </div>

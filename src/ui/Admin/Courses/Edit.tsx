@@ -74,7 +74,6 @@ export const EditCourseAdmin = () => {
     if (name !== "") updatedCourse.name = name;
     if (description !== "") updatedCourse.description = description;
     if (image !== "") updatedCourse.image = image;
-    if (video !== "") updatedCourse.video = video;
     if (specialty !== "") updatedCourse.specialty = specialty;
     if (workload !== 0.0) updatedCourse.workload = workload;
     updatedCourse.category = selectedOptions;

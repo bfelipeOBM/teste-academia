@@ -84,6 +84,7 @@ export const EditCourseAdmin = () => {
     if (image !== "") updatedCourse.image = image;
     if (specialty !== "") updatedCourse.specialty = specialty;
     if (workload !== 0.0) updatedCourse.workload = workload;
+    updatedCourse.video = video;
     updatedCourse.category = selectedOptions;
     updatedCourse.active = active;
     const xhr = new XMLHttpRequest();
@@ -137,7 +138,6 @@ export const EditCourseAdmin = () => {
     reader.readAsDataURL(file);
   }
   
-  console.log(course?.workload)
 
   return (
     <Flex w="100%">

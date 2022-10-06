@@ -32,14 +32,22 @@ export const ClassesInfoAdmin = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
-    axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}`).then((res) => {
+    axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}`, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+      }
+    }).then((res) => {
       setClasse(res.data);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments`).then((res) => {
+    axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments`, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+      }
+    }).then((res) => {
       setUsers(res.data);
       setFilteredUsers(res.data);
     })
@@ -60,7 +68,7 @@ export const ClassesInfoAdmin = () => {
 
   function handleUpdateUserParticipated(e: any, user_id: number) {
     axios.patch(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments/${user_id}`, {
-      user_participated: e.target.checked
+      user_participated: e.target.checked,
     })
 
     const updatedUsers = users?.map(user => {
@@ -71,8 +79,6 @@ export const ClassesInfoAdmin = () => {
     })
     setFilteredUsers(updatedUsers)
   }
-
-  console.log(classe)
 
   return (
     <Flex w="100%">

@@ -63,7 +63,7 @@ const CourseCard = (props: Props) => {
           <button className="goto__button" onClick={goToCourse}>
             Quero Participar
           </button>
-          {course?.workload && (
+          {course?.workload > 0 && (
             <div className="workload">
               Carga horária: <span>{course?.workload}h</span>
             </div>

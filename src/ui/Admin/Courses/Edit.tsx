@@ -160,7 +160,7 @@ export const EditCourseAdmin = () => {
         
         <Box w="100%" maxW={1120} mx="auto">
           <Box py={8}>
-            <Text fontSize={"2xl"}>Criar um novo curso</Text>
+            <Text fontSize={"2xl"}>Editar curso</Text>
           </Box>
           <VStack as="form" spacing={6} onSubmit={(e) => {handleUpdateCourse(e)}}>
             {course && (

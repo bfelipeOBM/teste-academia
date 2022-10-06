@@ -1,4 +1,4 @@
 export type Class = {
-  id?: number;
-  date?: string;
+  id: number;
+  date: string;
 };

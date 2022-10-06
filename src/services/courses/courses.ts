@@ -30,17 +30,18 @@ const getCourseMaterial = async (id: number) => {
       headers: authHeader() as AxiosRequestHeaders,
     }
   );
-  if (response.data.length > 0) {
+  response.data.map((material: any) => {
     const link = document.createElement("a");
     link.setAttribute(
       "download",
-      /(?<=\/)[^\/\?#]+(?=[^\/]*$)/g.exec(response.data[0].file_url)![0]
+      /(?<=\/)[^\/\?#]+(?=[^\/]*$)/g.exec(material.file_url)![0]
     );
-    link.href = response.data[0].file_url;
+    link.href = material.file_url;
+    link.download = material.file_url;
+    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-  }
+  });
 
   return response.data;
 };

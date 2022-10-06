@@ -1,4 +1,4 @@
-import { Class } from "./class";
+import { CourseClass } from "./class";
 
 export type Course = {
   workload?: string;
@@ -11,7 +11,7 @@ export type Course = {
   specialty?: string;
   category?: string[];
   tags?: string[];
-  upcoming_classes?: Class[];
+  upcoming_classes?: CourseClass[];
   active?: boolean;
   status?: string;
   inserted_at?: string;

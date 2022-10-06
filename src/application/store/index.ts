@@ -3,6 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
+import { ClassState } from "./classes/types";
 import { CoursesState } from "./courses/types";
 import { MessageState } from "./message/types";
 import { ProfileState } from "./profile/types";
@@ -22,6 +23,8 @@ export interface ApplicationState {
   courses: CoursesState;
   mycourses: CoursesState;
   course: CoursesState;
+  classes: ClassState;
+  myclasses: ClassState;
 }
 
 export type RootReducer = ReturnType<typeof rootReducer>;

@@ -169,10 +169,24 @@ const validateCpfCnpj = (val: any) => {
   }
 };
 
+const capitalize = (string: string) => {
+  return string && string[0].toUpperCase() + string.slice(1);
+};
+
+const FormatToBrazilianDate = (date: string) => {
+  return date && new Intl.DateTimeFormat("pt-BR").format(new Date(date));
+};
+
+const navigateToExternalUrl = (url: string, shouldOpenNewTab: boolean = true) =>
+  shouldOpenNewTab ? window.open(url, "_blank") : (window.location.href = url);
+
 export {
   cpfOrCnpjMask,
   phoneMask,
   getFirstAndLastName,
   useWindowSize,
   validateCpfCnpj,
+  capitalize,
+  FormatToBrazilianDate,
+  navigateToExternalUrl,
 };

@@ -1,3 +1,4 @@
+import { FormatToBrazilianDate } from "@/application/common/Utils";
 import { Course } from "@/application/models/course";
 import { ApplicationState } from "@/application/store";
 import { useEffect, useState } from "react";
@@ -23,9 +24,7 @@ const CourseCard = (props: Props) => {
     if (course?.upcoming_classes && course.upcoming_classes.length > 0) {
       course.upcoming_classes[0].date
         ? setNextClassDate(
-            new Intl.DateTimeFormat("pt-BR").format(
-              new Date(course.upcoming_classes[0].date)
-            )
+            FormatToBrazilianDate(course.upcoming_classes[0].date)
           )
         : setNextClassDate("");
     }
@@ -66,7 +65,7 @@ const CourseCard = (props: Props) => {
           </button>
           {course?.workload && (
             <div className="workload">
-              Carga horária: <span>{course?.workload}</span>
+              Carga horária: <span>{course?.workload}h</span>
             </div>
           )}
         </div>

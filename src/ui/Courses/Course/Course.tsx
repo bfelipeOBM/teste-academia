@@ -1,21 +1,37 @@
+import {
+  FormatToBrazilianDate,
+  navigateToExternalUrl,
+} from "@/application/common/Utils";
+import { Class } from "@/application/models/class";
 import { ApplicationState } from "@/application/store";
+import {
+  enrollOnClass,
+  getCourseClasses,
+} from "@/application/store/classes/action";
 import { getCourse } from "@/application/store/courses/action";
 import Footer from "@/ui/Footer/Footer";
 import Header from "@/ui/Header/Header";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import RelatedCourses from "../RelatedCourses/RelatedCourses";
 import "./Course.scss";
 
 const Course = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const { course } = useSelector((state: ApplicationState) => state.course);
   const [loading, setLoading] = useState(false);
   const [nextClassDate, setNextClassDate] = useState("");
+  const [disabledEnrollButton, setDisabledEnrollButton] = useState(false);
 
-  window.scrollTo(0, 0);
+  const { course } = useSelector((state: ApplicationState) => state.course);
+  const { classes } = useSelector((state: ApplicationState) => state.classes);
+  const { data: message } = useSelector(
+    (state: ApplicationState) => state.message
+  );
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+
+  const dispatch = useDispatch();
 
   const loadCourse = async () => {
     setLoading(true);
@@ -25,7 +41,67 @@ const Course = () => {
     setLoading(false);
   };
 
+  const loadClasses = async () => {
+    setLoading(true);
+    if (course.id) {
+      await dispatch(getCourseClasses(course) as any);
+    }
+    setLoading(false);
+  };
+
+  const enrolledStudentsText = (enrolled: number) => {
+    return enrolled && enrolled > 1
+      ? "pessoas já se inscreveram nesse curso"
+      : enrolled == 1
+      ? "pessoa já se inscreveu nesse curso"
+      : "Nenhuma pessoa se inscreveu nesse curso";
+  };
+
+  const handleEnroll = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const currentClass = classes.length && classes[0];
+
+    if (currentClass && course.id) {
+      try {
+        await dispatch(
+          enrollOnClass(course.id, currentClass.class_id, profile) as any
+        );
+
+        if (currentClass.sympla_url) {
+          navigateToExternalUrl(currentClass.sympla_url);
+        }
+
+        toast.success("Sucesso ao se inscrever!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        setDisabledEnrollButton(true);
+      } catch {
+        toast.error(`Erro! ${message.detail}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        setDisabledEnrollButton(false);
+      }
+    }
+  };
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (id) {
       loadCourse();
     }
@@ -37,16 +113,22 @@ const Course = () => {
       course.upcoming_classes.length > 0 &&
       course.upcoming_classes[0].date
     ) {
-      setNextClassDate(
-        new Intl.DateTimeFormat("pt-BR").format(
-          new Date(course.upcoming_classes[0].date)
-        )
-      );
+      setNextClassDate(FormatToBrazilianDate(course.upcoming_classes[0].date));
+    }
+
+    if (course) {
+      loadClasses();
     }
   }, [course]);
 
+  useEffect(() => {
+    if (classes) {
+    }
+  }, [classes]);
+
   return (
     <>
+      <ToastContainer />
       <Header></Header>
       {!loading && course && (
         <div className="course">
@@ -117,7 +199,7 @@ const Course = () => {
                   </div>
 
                   <div className="workload">
-                    Carga horária: <span>{course.workload}</span>
+                    Carga horária: <span>{course.workload}h</span>
                   </div>
 
                   <div className="categories">
@@ -135,8 +217,10 @@ const Course = () => {
                   </div>
 
                   <div className="enrollments">
-                    {/* <span>{course.enrollments}</span> pessoas já se inscreveram nesse curso */}
-                    <span>100</span> pessoas já se inscreveram nesse curso
+                    {classes.length > 0 && classes[0]?.students_count > 0 && (
+                      <span>{classes[0].students_count} </span>
+                    )}{" "}
+                    {enrolledStudentsText(classes[0]?.students_count)}
                   </div>
                 </div>
 
@@ -149,19 +233,23 @@ const Course = () => {
               </div>
 
               <div className="course__details__subscribe">
-                <button>Inscrever-se</button>
+                <button disabled={disabledEnrollButton} onClick={handleEnroll}>
+                  Inscrever-se
+                </button>
               </div>
 
               <div className="course__details__next-dates">
                 <span className="title">Próximas datas</span>
-                {/* {course?.upcoming_classes?.length &&
-                  course?.upcoming_classes.map((item: any) => (
+                {classes?.length > 0 &&
+                  classes.map((item: Class) => (
                     <div key={item.date} className="date">
-                      <span className="title">{item.date}</span>
+                      <span className="title">
+                        {FormatToBrazilianDate(item.date)}
+                      </span>
                       <div className="divider"></div>
-                      <span className="location">{item.location}</span>
+                      <span className="location">{item?.location_id}</span>
                     </div>
-                  ))} */}
+                  ))}
               </div>
             </div>
           </div>

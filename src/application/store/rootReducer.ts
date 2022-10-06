@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { default as classes, default as myclasses } from "./classes";
 import {
   default as course,
   default as courses,
@@ -15,4 +16,6 @@ export default combineReducers({
   courses,
   mycourses,
   course,
+  classes,
+  myclasses,
 });

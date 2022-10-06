@@ -1,4 +1,5 @@
 import {
+  capitalize,
   cpfOrCnpjMask,
   phoneMask,
   useWindowSize,
@@ -59,7 +60,10 @@ const ProfileEdit = (props: ProfileEditProps) => {
     { value: "mestredeobras", label: "Mestre de obras" },
     { value: "DIGITE OUTRA PROFISSÃO", label: "DIGITE OUTRA PROFISSÃO" },
   ]);
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [selectedOption, setSelectedOption] = useState<Option | null>({
+    value: userInfo.occupation,
+    label: userInfo.occupation && capitalize(userInfo.occupation),
+  } as Option);
 
   const { data: message } = useSelector(
     (state: ApplicationState) => state.message

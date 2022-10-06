@@ -66,7 +66,6 @@ const Login = () => {
         login: userLoginData,
         password,
       };
-      console.log(loginData);
       dispatch(login(loginData) as any);
     } catch {
       alert(message.detail);

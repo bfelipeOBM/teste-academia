@@ -10,10 +10,11 @@ export type Class = {
   course_id: number;
   date: string;
   location_id: number;
+  location_name: string;
   max_students: number;
   inserted_at: string;
   updated_at: string;
-  partner: Partner;
+  partner: string;
   sympla_url: string;
   name: string;
   description: string;
@@ -25,11 +26,4 @@ export type Class = {
   specialty: string;
   workload: number;
   students_count: number;
-};
-
-export type Partner = {
-  id: number;
-  name: string;
-  description: string;
-  url: string;
 };

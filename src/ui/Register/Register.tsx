@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { OnChangeValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
+import { toast, ToastContainer } from "react-toastify";
 import "./Register.scss";
 import { formInitialState, schema } from "./RegisterForm";
 
@@ -79,7 +80,16 @@ const Register = () => {
       await dispatch(register(registerData) as any);
       navigate("/");
     } catch {
-      alert(message.detail);
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
 
     setLoading(false);
@@ -140,6 +150,7 @@ const Register = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="register-watermark-image">
         <img src={waterMark} alt="register" />
       </div>

@@ -1,8 +1,11 @@
+import { ApplicationState } from "@/application/store";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import changepasswordImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import "./ChangePassword.scss";
 
 const recoveryMethodType = {
@@ -19,6 +22,10 @@ const ChangePassword = () => {
   const [errorPasswordText, setErrorPasswordText] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { data: message } = useSelector(
+    (state: ApplicationState) => state.message
+  );
 
   const { phone: userNumber, email: userEmail } = JSON.parse(
     localStorage.getItem("reset-pwd-methods")!
@@ -57,13 +64,23 @@ const ChangePassword = () => {
       await AuthService.changePassword(userDocument, userPassword);
       navigate("/login");
     } catch {
-      setError("Falha ao solicitar recuperação de senha");
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
 
     setLoading(false);
   };
   return (
     <>
+      <ToastContainer />
       <div className="changepassword-watermark-image">
         <img src={waterMark} alt="changepassword" />
       </div>
@@ -90,8 +107,15 @@ const ChangePassword = () => {
             </span>
           </div>
           <div>
-          <span className="changepassword__right__title">Definir uma nova senha</span>
-            <p style={{height: "auto"}}>A nova senha deve conter <strong>letras</strong> e <strong>números</strong> e ter no <strong>mínimo 6 caracteres</strong>. Você também pode usar letras maiúsculas e minúsculas e caracteres especiais (*, %, $, @).</p>
+            <span className="changepassword__right__title">
+              Definir uma nova senha
+            </span>
+            <p style={{ height: "auto" }}>
+              A nova senha deve conter <strong>letras</strong> e{" "}
+              <strong>números</strong> e ter no{" "}
+              <strong>mínimo 6 caracteres</strong>. Você também pode usar letras
+              maiúsculas e minúsculas e caracteres especiais (*, %, $, @).
+            </p>
           </div>
           <form className="changepassword__form" onSubmit={handleSubmit}>
             <div className="changepassword__form__inputs-group">
@@ -99,32 +123,35 @@ const ChangePassword = () => {
                 <label
                   className="changepassword__form__checkbox__title"
                   htmlFor="userPassword"
-                >Nova senha
+                >
+                  Nova senha
                 </label>
-                  <input
-                    className="changepassword__form__checkbox__input"
-                    type="text"
-                    id="userPassword"
-                    onChange={(e) => setUserPassword(e.target.value)}
-                  />
-                  <span>&nbsp;</span>
-                  
+                <input
+                  className="changepassword__form__checkbox__input"
+                  type="text"
+                  id="userPassword"
+                  onChange={(e) => setUserPassword(e.target.value)}
+                />
+                <span>&nbsp;</span>
               </div>
             </div>
             <div className="changepassword__form__inputs-group">
               <div className="changepassword__form__checkbox">
-              <label
+                <label
                   className="changepassword__form__checkbox__title"
                   htmlFor="userPassword"
-                >Confirmar nova senha
+                >
+                  Confirmar nova senha
                 </label>
-                  <input
-                    className="changepassword__form__checkbox__input"
-                    type="text"
-                    id="userPassword"
-                    onChange={(e) => setUserPasswordConfirmation(e.target.value)}
-                  />
-                  {errorPasswordText && (<span style={{color: 'red'}}>"As senhas não conferem"</span>)}
+                <input
+                  className="changepassword__form__checkbox__input"
+                  type="text"
+                  id="userPassword"
+                  onChange={(e) => setUserPasswordConfirmation(e.target.value)}
+                />
+                {errorPasswordText && (
+                  <span style={{ color: "red" }}>"As senhas não conferem"</span>
+                )}
               </div>
             </div>
             <button

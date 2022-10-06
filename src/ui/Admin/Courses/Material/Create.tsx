@@ -66,7 +66,6 @@ export const CreateCourseMaterialAdmin = () => {
     })
 
     const sendData = JSON.stringify(data);
-    // console.log(sendData)
     setLoading(true);
     setTimeout(() => {
       let xhr = new XMLHttpRequest();
@@ -85,7 +84,7 @@ export const CreateCourseMaterialAdmin = () => {
               theme: 'colored'
             });
             setTimeout(() => {
-              navigate(-1);
+              // navigate(-1);
             }, 3000)
           } else {
             toast.error('Erro ao adicionar materiais!', {
@@ -105,7 +104,7 @@ export const CreateCourseMaterialAdmin = () => {
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
       xhr.send(sendData);
-    }, 5000)
+    }, 10)
     
   }
 

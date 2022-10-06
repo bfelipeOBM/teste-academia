@@ -59,9 +59,6 @@ export const UsersAdminInfos = () => {
     setUserToDelete(user);
     onOpen();
   }
-
-  console.log(users)
-
   function handleDeleteUser() {
     axios.delete(`${Constants.API_URL}users/${userToDelete?.id}`, {
       headers: {

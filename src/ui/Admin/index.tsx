@@ -22,8 +22,6 @@ export const Admin = () => {
     }
   }, [user.isLoggedIn, dispatch]);
 
-  console.log(profile)
-
   return (
     <Flex w="100%">
       <Sidebar />

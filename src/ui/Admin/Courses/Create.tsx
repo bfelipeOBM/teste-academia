@@ -79,7 +79,6 @@ export const CreateCourseAdmin = () => {
       "active": true
     });
 
-    console.log(data)
 
     setLoadingCreateCourse(true)
 
@@ -87,7 +86,6 @@ export const CreateCourseAdmin = () => {
       const xhr = new XMLHttpRequest();
       setLoadingCreateCourse(false);
       xhr.addEventListener("readystatechange", function () {
-        console.log(this.readyState)
         if (this.readyState === this.DONE) {
           setLoadingCreateCourse(false)
           if (this.status === 201) {

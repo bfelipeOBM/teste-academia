@@ -24,7 +24,6 @@ export const UsersAdminCreate = () => {
   const dispatch = useDispatch();
   const emailError = email === "" || email.length < 5 || !email.includes("@") || !email.includes(".");
 
-  console.log(emailError)
 
   useEffect(() => {
     if (userState.isLoggedIn) {
@@ -50,7 +49,6 @@ export const UsersAdminCreate = () => {
       active
     }
 
-    // console.log({createUser})
 
     axios.post(`${Constants.API_URL}users/`, createUser).then((response) => {
       toast.success('Conta criada!', {

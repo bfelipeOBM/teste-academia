@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { OnChangeValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
+import { toast, ToastContainer } from "react-toastify";
 import "./ProfileEdit.scss";
 import { schema } from "./ProfileEditForm";
 
@@ -93,8 +94,28 @@ const ProfileEdit = (props: ProfileEditProps) => {
       };
 
       await dispatch(updateProfile(profileData) as any);
+
+      toast.success("Dados atualizados!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } catch {
-      alert(message.detail);
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
 
     setLoading(false);
@@ -117,9 +138,29 @@ const ProfileEdit = (props: ProfileEditProps) => {
     try {
       if (userImageFile) {
         await dispatch(updatePhoto(userImageFile, userInfo) as any);
+
+        toast.success("Imagem atualizada!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch {
-      alert(message.detail);
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -157,324 +198,337 @@ const ProfileEdit = (props: ProfileEditProps) => {
   };
 
   return (
-    <div className="profile-edit">
-      <div className="profile-edit__header">
-        <span className="profile-edit__header__title">Meus Dados</span>
-        <span className="profile-edit__header__description">
-          Olá {userInfo.name}, aqui você pode editar seus dados.
-        </span>
-      </div>
-      <div className="profile-edit__form">
-        {width < 769 && (
-          <div className="profile-edit__form__avatar-upload">
-            <div className="profile-edit__form__avatar-upload__title">
-              <span>Imagem de Perfil</span>
-            </div>
-            <div className="profile-edit__form__avatar-upload__image">
-              <ImageUpload src={userImage} onChange={changePhoto}></ImageUpload>
-            </div>
-            <div className="profile-edit__form__avatar-upload__button">
-              <button
-                type="button"
-                className="profile-edit__form__avatar-upload__button-button"
-                onClick={uploadProfileImage}
-                disabled={loading || !userImageFile}
-              >
-                Enviar Imagem
-              </button>
-            </div>
-            <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
-              <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
-                Vincular conta:
-              </span>
+    <>
+      <ToastContainer />
 
-              <div className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons">
-                <div
-                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                  onClick={() => {}}
+      <div className="profile-edit">
+        <div className="profile-edit__header">
+          <span className="profile-edit__header__title">Meus Dados</span>
+          <span className="profile-edit__header__description">
+            Olá {userInfo.name}, aqui você pode editar seus dados.
+          </span>
+        </div>
+        <div className="profile-edit__form">
+          {width < 769 && (
+            <div className="profile-edit__form__avatar-upload">
+              <div className="profile-edit__form__avatar-upload__title">
+                <span>Imagem de Perfil</span>
+              </div>
+              <div className="profile-edit__form__avatar-upload__image">
+                <ImageUpload
+                  src={userImage}
+                  onChange={changePhoto}
+                ></ImageUpload>
+              </div>
+              <div className="profile-edit__form__avatar-upload__button">
+                <button
+                  type="button"
+                  className="profile-edit__form__avatar-upload__button-button"
+                  onClick={uploadProfileImage}
+                  disabled={loading || !userImageFile}
                 >
-                  <img
-                    src={obramaxLogo}
-                    alt="obramax"
-                    width="100%"
-                    height="100%"
-                  />
-                </div>
+                  Enviar Imagem
+                </button>
+              </div>
+              <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
+                <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
+                  Vincular conta:
+                </span>
 
-                <div
-                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                  onClick={() => {}}
-                >
-                  <img
-                    src={facebookLogo}
-                    alt="facebook"
-                    width="100%"
-                    height="100%"
-                  />
-                </div>
+                <div className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons">
+                  <div
+                    className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                    onClick={() => {}}
+                  >
+                    <img
+                      src={obramaxLogo}
+                      alt="obramax"
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
 
-                <div
-                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                  onClick={() => {}}
-                >
-                  <img
-                    src={googleLogo}
-                    alt="google"
-                    width="100%"
-                    height="100%"
-                  />
+                  <div
+                    className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                    onClick={() => {}}
+                  >
+                    <img
+                      src={facebookLogo}
+                      alt="facebook"
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+
+                  <div
+                    className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                    onClick={() => {}}
+                  >
+                    <img
+                      src={googleLogo}
+                      alt="google"
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-        <form
-          className="form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            formik.handleSubmit(e);
-          }}
-        >
-          <div className="profile-edit__form__inputs-group">
-            <label className="profile-edit__form__title" htmlFor="name">
-              Nome
-            </label>
-            <input
-              placeholder="Nome completo"
-              className={`profile-edit__form__input ${
-                formik.touched.name && formik.errors.name ? "error" : ""
-              }`}
-              type="text"
-              id="name"
-              value={formik.values.name}
-              maxLength={95}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.name && formik.errors.name && (
-              <span className="profile-edit__form__error">
-                {formik.errors.name}
-              </span>
-            )}
-          </div>
-          <div className="profile-edit__form__inputs-row-direction">
-            <div className="profile-edit__form__input-row-group-left">
-              <label
-                className="profile-edit__form__title__email"
-                htmlFor="email"
-              >
-                E-mail
+          )}
+          <form
+            className="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              formik.handleSubmit(e);
+            }}
+          >
+            <div className="profile-edit__form__inputs-group">
+              <label className="profile-edit__form__title" htmlFor="name">
+                Nome
               </label>
               <input
-                disabled
-                placeholder="Seu e-mail"
-                className="profile-edit__form__input"
-                type="email"
-                id="email"
-                value={formik.values.email}
-              />
-            </div>
-
-            <div className="profile-edit__form__input-row-group-right">
-              <label
-                className="profile-edit__form__title__cpf-cnpf"
-                htmlFor="cpf-cnpf"
-              >
-                CPF/CNPJ
-              </label>
-              <input
-                disabled
-                placeholder="Seu CPF ou CNPJ"
-                className="profile-edit__form__input"
-                type="text"
-                id="document"
-                maxLength={18}
-                value={cpfOrCnpjMask(formik.values.document)}
-              />
-            </div>
-          </div>
-          <div className="profile-edit__form__inputs-row-direction">
-            <div className="profile-edit__form__input-row-group-left">
-              <label className="profile-edit__form__title" htmlFor="profession">
-                Profissão
-              </label>
-              <CreatableSelect
-                id="occupation"
-                onChange={(e) => handleOptionChange(e)}
-                onBlur={formik.handleBlur}
-                placeholder="Selecione sua profissão"
-                className={`register__form__input-profession ${
-                  formik.errors.occupation ? "error" : ""
-                }${otherOccupationStyle()}`}
-                classNamePrefix="react-select"
-                createOptionPosition="first"
-                onCreateOption={(e) => handleCreate(e)}
-                formatCreateLabel={(e) => `Selecionar "${e}"`}
-                options={options}
-                value={selectedOption}
-              ></CreatableSelect>
-              {formik.errors.occupation && (
-                <span className="profile-edit__form__error">
-                  {formik.errors.occupation}
-                </span>
-              )}
-            </div>
-            <div className="profile-edit__form__input-row-group-right">
-              <label className="profile-edit__form__title" htmlFor="whatsapp">
-                Whatsapp
-              </label>
-              <input
-                placeholder="Seu Whatsapp"
+                placeholder="Nome completo"
                 className={`profile-edit__form__input ${
-                  formik.touched.whatsapp && formik.errors.whatsapp
-                    ? "error"
-                    : ""
+                  formik.touched.name && formik.errors.name ? "error" : ""
                 }`}
                 type="text"
-                id="whatsapp"
-                maxLength={15}
-                value={formik.values.whatsapp}
-                onBlur={formik.handleBlur}
-                onChange={(e) =>
-                  formik.setFieldValue("whatsapp", phoneMask(e.target.value))
-                }
-              />
-              {formik.touched.whatsapp && formik.errors.whatsapp && (
-                <span className="profile-edit__form__error">
-                  {formik.errors.whatsapp}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className="profile-edit__form__inputs-row-direction">
-            <div className="profile-edit__form__input-row-group-left">
-              <label
-                className="profile-edit__form__title-password"
-                htmlFor="password"
-              >
-                Senha
-              </label>
-              <input
-                placeholder="Sua senha"
-                className={`profile-edit__form__input-password ${
-                  formik.touched.password && formik.errors.password
-                    ? "error"
-                    : ""
-                }`}
-                type="password"
-                id="password"
-                value={formik.values.password}
+                id="name"
+                value={formik.values.name}
+                maxLength={95}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.password && formik.errors.password && (
+              {formik.touched.name && formik.errors.name && (
                 <span className="profile-edit__form__error">
-                  {formik.errors.password}
+                  {formik.errors.name}
                 </span>
               )}
             </div>
-            <div className="profile-edit__form__input-row-group-right">
-              <label
-                className="profile-edit__form__title__confirm-password"
-                htmlFor="confirmPassword"
-              >
-                Confirmar senha
-              </label>
-              <input
-                placeholder="Confirme sua senha"
-                className={`profile-edit__form__input-confirm-password ${
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                    ? "error"
-                    : ""
-                }`}
-                type="password"
-                id="confirmPassword"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.confirmPassword &&
-                formik.errors.confirmPassword && (
+            <div className="profile-edit__form__inputs-row-direction">
+              <div className="profile-edit__form__input-row-group-left">
+                <label
+                  className="profile-edit__form__title__email"
+                  htmlFor="email"
+                >
+                  E-mail
+                </label>
+                <input
+                  disabled
+                  placeholder="Seu e-mail"
+                  className="profile-edit__form__input"
+                  type="email"
+                  id="email"
+                  value={formik.values.email}
+                />
+              </div>
+
+              <div className="profile-edit__form__input-row-group-right">
+                <label
+                  className="profile-edit__form__title__cpf-cnpf"
+                  htmlFor="cpf-cnpf"
+                >
+                  CPF/CNPJ
+                </label>
+                <input
+                  disabled
+                  placeholder="Seu CPF ou CNPJ"
+                  className="profile-edit__form__input"
+                  type="text"
+                  id="document"
+                  maxLength={18}
+                  value={cpfOrCnpjMask(formik.values.document)}
+                />
+              </div>
+            </div>
+            <div className="profile-edit__form__inputs-row-direction">
+              <div className="profile-edit__form__input-row-group-left">
+                <label
+                  className="profile-edit__form__title"
+                  htmlFor="profession"
+                >
+                  Profissão
+                </label>
+                <CreatableSelect
+                  id="occupation"
+                  onChange={(e) => handleOptionChange(e)}
+                  onBlur={formik.handleBlur}
+                  placeholder="Selecione sua profissão"
+                  className={`register__form__input-profession ${
+                    formik.errors.occupation ? "error" : ""
+                  }${otherOccupationStyle()}`}
+                  classNamePrefix="react-select"
+                  createOptionPosition="first"
+                  onCreateOption={(e) => handleCreate(e)}
+                  formatCreateLabel={(e) => `Selecionar "${e}"`}
+                  options={options}
+                  value={selectedOption}
+                ></CreatableSelect>
+                {formik.errors.occupation && (
                   <span className="profile-edit__form__error">
-                    {formik.errors.confirmPassword}
+                    {formik.errors.occupation}
                   </span>
                 )}
+              </div>
+              <div className="profile-edit__form__input-row-group-right">
+                <label className="profile-edit__form__title" htmlFor="whatsapp">
+                  Whatsapp
+                </label>
+                <input
+                  placeholder="Seu Whatsapp"
+                  className={`profile-edit__form__input ${
+                    formik.touched.whatsapp && formik.errors.whatsapp
+                      ? "error"
+                      : ""
+                  }`}
+                  type="text"
+                  id="whatsapp"
+                  maxLength={15}
+                  value={formik.values.whatsapp}
+                  onBlur={formik.handleBlur}
+                  onChange={(e) =>
+                    formik.setFieldValue("whatsapp", phoneMask(e.target.value))
+                  }
+                />
+                {formik.touched.whatsapp && formik.errors.whatsapp && (
+                  <span className="profile-edit__form__error">
+                    {formik.errors.whatsapp}
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
-          <button
-            type="submit"
-            className="profile-edit__form__button"
-            disabled={loading || !formik.isValid || !formik.dirty}
-          >
-            {loading ? "Carregando..." : "Atualizar Dados"}
-          </button>
-        </form>
-        {width > 769 && (
-          <div className="profile-edit__form__avatar-upload">
-            <div className="profile-edit__form__avatar-upload__title">
-              <span>Imagem de Perfil</span>
-            </div>
-            <div className="profile-edit__form__avatar-upload__image">
-              <ImageUpload src={userImage} onChange={changePhoto}></ImageUpload>
-            </div>
-            <div className="profile-edit__form__avatar-upload__button">
-              <button
-                type="button"
-                className="profile-edit__form__avatar-upload__button-button"
-                onClick={uploadProfileImage}
-                disabled={loading || !userImageFile}
-              >
-                Enviar Imagem
-              </button>
-            </div>
-            <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
-              <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
-                Vincular conta:
-              </span>
-
-              <div className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons">
-                <div
-                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                  onClick={() => {}}
+            <div className="profile-edit__form__inputs-row-direction">
+              <div className="profile-edit__form__input-row-group-left">
+                <label
+                  className="profile-edit__form__title-password"
+                  htmlFor="password"
                 >
-                  <img
-                    src={obramaxLogo}
-                    alt="obramax"
-                    width="100%"
-                    height="100%"
-                  />
-                </div>
-
-                <div
-                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                  onClick={() => {}}
+                  Senha
+                </label>
+                <input
+                  placeholder="Sua senha"
+                  className={`profile-edit__form__input-password ${
+                    formik.touched.password && formik.errors.password
+                      ? "error"
+                      : ""
+                  }`}
+                  type="password"
+                  id="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.password && formik.errors.password && (
+                  <span className="profile-edit__form__error">
+                    {formik.errors.password}
+                  </span>
+                )}
+              </div>
+              <div className="profile-edit__form__input-row-group-right">
+                <label
+                  className="profile-edit__form__title__confirm-password"
+                  htmlFor="confirmPassword"
                 >
-                  <img
-                    src={facebookLogo}
-                    alt="facebook"
-                    width="100%"
-                    height="100%"
-                  />
-                </div>
-
-                <div
-                  className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
-                  onClick={() => {}}
+                  Confirmar senha
+                </label>
+                <input
+                  placeholder="Confirme sua senha"
+                  className={`profile-edit__form__input-confirm-password ${
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
+                      ? "error"
+                      : ""
+                  }`}
+                  type="password"
+                  id="confirmPassword"
+                  value={formik.values.confirmPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword && (
+                    <span className="profile-edit__form__error">
+                      {formik.errors.confirmPassword}
+                    </span>
+                  )}
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="profile-edit__form__button"
+              disabled={loading || !formik.isValid || !formik.dirty}
+            >
+              {loading ? "Carregando..." : "Atualizar Dados"}
+            </button>
+          </form>
+          {width > 769 && (
+            <div className="profile-edit__form__avatar-upload">
+              <div className="profile-edit__form__avatar-upload__title">
+                <span>Imagem de Perfil</span>
+              </div>
+              <div className="profile-edit__form__avatar-upload__image">
+                <ImageUpload
+                  src={userImage}
+                  onChange={changePhoto}
+                ></ImageUpload>
+              </div>
+              <div className="profile-edit__form__avatar-upload__button">
+                <button
+                  type="button"
+                  className="profile-edit__form__avatar-upload__button-button"
+                  onClick={uploadProfileImage}
+                  disabled={loading || !userImageFile}
                 >
-                  <img
-                    src={googleLogo}
-                    alt="google"
-                    width="100%"
-                    height="100%"
-                  />
+                  Enviar Imagem
+                </button>
+              </div>
+              <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
+                <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
+                  Vincular conta:
+                </span>
+
+                <div className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons">
+                  <div
+                    className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                    onClick={() => {}}
+                  >
+                    <img
+                      src={obramaxLogo}
+                      alt="obramax"
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+
+                  <div
+                    className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                    onClick={() => {}}
+                  >
+                    <img
+                      src={facebookLogo}
+                      alt="facebook"
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+
+                  <div
+                    className="profile-edit__form__avatar-upload__register__buttons__socialregister__buttons__icon"
+                    onClick={() => {}}
+                  >
+                    <img
+                      src={googleLogo}
+                      alt="google"
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

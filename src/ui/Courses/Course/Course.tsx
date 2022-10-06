@@ -8,7 +8,10 @@ import {
   enrollOnClass,
   getCourseClasses,
 } from "@/application/store/classes/action";
-import { getCourse } from "@/application/store/courses/action";
+import {
+  getCourse,
+  getCourseMaterial,
+} from "@/application/store/courses/action";
 import Footer from "@/ui/Footer/Footer";
 import Header from "@/ui/Header/Header";
 import React, { useEffect, useState } from "react";
@@ -100,6 +103,28 @@ const Course = () => {
     }
   };
 
+  const downloadCourseMaterial = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    try {
+      if (course.id) {
+        await dispatch(getCourseMaterial(course.id) as any);
+      }
+    } catch {
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     if (id) {
@@ -120,11 +145,6 @@ const Course = () => {
       loadClasses();
     }
   }, [course]);
-
-  useEffect(() => {
-    if (classes) {
-    }
-  }, [classes]);
 
   return (
     <>
@@ -225,7 +245,7 @@ const Course = () => {
                 </div>
 
                 <div className="download">
-                  <button>
+                  <button onClick={downloadCourseMaterial}>
                     <i className="material-icons-outlined">cloud_download</i>{" "}
                     Baixar material de apoio
                   </button>

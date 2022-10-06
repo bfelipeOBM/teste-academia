@@ -15,6 +15,7 @@ import Toast from "@/ui/Toast/Toast";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import "./Login.scss";
 
 const LOGIN_TYPE = {
@@ -68,7 +69,16 @@ const Login = () => {
       };
       dispatch(login(loginData) as any);
     } catch {
-      alert(message.detail);
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
 
     setLoading(false);
@@ -90,12 +100,22 @@ const Login = () => {
           break;
       }
     } catch {
-      alert("Falha ao fazer login");
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
   return (
     <>
+      <ToastContainer />
       {width > 769 && (
         <div className="login-watermark-image">
           <img src={waterMark} alt="login" />

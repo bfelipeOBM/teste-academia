@@ -1,8 +1,11 @@
+import { ApplicationState } from "@/application/store";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import recoverMethodImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import "./RecoverMethod.scss";
 
 const recoveryMethodType = {
@@ -17,6 +20,10 @@ const RecoverMethod = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { data: message } = useSelector(
+    (state: ApplicationState) => state.message
+  );
 
   const { phone: userNumber, email: userEmail } = JSON.parse(
     localStorage.getItem("reset-pwd-methods")!
@@ -41,15 +48,37 @@ const RecoverMethod = () => {
         JSON.stringify(recoveryMethod)
       );
       await AuthService.recoverPasswordMethod(userDocument, recoveryMethod);
+
+      toast.success("Senha alterada com sucesso!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+
       navigate("/token");
     } catch {
-      setError("Falha ao solicitar recuperação de senha");
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
 
     setLoading(false);
   };
   return (
     <>
+      <ToastContainer />
       <div className="recovermethod-watermark-image">
         <img src={waterMark} alt="recovermethod" />
       </div>

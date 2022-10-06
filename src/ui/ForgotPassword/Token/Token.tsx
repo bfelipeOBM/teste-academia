@@ -1,9 +1,12 @@
+import { ApplicationState } from "@/application/store";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import tokenImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
 import React, { useEffect, useRef, useState } from "react";
 import AuthCode, { AuthCodeRef } from "react-auth-code-input";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import "./Token.scss";
 
 const INITIAL_COUNT = 120;
@@ -40,6 +43,10 @@ const Token = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { data: message } = useSelector(
+    (state: ApplicationState) => state.message
+  );
 
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const handleOnChange = (res: string) => {
@@ -82,15 +89,25 @@ const Token = () => {
       setError("");
       setLoading(true);
       await AuthService.sendRecoveryCode(userDocument, tokenNumber);
-      navigate("/change-password", { state: { toast: true } });
+      navigate("/change-password");
     } catch {
-      setError("Falha ao recuperar senha");
+      toast.error(`Erro! ${message.detail}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
 
     setLoading(false);
   };
   return (
     <>
+      <ToastContainer />
       <div className="token-watermark-image">
         <img src={waterMark} alt="token" />
       </div>

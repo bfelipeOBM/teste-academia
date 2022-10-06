@@ -4,6 +4,8 @@ import {
   GET_COURSES_FAIL,
   GET_COURSES_SUCCESS,
   GET_COURSE_FAIL,
+  GET_COURSE_MATERIAL_FAIL,
+  GET_COURSE_MATERIAL_SUCCESS,
   GET_COURSE_SUCCESS,
   GET_MYCOURSES_FAIL,
   GET_MYCOURSES_SUCCESS,
@@ -85,6 +87,34 @@ export const getMyCourses = (user: User) => (dispatch: Dispatch) => {
 
       dispatch({
         type: GET_MYCOURSES_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
+};
+
+export const getCourseMaterial = (id: number) => (dispatch: Dispatch) => {
+  return CoursesService.getCourseMaterial(id).then(
+    (data) => {
+      dispatch({
+        type: GET_COURSE_MATERIAL_SUCCESS,
+        payload: { data },
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      const message =
+        error?.response?.data || error?.message || error.toString();
+
+      dispatch({
+        type: GET_COURSE_MATERIAL_FAIL,
       });
 
       dispatch({

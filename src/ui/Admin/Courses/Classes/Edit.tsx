@@ -5,7 +5,8 @@ import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack,
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { BackButton } from '../../Components/BackButton';
 import { Header } from '../../Components/Header';
 import { Sidebar } from '../../Components/Sidebar';
@@ -24,6 +25,7 @@ export const EditClassAdmin = () => {
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (userState.isLoggedIn) {
@@ -56,7 +58,32 @@ export const EditClassAdmin = () => {
       sympla_url: sympla,
       active: sendActive,
       email_observation: observation
-    }, { headers: { Bearer: `${userState.data?.access_token}` } })
+    }, { headers: { Bearer: `${userState.data?.access_token}` } }).then((response) => {
+      toast.success('Banner adicionado!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
+      setTimeout(() => {
+        navigate(-1);
+      }, 3000)
+    }).catch(() => {
+      toast.error('Erro ao editar turma!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
+    })
   }
 
   return (
@@ -154,6 +181,7 @@ export const EditClassAdmin = () => {
             >Editar turma</Button>
           </VStack>
         </Box>
+        <ToastContainer />
       </Box>
       )
       : "Carregando..."}

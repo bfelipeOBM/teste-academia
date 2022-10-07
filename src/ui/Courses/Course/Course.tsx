@@ -117,7 +117,8 @@ const Course = () => {
     e.preventDefault();
     try {
       if (course.id) {
-        await dispatch(getCourseMaterial(course.id) as any);
+        const batata = await dispatch(getCourseMaterial(course.id) as any);
+        console.log(batata)
       }
     } catch {
       toast.error(`Erro! ${message.detail}`, {

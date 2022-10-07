@@ -33,24 +33,7 @@ export const signInWithGoogle = async () => {
     });
 }
 
-export const signInWithFacebook = async () => {
-  signInWithPopup(auth, facebookProvider)
-    .then((result) => {
-      auth.currentUser?.getIdToken(true).then(function(idToken) {
-        createUser(idToken)
-      })
-    }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.email;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      console.log(errorCode, errorMessage, email, credential);
-    });
-}
-
-
 function createUser(token: string | undefined) {
-  console.log(token);
   axios.post(`${Constants.API_URL}auth/provider`, {
     token
   }).then((response) => {

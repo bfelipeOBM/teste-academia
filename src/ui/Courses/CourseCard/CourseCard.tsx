@@ -17,7 +17,9 @@ const CourseCard = (props: Props) => {
   const user = useSelector((state: ApplicationState) => state.user);
 
   const goToCourse = () => {
-    user.isLoggedIn ? navigate(`/course/${course.id}`) : navigate(`/login`);
+    user.isLoggedIn
+      ? navigate(`/course/${course.id}`, { state: { id: course.id } })
+      : navigate(`/login`);
   };
 
   useEffect(() => {

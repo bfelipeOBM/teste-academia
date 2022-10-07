@@ -22,6 +22,7 @@ export const EditClassAdmin = () => {
   const [active, setActive] = useState<boolean>();
   const [sendActive, setSendActive] = useState<boolean>();
   const [observation, setObservation] = useState<string>();
+  const [sendEmail, setSendEmail] = useState(true);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -57,9 +58,10 @@ export const EditClassAdmin = () => {
       partner: partner,
       sympla_url: sympla,
       active: sendActive,
-      email_observation: observation
+      email_observation: observation,
+      send_email: sendEmail
     }, { headers: { Bearer: `${userState.data?.access_token}` } }).then((response) => {
-      toast.success('Banner adicionado!', {
+      toast.success('Turma editada!', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -147,7 +149,7 @@ export const EditClassAdmin = () => {
 
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
-                <FormLabel>Localização {classe?.location_id}</FormLabel>
+                <FormLabel>Localização</FormLabel>
                 <Select defaultValue={classe?.location_id || 1} onChange={(e) => setLocationId(+e.target.value)}>
                   <option value='1'>Online</option>
                   <option value='2'>Mooca</option>
@@ -157,6 +159,7 @@ export const EditClassAdmin = () => {
               </FormControl>
             </Box>
 
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
             <FormControl>
               <FormLabel>Curso ativo</FormLabel>
               <Checkbox
@@ -164,6 +167,8 @@ export const EditClassAdmin = () => {
                 // onChange={(e) => handleAddImage(e)}
                 isChecked={active}/>
             </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
             <FormControl>
               <FormLabel>Motivo da mudança de data/cancelamento (enviado por e-mail) </FormLabel>
               <Input
@@ -171,7 +176,16 @@ export const EditClassAdmin = () => {
                 onChange={(e) => setObservation(e.target.value)}
               />
             </FormControl>
-           
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+            <FormControl>
+            <FormLabel>Notificar usuários por email?</FormLabel>
+              <Checkbox
+                isChecked={sendEmail}
+                onChange={(e) => setSendEmail(e.target.checked)}
+              />
+            </FormControl>
+           </Box>
             <Button
               type='button'
               colorScheme="green"

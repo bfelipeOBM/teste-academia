@@ -16,7 +16,7 @@ import Footer from "@/ui/Footer/Footer";
 import Header from "@/ui/Header/Header";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -30,7 +30,8 @@ import RelatedCourses from "../RelatedCourses/RelatedCourses";
 import "./Course.scss";
 
 const Course = () => {
-  const { id } = useParams();
+  const location = useLocation();
+  const { id } = location.state;
   const [loading, setLoading] = useState(false);
   const [nextClassDate, setNextClassDate] = useState("");
   const [disabledEnrollButton, setDisabledEnrollButton] = useState(false);
@@ -41,13 +42,15 @@ const Course = () => {
     (state: ApplicationState) => state.message
   );
   const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const user = useSelector((state: ApplicationState) => state.user);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const loadCourse = async () => {
     setLoading(true);
     if (id) {
-      await dispatch(getCourse(parseInt(id)) as any);
+      await dispatch(getCourse(id) as any);
     }
     setLoading(false);
   };
@@ -134,9 +137,13 @@ const Course = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    if (id) {
-      loadCourse();
+    if (user.isLoggedIn) {
+      window.scrollTo(0, 0);
+      if (id) {
+        loadCourse();
+      }
+    } else {
+      navigate("/login");
     }
   }, []);
 

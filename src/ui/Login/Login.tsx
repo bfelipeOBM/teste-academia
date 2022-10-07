@@ -3,12 +3,10 @@ import { UserLogin } from "@/application/models/user";
 import { ApplicationState } from "@/application/store";
 import { login } from "@/application/store/user/action";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
-import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import loginImg from "@/assets/login_sideimage.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
 import {
-  signInWithFacebook,
   signInWithGoogle,
 } from "@/services/firebase/firebase-integration";
 import Toast from "@/ui/Toast/Toast";
@@ -19,7 +17,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "./Login.scss";
 
 const LOGIN_TYPE = {
-  FACEBOOK: "facebook",
   GOOGLE: "google",
   OBRAMAX: "obramax",
 };
@@ -87,9 +84,6 @@ const Login = () => {
   const handleSocialLogin = async (currentLoginType: string) => {
     try {
       switch (currentLoginType) {
-        case LOGIN_TYPE.FACEBOOK:
-          await signInWithFacebook();
-          break;
         case LOGIN_TYPE.GOOGLE:
           await signInWithGoogle();
           break;
@@ -223,18 +217,6 @@ const Login = () => {
                     <img
                       src={obramaxLogo}
                       alt="obramax"
-                      width="100%"
-                      height="100%"
-                    />
-                  </div>
-
-                  <div
-                    className="login__form__login__buttons__sociallogin__buttons__icon"
-                    onClick={() => handleSocialLogin(LOGIN_TYPE.FACEBOOK)}
-                  >
-                    <img
-                      src={facebookLogo}
-                      alt="facebook"
                       width="100%"
                       height="100%"
                     />

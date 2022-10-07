@@ -238,8 +238,7 @@ export const EditCourseAdmin = () => {
                 <Checkbox
                   onChange={(e) => setActive(e.target.checked)}
                   // onChange={(e) => handleAddImage(e)}
-                  isChecked={active}
-                  accept="image/png, image/gif, image/jpeg, image/jpg "/>
+                  isChecked={active}/>
               </FormControl>
             </Box>
             <Button

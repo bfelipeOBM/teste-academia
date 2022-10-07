@@ -128,7 +128,7 @@ const ChangePassword = () => {
                 </label>
                 <input
                   className="changepassword__form__checkbox__input"
-                  type="text"
+                  type="password"
                   id="userPassword"
                   onChange={(e) => setUserPassword(e.target.value)}
                 />
@@ -145,7 +145,7 @@ const ChangePassword = () => {
                 </label>
                 <input
                   className="changepassword__form__checkbox__input"
-                  type="text"
+                  type="password"
                   id="userPassword"
                   onChange={(e) => setUserPasswordConfirmation(e.target.value)}
                 />

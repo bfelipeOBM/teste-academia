@@ -79,12 +79,18 @@ export const UsersAdminInfos = () => {
       onClose();
     })
   }
+
+  const regex = /[\s+]|[\.+]|[\D+]/g
+  
   function searchUser(e: any) {
     const search = e.target.value;
     const searchUsers: any = [];
 
     users.filter(user => {
-      if (user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || user.document?.toLowerCase().includes(search.toLowerCase()) || user.phone?.toLowerCase().includes(search.toLowerCase())) {
+      const userDocument = user.document.replaceAll(regex, '')
+      const userPhone = user.phone.replaceAll(regex, '')
+      
+      if (user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || userDocument?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, '')) || userPhone?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, ''))) {
         searchUsers.push(user);
       }
     })

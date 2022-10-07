@@ -71,7 +71,6 @@ export const CreateCourseMaterialAdmin = () => {
       let xhr = new XMLHttpRequest();
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-          setLoading(false)
           if (this.status === 201) {
             toast.success('Materiais adicionados!', {
               position: "top-right",
@@ -84,9 +83,10 @@ export const CreateCourseMaterialAdmin = () => {
               theme: 'colored'
             });
             setTimeout(() => {
-              // navigate(-1);
+              navigate(-1);
             }, 3000)
           } else {
+            setLoading(false)
             toast.error('Erro ao adicionar materiais!', {
               position: "top-right",
               autoClose: 5000,
@@ -130,7 +130,7 @@ export const CreateCourseMaterialAdmin = () => {
               colorScheme="green"
               w={"full"}
               size={"lg"}
-              disabled={loading}
+              disabled={loading || filesInput.length === 0}
             >{loading ? "Fazendo upload" : "Adicionar material"}</Button>
           </VStack>
         </Box>

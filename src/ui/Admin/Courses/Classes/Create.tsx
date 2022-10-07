@@ -1,7 +1,7 @@
 import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react'
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper, Checkbox } from '@chakra-ui/react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,6 +18,7 @@ export const CreateClassAdmin = () => {
   const [maxStudents, setMaxStudents] = useState(0);
   const [partner, setPartner] = useState("");
   const [locationId, setLocationId] = useState(1);
+  const [active, setActive] = useState(true);
   const [sympla, setSympla] = useState<any>(null);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
@@ -42,7 +43,8 @@ export const CreateClassAdmin = () => {
       max_students: maxStudents,
       location_id: locationId,
       partner: partner,
-      sympla_url: sympla
+      sympla_url: sympla,
+      active: active
     }, {
       headers: {
         "Bearer": `${userState.data?.access_token}`
@@ -133,6 +135,13 @@ export const CreateClassAdmin = () => {
                 </Select>
               </FormControl>
             </Box>
+
+            <FormControl>
+              <FormLabel>Curso ativo</FormLabel>
+              <Checkbox
+                onChange={(e) => setActive(e.target.checked)}
+                isChecked={active}/>
+            </FormControl>
            
             <Button
               type='button'

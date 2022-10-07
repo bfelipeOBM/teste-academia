@@ -1,7 +1,7 @@
 import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper } from '@chakra-ui/react'
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Select, NumberInput, NumberInputField, NumberDecrementStepper, NumberIncrementStepper, NumberInputStepper, Checkbox } from '@chakra-ui/react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,7 +17,10 @@ export const EditClassAdmin = () => {
   const [locationId, setLocationId] = useState<number>();
   const [classe, setClasse] = useState<any>();
   const [partner, setPartner] = useState<string>();
-  const [sympla, setSympla] = useState<any>(null)
+  const [sympla, setSympla] = useState<any>();
+  const [active, setActive] = useState<boolean>();
+  const [sendActive, setSendActive] = useState<boolean>();
+  const [observation, setObservation] = useState<string>();
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -36,19 +39,24 @@ export const EditClassAdmin = () => {
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}`).then((response) => {
       setClasse(response.data);
+      setActive(response.data.active)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleUpdateClass(e: any) {
     e.preventDefault();
+
+
     axios.patch(`${Constants.API_URL}courses/${id}/classes/${class_id}`, {
       date,
       max_students: maxStudents,
       location_id: locationId,
       partner: partner,
-      sympla_url: sympla
-    })
+      sympla_url: sympla,
+      active: sendActive,
+      email_observation: observation
+    }, { headers: { Bearer: `${userState.data?.access_token}` } })
   }
 
   return (
@@ -121,6 +129,21 @@ export const EditClassAdmin = () => {
                 </Select>
               </FormControl>
             </Box>
+
+            <FormControl>
+              <FormLabel>Curso ativo</FormLabel>
+              <Checkbox
+                onChange={(e) => {setActive(e.target.checked); setSendActive(e.target.checked)}}
+                // onChange={(e) => handleAddImage(e)}
+                isChecked={active}/>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Motivo da mudança de data/cancelamento (enviado por e-mail) </FormLabel>
+              <Input
+                type="text"
+                onChange={(e) => setObservation(e.target.value)}
+              />
+            </FormControl>
            
             <Button
               type='button'

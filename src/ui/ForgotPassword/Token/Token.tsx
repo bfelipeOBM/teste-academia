@@ -1,10 +1,9 @@
-import { ApplicationState } from "@/application/store";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import tokenImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
+import { AxiosError } from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import AuthCode, { AuthCodeRef } from "react-auth-code-input";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "./Token.scss";
@@ -62,7 +61,7 @@ const handleSendCode = async (e: any) => {
       theme: "colored",
     });
   }
-}
+};
 
 const twoDigits = (num: Number) => String(num).padStart(2, "0");
 
@@ -78,10 +77,6 @@ const Token = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const { data: message } = useSelector(
-    (state: ApplicationState) => state.message
-  );
 
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const handleOnChange = (res: string) => {
@@ -125,8 +120,8 @@ const Token = () => {
       setLoading(true);
       await AuthService.sendRecoveryCode(userDocument, tokenNumber);
       navigate("/change-password");
-    } catch {
-      toast.error(`Erro! ${message.detail}`, {
+    } catch (error: AxiosError | any) {
+      toast.error(`Erro! ${error.response.data.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -193,7 +188,10 @@ const Token = () => {
               {secondsRemaining === 0 && (
                 <label className="token__form__title" htmlFor="tokenNumber">
                   O código enviado expirou. Clique em{" "}
-                  <span className="token__form__resend__title__link" onClick={(e) => handleSendCode(e)}>
+                  <span
+                    className="token__form__resend__title__link"
+                    onClick={(e) => handleSendCode(e)}
+                  >
                     Reenviar
                   </span>{" "}
                   para receber um novo código.
@@ -210,7 +208,12 @@ const Token = () => {
             </div>
             <label className="token__form__resend__title" htmlFor="tokenNumber">
               Não recebeu o código?{" "}
-              <span className="token__form__resend__title__link" onClick={(e) => handleSendCode(e)}>Reenviar</span>
+              <span
+                className="token__form__resend__title__link"
+                onClick={(e) => handleSendCode(e)}
+              >
+                Reenviar
+              </span>
             </label>
             <button
               type="submit"

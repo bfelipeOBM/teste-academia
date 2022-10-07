@@ -1,9 +1,8 @@
-import { ApplicationState } from "@/application/store";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import changepasswordImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
+import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "./ChangePassword.scss";
@@ -22,10 +21,6 @@ const ChangePassword = () => {
   const [errorPasswordText, setErrorPasswordText] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const { data: message } = useSelector(
-    (state: ApplicationState) => state.message
-  );
 
   const { phone: userNumber, email: userEmail } = JSON.parse(
     localStorage.getItem("reset-pwd-methods")!
@@ -63,8 +58,8 @@ const ChangePassword = () => {
       );
       await AuthService.changePassword(userDocument, userPassword);
       navigate("/login");
-    } catch {
-      toast.error(`Erro! ${message.detail}`, {
+    } catch (error: AxiosError | any) {
+      toast.error(`Erro! ${error.response.data.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

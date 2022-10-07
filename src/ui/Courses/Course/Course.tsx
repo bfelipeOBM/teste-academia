@@ -143,7 +143,7 @@ const Course = () => {
         loadCourse();
       }
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, []);
 
@@ -178,7 +178,7 @@ const Course = () => {
                 <iframe
                   width="100%"
                   height="100%"
-                  src={course.video}
+                  src={course.video || course.short_video || course.image}
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

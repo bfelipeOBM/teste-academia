@@ -1,10 +1,9 @@
 import { cpfOrCnpjMask } from "@/application/common/Utils";
-import { ApplicationState } from "@/application/store";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import forgotpasswordImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
+import { AxiosError } from "axios";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "./ForgotPassword.scss";
@@ -14,9 +13,6 @@ const ForgotPassword = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { data: message } = useSelector(
-    (state: ApplicationState) => state.message
-  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,8 +22,8 @@ const ForgotPassword = () => {
       setLoading(true);
       await AuthService.resetPassword(userDocument.replace(/\D/g, ""));
       navigate("/recovermethod");
-    } catch {
-      toast.error(`Erro! ${message.detail}`, {
+    } catch (error: AxiosError | any) {
+      toast.error(`Erro! ${error.response.data.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

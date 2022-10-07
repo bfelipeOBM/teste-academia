@@ -50,7 +50,7 @@ export const CreateCourseMaterialAdmin = () => {
     
     setFilesInput([...filesInput, 
       <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"} key={filesInput.length}>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel>Material {filesInput.length + 1}</FormLabel>
           <Input type="file" name={`file-${filesInput.length}`} onChange={(handleAddFile)} required/>
         </FormControl>
@@ -122,16 +122,15 @@ export const CreateCourseMaterialAdmin = () => {
           <Box py={8}>
             <Text fontSize={"2xl"}>Adicionar material para o curso e todas as turmas</Text>
           </Box>
-          <VStack as="form" spacing={6}>
+          <VStack as="form" spacing={6} onSubmit={(e) => {handleCreateCourseMaterial(e)}}>
             {filesInput}
            <Button onClick={handleAddFileInput} >Adicionar outro material</Button>
             <Button
-              type='button'
+              type='submit'
               colorScheme="green"
               w={"full"}
               size={"lg"}
               disabled={loading}
-              onClick={(e) => {handleCreateCourseMaterial(e)}}
             >{loading ? "Fazendo upload" : "Adicionar material"}</Button>
           </VStack>
         </Box>

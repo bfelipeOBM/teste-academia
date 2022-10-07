@@ -29,6 +29,41 @@ function useInterval(callback: any, delay: any) {
   }, [delay]);
 }
 
+const handleSendCode = async (e: any) => {
+  e.preventDefault();
+  const userDocument: string = JSON.parse(
+    localStorage.getItem("userDocument")!
+  );
+  const recoveryMethod: string = JSON.parse(
+    localStorage.getItem("reset-pwd-selected-method")!
+  );
+  try {
+    await AuthService.recoverPasswordMethod(userDocument, recoveryMethod);
+
+    toast.success("Código reenviado!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  } catch {
+    toast.error(`Erro ao reenviar o código!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+}
+
 const twoDigits = (num: Number) => String(num).padStart(2, "0");
 
 const STATUS = {
@@ -158,7 +193,7 @@ const Token = () => {
               {secondsRemaining === 0 && (
                 <label className="token__form__title" htmlFor="tokenNumber">
                   O código enviado expirou. Clique em{" "}
-                  <span className="token__form__resend__title__link">
+                  <span className="token__form__resend__title__link" onClick={(e) => handleSendCode(e)}>
                     Reenviar
                   </span>{" "}
                   para receber um novo código.
@@ -175,7 +210,7 @@ const Token = () => {
             </div>
             <label className="token__form__resend__title" htmlFor="tokenNumber">
               Não recebeu o código?{" "}
-              <span className="token__form__resend__title__link">Reenviar</span>
+              <span className="token__form__resend__title__link" onClick={(e) => handleSendCode(e)}>Reenviar</span>
             </label>
             <button
               type="submit"

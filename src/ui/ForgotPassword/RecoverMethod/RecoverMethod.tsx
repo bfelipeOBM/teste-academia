@@ -1,9 +1,8 @@
-import { ApplicationState } from "@/application/store";
 import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import recoverMethodImg from "@/assets/login_sideimage.png";
 import AuthService from "@/services/auth";
+import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "./RecoverMethod.scss";
@@ -20,10 +19,6 @@ const RecoverMethod = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const { data: message } = useSelector(
-    (state: ApplicationState) => state.message
-  );
 
   const { phone: userNumber, email: userEmail } = JSON.parse(
     localStorage.getItem("reset-pwd-methods")!
@@ -61,8 +56,8 @@ const RecoverMethod = () => {
       });
 
       navigate("/token");
-    } catch {
-      toast.error(`Erro! ${message.detail}`, {
+    } catch (error: AxiosError | any) {
+      toast.error(`Erro! ${error.response.data.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

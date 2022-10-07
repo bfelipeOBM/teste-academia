@@ -61,10 +61,10 @@ export const ClassesInfoAdmin = () => {
 
     
     users.filter(user => {
-
-      const userDocument = user.document.replaceAll(regex, '')
-      const userPhone = user.phone.replaceAll(regex, '')
-      if (user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || userDocument?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, '')) || userPhone?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, ''))) {
+      const userDocument = user.document?.replaceAll(regex, '')
+      const userPhone = user.phone?.replaceAll(regex, '')
+      
+      if (user.name?.toLowerCase().includes(search.toLowerCase()) || user.email?.toLowerCase().includes(search.toLowerCase()) || userDocument?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, '')) || userPhone?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, ''))) {
         searchUsers.push(user);
       }
     })

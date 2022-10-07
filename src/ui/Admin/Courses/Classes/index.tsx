@@ -53,13 +53,18 @@ export const ClassesInfoAdmin = () => {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classe])
+  const regex = /[\s+]|[\.+]|[\D+]/g
 
   function searchUser(e: any) {
     const search = e.target.value;
     const searchUsers: any = [];
 
+    
     users.filter(user => {
-      if (user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || user.document?.toLowerCase().includes(search.toLowerCase()) || user.phone?.toLowerCase().includes(search.toLowerCase())) {
+
+      const userDocument = user.document.replaceAll(regex, '')
+      const userPhone = user.phone.replaceAll(regex, '')
+      if (user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || userDocument?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, '')) || userPhone?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, ''))) {
         searchUsers.push(user);
       }
     })
@@ -135,24 +140,6 @@ export const ClassesInfoAdmin = () => {
                   </Box>
                 </GridItem>
               ))}
-          {/* <GridItem
-                  // key={user.id}
-                  w='100%'
-                  bg='blue.500'
-                  borderRadius="16px"
-                  bgColor={"white"}
-                  overflow={"hidden"}
-                  border="1px solid #DCE2E6"
-                  position="relative">
-                  <AspectRatio ratio={16 / 9}>
-                    <Image src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"} objectFit="cover"/>
-                  </AspectRatio>
-                  <Box p={8}>
-                    <Heading size="lg">Banana</Heading>
-                    <Text>Banana@email.com</Text>
-                    <Text>Banana</Text>
-                  </Box>
-                </GridItem> */}
 
             </Grid>
           </Box>

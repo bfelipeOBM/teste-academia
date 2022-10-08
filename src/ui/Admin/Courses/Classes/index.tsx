@@ -7,6 +7,7 @@ import { Plus } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
 import { InfosCreateMaterialAdmin } from "../Material/Infos";
@@ -112,7 +113,28 @@ export const ClassesInfoAdmin = () => {
         Bearer: `${userState.data?.access_token}`
       }
     }).then(() => {
+      toast.success('Usuário adicionado!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
       setUpdateUsers(true);
+    }).catch(() => {
+      toast.error('Usuário já cadastrado!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
     })
     setSearchUsers([]);
   }
@@ -212,6 +234,7 @@ export const ClassesInfoAdmin = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <ToastContainer />
     </Flex>
   );
 };

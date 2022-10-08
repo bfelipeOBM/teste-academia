@@ -119,18 +119,18 @@ export const CreateCourseMaterialAdmin = () => {
         </Header>
         <Box w="100%" maxW={1120} mx="auto">
           <Box py={8}>
-            <Text fontSize={"2xl"}>Adicionar material para o curso e todas as turmas</Text>
+            <Text fontSize={"2xl"}>Adicionar material</Text>
           </Box>
           <VStack as="form" spacing={6} onSubmit={(e) => {handleCreateCourseMaterial(e)}}>
             {filesInput}
-           <Button onClick={handleAddFileInput} >Adicionar outro material</Button>
+           <Button onClick={handleAddFileInput}>{filesInput.length > 0 ? 'Anexar outro material' : 'Anexar material'}</Button>
             <Button
               type='submit'
               colorScheme="green"
               w={"full"}
               size={"lg"}
               disabled={loading || filesInput.length === 0}
-            >{loading ? "Fazendo upload" : "Adicionar material"}</Button>
+            >{loading ? "Fazendo upload" : "Fazer upload"}</Button>
           </VStack>
         </Box>
       </Box>

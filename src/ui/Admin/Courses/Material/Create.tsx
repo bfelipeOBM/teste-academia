@@ -15,7 +15,7 @@ interface DataObject {
 }
 
 export const CreateCourseMaterialAdmin = () => {
-  const {id} = useParams();
+  const {id, classId} = useParams();
   const [filesInput, setFilesInput] = useState<any[]>([])
   const [files, setFiles] = useState<any[]>([])
   const userState = useSelector((state: ApplicationState) => state.user);
@@ -100,7 +100,7 @@ export const CreateCourseMaterialAdmin = () => {
           }
         }
       });
-      xhr.open('POST', `${Constants.API_URL}courses/${id}/material/`);
+      xhr.open('POST', `${Constants.API_URL}courses/${id}/class/${classId}/materials/`);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
       xhr.send(sendData);

@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
 import { User } from "../../interface/user";
+import { InfosCreateMaterialAdmin } from "../Material/Infos";
 
 export const ClassesInfoAdmin = () => {
   const {id, class_id} = useParams();
@@ -103,6 +104,9 @@ export const ClassesInfoAdmin = () => {
         </HStack>
         </Header>
         <Box w="100%" maxW={1120} mx="auto">
+          <Box>
+            <InfosCreateMaterialAdmin />
+          </Box>
           <Box py={8}>
             <Heading fontSize={"4xl"}>Alunos inscritos</Heading>
             <Input

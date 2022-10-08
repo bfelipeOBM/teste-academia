@@ -88,10 +88,6 @@ export const CourseAdminInfos = () => {
             <Heading fontSize={"6xl"}>{course?.name}</Heading>
             <Text>{course?.description}</Text>
           </Box>
-          <Box>
-            <Heading>Material de apoio</Heading>
-            <InfosCreateMaterialAdmin />
-          </Box>
           <Box py={8}>
             <Heading fontSize={"4xl"}>Turmas</Heading>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>

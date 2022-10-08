@@ -62,14 +62,20 @@ export const ClassesInfoAdmin = () => {
 
   function searchUser(e: any) {
     const search = e.target.value;
+    const withourSpecialCharacters = search.replace(regex, '');
     const searchUsers: any = [];
     
     users.filter(user => {
       const userDocument = user.document?.replaceAll(regex, '')
       const userPhone = user.phone?.replaceAll(regex, '')
-      
-      if (user.name?.toLowerCase().includes(search.toLowerCase()) || user.email?.toLowerCase().includes(search.toLowerCase()) || userDocument?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, '')) || userPhone?.toLowerCase().includes(search.toLowerCase().replaceAll(regex, ''))) {
+
+      if (user.name?.toLowerCase().includes(search.toLowerCase()) || user.email?.toLowerCase().includes(search.toLowerCase())) {
         searchUsers.push(user);
+      }
+      if (withourSpecialCharacters.length > 0) {
+        if (userDocument?.toLowerCase().includes(withourSpecialCharacters) || userPhone?.toLowerCase().includes(withourSpecialCharacters)) {
+          searchUsers.push(user);
+        }
       }
     })
     setFilteredUsers(searchUsers);

@@ -1,7 +1,7 @@
 import Constants from "@/application/common/Constants";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
-import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, Image, Input, Text } from "@chakra-ui/react";
+import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import { Plus } from "phosphor-react";
 import { useEffect, useState } from "react";
@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
-import { User } from "../../interface/user";
 import { InfosCreateMaterialAdmin } from "../Material/Infos";
 
 export const ClassesInfoAdmin = () => {
@@ -17,10 +16,14 @@ export const ClassesInfoAdmin = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [classe, setClasse] = useState<any>();
+  const [searchUsers, setSearchUsers] = useState<any[]>([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const userState = useSelector((state: ApplicationState) => state.user);
+  const [updateUsers, setUpdateUsers] = useState(false);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
   
+  console.log(searchUsers)
   useEffect(() => {
     if (userState.isLoggedIn) {
       dispatch(userProfile() as any);
@@ -53,13 +56,12 @@ export const ClassesInfoAdmin = () => {
       setFilteredUsers(res.data);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [classe])
+  }, [classe, updateUsers])
   const regex = /[\s+]|[\.+]|[\D+]/g
 
   function searchUser(e: any) {
     const search = e.target.value;
     const searchUsers: any = [];
-
     
     users.filter(user => {
       const userDocument = user.document?.replaceAll(regex, '')
@@ -86,6 +88,35 @@ export const ClassesInfoAdmin = () => {
     setFilteredUsers(updatedUsers)
   }
 
+  function handleSearchUser(text: string) {
+    axios.get(`${Constants.API_URL}users?search=${text}`, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+      }
+    }).then((res) => {
+      setSearchUsers(res.data);
+    }).finally(() => {
+      searchUsers.map((user: any) => {
+        if (user.name === text) {
+          setSearchUsers([user]);
+        }
+      })
+    })
+  }
+
+  function handleAddUserToClass() {
+    axios.post(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollment/`, {
+      user_id: searchUsers[0].id
+    }, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+      }
+    }).then(() => {
+      setUpdateUsers(true);
+    })
+    setSearchUsers([]);
+  }
+
   return (
     <Flex w="100%">
       <Sidebar />
@@ -99,7 +130,7 @@ export const ClassesInfoAdmin = () => {
         </Box>
         <Heading fontSize={"2xl"}>Parceiro: {classe?.partner}</Heading>
           <Box>
-            <Button colorScheme="green" size={"lg"} leftIcon={<Plus />}>Adicionar aluno a turma</Button>
+            <Button colorScheme="green" size={"lg"} leftIcon={<Plus />} onClick={onOpen}>Adicionar aluno a turma</Button>
           </Box>
         </HStack>
         </Header>
@@ -149,6 +180,38 @@ export const ClassesInfoAdmin = () => {
           </Box>
         </Box>
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Deletar banner</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input
+              placeholder="Pesquise o usuário"
+              list="users"
+              onChange={(e) => {
+                console.log("To aqui")
+                handleSearchUser(e.target.value);
+              }}
+            />
+            <datalist id="users">
+              {searchUsers?.map(user => (
+                <option value={user.name} />
+              ))}
+            </datalist>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button variant={'outline'} mr={3} onClick={onClose}>
+              Fechar
+            </Button>
+            <Button
+              colorScheme={'green'}
+              onClick={() => {handleAddUserToClass(); onClose()}}
+            >Adicionar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };

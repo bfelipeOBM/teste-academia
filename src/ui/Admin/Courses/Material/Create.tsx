@@ -100,7 +100,7 @@ export const CreateCourseMaterialAdmin = () => {
           }
         }
       });
-      xhr.open('POST', `${Constants.API_URL}courses/${id}/class/${classId}/materials/`);
+      xhr.open('POST', `${Constants.API_URL}courses/${id}/class/${classId}/materials`);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
       xhr.send(sendData);

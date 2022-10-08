@@ -153,7 +153,6 @@ export const ClassesInfoAdmin = () => {
         <HStack justifyContent="space-between">
         <Box>
         <Heading>Turma { classe && new Intl.DateTimeFormat('pt-BR').format(new Date(classe?.date))}</Heading>
-        
         <Heading fontSize={"2xl"}>Quantidade de inscritos: {classe?.students_count} / {classe?.max_students}</Heading>
         </Box>
         <Heading fontSize={"2xl"}>Parceiro: {classe?.partner}</Heading>
@@ -163,10 +162,12 @@ export const ClassesInfoAdmin = () => {
         </HStack>
         </Header>
         <Box w="100%" maxW={1120} mx="auto">
-          <Box>
+          <Box mt={8}>
+          <Heading>Curso: {classe && classe.name}</Heading>
             <InfosCreateMaterialAdmin />
           </Box>
           <Box py={8}>
+            
             <Heading fontSize={"4xl"}>Alunos inscritos</Heading>
             <Input
               w={"100%"}

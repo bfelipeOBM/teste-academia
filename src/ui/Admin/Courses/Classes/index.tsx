@@ -112,7 +112,7 @@ export const ClassesInfoAdmin = () => {
   }
 
   function handleAddUserToClass() {
-    axios.post(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollment/`, {
+    axios.post(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollment`, {
       user_id: searchUsers[0].id
     }, {
       headers: {

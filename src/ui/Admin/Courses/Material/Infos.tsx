@@ -1,7 +1,7 @@
 import Constants from "@/application/common/Constants";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
-import { Box, Grid, GridItem, HStack, IconButton, Tooltip, Heading, Button, Link as ChakraLink} from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack, IconButton, Tooltip, Heading, Button, Link as ChakraLink, VStack} from "@chakra-ui/react";
 import axios from "axios";
 import { Eye, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ interface Material {
 }
 
 export const InfosCreateMaterialAdmin = () => {
-  const {id} = useParams();
+  const {id, class_id} = useParams();
   const [materials, setMaterials] = useState<Material[]>([]);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
@@ -32,7 +32,7 @@ export const InfosCreateMaterialAdmin = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
-    axios.get(`${Constants.API_URL}courses/${id}/material`, {
+    axios.get(`${Constants.API_URL}courses/${id}/class/${class_id}/materials`, {
       headers: {
         Bearer: `${userState.data?.access_token}`
     }}).then(res => {
@@ -41,7 +41,7 @@ export const InfosCreateMaterialAdmin = () => {
   }, [])
 
   function handleDeleteMaterial(materialId: number) {
-    axios.delete(`${Constants.API_URL}courses/${id}/material/${materialId}`, {
+    axios.delete(`${Constants.API_URL}courses/${id}/class/${class_id}/materials/${materialId}`, {
       headers: {
         Bearer: `${userState.data?.access_token}`
     }}).then(res => {
@@ -50,7 +50,11 @@ export const InfosCreateMaterialAdmin = () => {
   }
   
   return (
-    <div>
+    <VStack
+      alignItems={"flex-start"}
+      gap={4}
+      my={8}>
+      <Heading fontSize={"3xl"}>Material de apoio</Heading>
       <Grid templateColumns='repeat(4, 1fr)' minH={100} gap={6}>
         {materials?.map((material, index) => (
           
@@ -89,9 +93,9 @@ export const InfosCreateMaterialAdmin = () => {
             </GridItem>
         ))}
       </Grid>
-      <Link to={`/admin/courses/${id}/material`}>
+      <Link to={`/admin/courses/${id}/class/${class_id}/material`}>
         <Button colorScheme={'green'}>Adicionar material de apoio</Button>
       </Link>
-    </div>
+    </VStack>
   )
 }

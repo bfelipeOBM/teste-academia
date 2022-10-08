@@ -75,7 +75,6 @@ export const EditCourseAdmin = () => {
   }
 
   function handleUpdateCourse(e: any) {
-    e.preventDefault();
     setLoading(true)
     const updatedCourse: UpdatedCorse = {}
 

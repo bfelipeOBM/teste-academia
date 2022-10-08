@@ -171,7 +171,7 @@ const RouteWrapper = () => {
             }
           />
           <Route
-            path="/admin/courses/:id/material"
+            path="/admin/courses/:id/class/:classId/material"
             element={
               <ChakraProvider>
                 <CreateCourseMaterialAdmin />

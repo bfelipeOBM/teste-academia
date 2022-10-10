@@ -150,8 +150,12 @@ const Course = () => {
     ) {
       setDisabledEnrollButton(true);
       setEnrollButtonText("Inscrito");
+    } else if (!classes.length || !classes[0]) {
+      setDisabledEnrollButton(true);
+      setEnrollButtonText("Em breve");
     } else {
       setDisabledEnrollButton(false);
+      setEnrollButtonText("Inscreva-se");
     }
   }, [mycourses]);
 

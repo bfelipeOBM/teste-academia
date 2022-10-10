@@ -5,6 +5,7 @@ import { getCourseClasses } from "@/application/store/classes/action";
 import {
   getCourse,
   getCourseMaterial,
+  getMyCourses,
 } from "@/application/store/courses/action";
 import Footer from "@/ui/Footer/Footer";
 import Header from "@/ui/Header/Header";
@@ -29,7 +30,8 @@ const Course = () => {
   const { id } = location.state;
   const [loading, setLoading] = useState(false);
   const [nextClassDate, setNextClassDate] = useState("");
-  const [disabledEnrollButton, setDisabledEnrollButton] = useState(false);
+  const [disabledEnrollButton, setDisabledEnrollButton] = useState(true);
+  const [enrollButtonText, setEnrollButtonText] = useState("Inscreva-se");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentClass, setCurrentClass] = useState<Class>();
 
@@ -40,6 +42,9 @@ const Course = () => {
   );
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const user = useSelector((state: ApplicationState) => state.user);
+  const { mycourses } = useSelector(
+    (state: ApplicationState) => state.mycourses
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,6 +66,14 @@ const Course = () => {
       } else {
         setDisabledEnrollButton(true);
       }
+    }
+    setLoading(false);
+  };
+
+  const loadAlreadyEnrolled = async () => {
+    setLoading(true);
+    if (profile.id) {
+      await dispatch(getMyCourses(profile) as any);
     }
     setLoading(false);
   };
@@ -91,7 +104,7 @@ const Course = () => {
         await dispatch(getCourseMaterial(course.id) as any);
       }
     } catch {
-      toast.error(`Erro! ${message.detail}`, {
+      toast.warn(`${message.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -106,6 +119,7 @@ const Course = () => {
 
   useEffect(() => {
     if (user.isLoggedIn) {
+      loadAlreadyEnrolled();
       window.scrollTo(0, 0);
       if (id) {
         loadCourse();
@@ -128,6 +142,18 @@ const Course = () => {
       loadClasses();
     }
   }, [course]);
+
+  useEffect(() => {
+    if (
+      mycourses.length > 0 &&
+      mycourses.some((c) => c.course_id == course.id)
+    ) {
+      setDisabledEnrollButton(true);
+      setEnrollButtonText("Inscrito");
+    } else {
+      setDisabledEnrollButton(false);
+    }
+  }, [mycourses]);
 
   return (
     <>
@@ -265,7 +291,7 @@ const Course = () => {
 
               <div className="course__details__subscribe">
                 <button disabled={disabledEnrollButton} onClick={handleEnroll}>
-                  Inscrever-se
+                  {enrollButtonText}
                 </button>
               </div>
 

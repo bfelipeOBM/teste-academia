@@ -57,7 +57,7 @@ const CustomModal = ({ isOpen, onClose, currentClass }: ModalProps) => {
       }
       handleClose();
     } catch {
-      toast.error(`Erro! ${message.detail}`, {
+      toast.error(`${message.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

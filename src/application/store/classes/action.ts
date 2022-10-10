@@ -73,33 +73,34 @@ export const getCourseClasses = (course: Course) => (dispatch: Dispatch) => {
   );
 };
 
-export const getEnrolledClasses = (user: User) => (dispatch: Dispatch) => {
-  return ClassesService.getEnrolledClasses(user).then(
-    (data) => {
-      dispatch({
-        type: GET_MYCLASSES_SUCCESS,
-        payload: { data },
-      });
+export const getEnrolledClasses =
+  (user: User, classId: number) => (dispatch: Dispatch) => {
+    return ClassesService.getEnrolledClasses(user, classId).then(
+      (data) => {
+        dispatch({
+          type: GET_MYCLASSES_SUCCESS,
+          payload: { data },
+        });
 
-      return Promise.resolve();
-    },
-    (error) => {
-      const message =
-        error?.response?.data || error.message || error.toString();
+        return Promise.resolve();
+      },
+      (error) => {
+        const message =
+          error?.response?.data || error.message || error.toString();
 
-      dispatch({
-        type: GET_MYCLASSES_FAIL,
-      });
+        dispatch({
+          type: GET_MYCLASSES_FAIL,
+        });
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-      });
+        dispatch({
+          type: SET_MESSAGE,
+          payload: message,
+        });
 
-      return Promise.reject();
-    }
-  );
-};
+        return Promise.reject();
+      }
+    );
+  };
 
 export const enrollOnClass =
   (courseId: number, classId: number, userId: User) =>

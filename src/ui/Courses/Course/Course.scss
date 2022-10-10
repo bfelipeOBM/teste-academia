@@ -245,6 +245,13 @@
               background: #002a5b 0% 0% no-repeat padding-box;
               border: 1px solid #002a5b;
             }
+
+            &:disabled {
+              background: #ccc 0% 0% no-repeat padding-box;
+              border: 1px solid #ccc;
+              color: #fff;
+              cursor: not-allowed;
+            }
           }
         }
 
@@ -535,6 +542,13 @@
             &:active {
               background: #002a5b 0% 0% no-repeat padding-box;
               border: 1px solid #002a5b;
+            }
+
+            &:disabled {
+              background: #ccc 0% 0% no-repeat padding-box;
+              border: 1px solid #ccc;
+              color: #fff;
+              cursor: not-allowed;
             }
           }
         }

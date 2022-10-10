@@ -1,0 +1,138 @@
+.custom-modal {
+  @media only screen and (min-width: 768px) {
+    --bs-modal-width: 812px;
+    .modal {
+      width: min(100%, var(--bs-modal-width));
+    }
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin-inline: auto;
+
+    .modal-header {
+      height: 94px;
+      color: #fff;
+      font-size: 27px;
+      font-weight: bold;
+      background-color: #002a5b;
+      justify-content: center;
+      position: relative;
+
+      div.borderBottom:before {
+        content: "";
+        position: absolute;
+        left: 20%;
+        bottom: -4px;
+        height: 15px;
+        width: 60%;
+        border-bottom: 10px solid #ef7f00;
+      }
+    }
+
+    .modal-body {
+      padding: 20px;
+      font-size: 16px;
+      color: #000;
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: center;
+
+      .current-class-card {
+        display: flex;
+        flex-direction: row;
+        background-color: #f5f4f7;
+
+        &__image {
+          width: 216px;
+          height: 120px;
+          margin: 20px;
+        }
+
+        &__content {
+          display: flex;
+          flex-direction: column;
+          width: min(100% - 15px, 550px);
+          padding: 20px 0;
+
+          &__header {
+            color: #6a6a6a;
+            font-size: 16px;
+            text-align: left;
+            margin-bottom: 5px;
+          }
+
+          &__name-description {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .name {
+              text-align: left;
+              font-weight: bold;
+              font-size: 18px;
+              letter-spacing: 0px;
+              color: #000;
+              margin-bottom: 5px;
+            }
+
+            .description {
+              text-align: left;
+              font-size: 16px;
+              letter-spacing: 0px;
+              color: #000;
+              max-width: 484px;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+
+    .modal-footer {
+      padding: 20px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: row;
+      border-top: none;
+
+      .btn-secondary {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        width: 93px;
+        height: 25px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #141b23;
+        background-color: transparent;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+
+        i {
+          margin-right: 3px;
+        }
+
+        &:hover {
+          color: #ef7f00;
+        }
+      }
+
+      .btn-primary {
+        width: 205px;
+        height: 50px;
+        font-size: 16px;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #ef7f00;
+        border: none;
+      }
+    }
+  }
+}

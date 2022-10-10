@@ -6,9 +6,7 @@ import waterMark from "@/assets/carimbo_obra_compromisso.png";
 import googleLogo from "@/assets/google@2x.png";
 import loginImg from "@/assets/login_sideimage.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
-import {
-  signInWithGoogle,
-} from "@/services/firebase/firebase-integration";
+import { signInWithGoogle } from "@/services/firebase/firebase-integration";
 import Toast from "@/ui/Toast/Toast";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,7 +62,7 @@ const Login = () => {
         login: userLoginData,
         password,
       };
-      dispatch(login(loginData) as any);
+      await dispatch(login(loginData) as any);
     } catch {
       toast.error(`Erro! ${message.detail}`, {
         position: "top-right",

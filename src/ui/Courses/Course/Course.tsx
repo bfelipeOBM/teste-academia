@@ -1,19 +1,14 @@
-import {
-  FormatToBrazilianDate,
-  navigateToExternalUrl,
-} from "@/application/common/Utils";
+import { FormatToBrazilianDate } from "@/application/common/Utils";
 import { Class } from "@/application/models/class";
 import { ApplicationState } from "@/application/store";
-import {
-  enrollOnClass,
-  getCourseClasses,
-} from "@/application/store/classes/action";
+import { getCourseClasses } from "@/application/store/classes/action";
 import {
   getCourse,
   getCourseMaterial,
 } from "@/application/store/courses/action";
 import Footer from "@/ui/Footer/Footer";
 import Header from "@/ui/Header/Header";
+import CustomModal from "@/ui/Modal/Modal";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -35,6 +30,8 @@ const Course = () => {
   const [loading, setLoading] = useState(false);
   const [nextClassDate, setNextClassDate] = useState("");
   const [disabledEnrollButton, setDisabledEnrollButton] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentClass, setCurrentClass] = useState<Class>();
 
   const { course } = useSelector((state: ApplicationState) => state.course);
   const { classes } = useSelector((state: ApplicationState) => state.classes);
@@ -59,6 +56,11 @@ const Course = () => {
     setLoading(true);
     if (course.id) {
       await dispatch(getCourseClasses(course) as any);
+      if (classes.length && classes[0]) {
+        setCurrentClass(classes[0]);
+      } else {
+        setDisabledEnrollButton(true);
+      }
     }
     setLoading(false);
   };
@@ -73,44 +75,10 @@ const Course = () => {
 
   const handleEnroll = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const currentClass = classes.length && classes[0];
 
-    if (currentClass && course.id) {
-      try {
-        await dispatch(
-          enrollOnClass(course.id, currentClass.class_id, profile) as any
-        );
-
-        if (currentClass.sympla_url) {
-          navigateToExternalUrl(currentClass.sympla_url);
-        }
-
-        toast.success("Sucesso ao se inscrever!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-
-        setDisabledEnrollButton(true);
-      } catch {
-        toast.error(`Erro! ${message.detail}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-
-        setDisabledEnrollButton(false);
-      }
+    if (classes.length && classes[0]) {
+      setIsModalOpen(true);
+      setCurrentClass(classes[0]);
     }
   };
 
@@ -163,6 +131,11 @@ const Course = () => {
 
   return (
     <>
+      <CustomModal
+        isOpen={isModalOpen}
+        currentClass={currentClass}
+        onClose={() => setIsModalOpen(false)}
+      ></CustomModal>
       <ToastContainer />
       <Header></Header>
       {!loading && course && (
@@ -175,15 +148,25 @@ const Course = () => {
           <div className="course__content">
             <div className="course__info">
               <div className="course__info__video">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={course.video || course.short_video || course.image}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                {!course.video && !course.short_video && course.image && (
+                  <img
+                    src={course.image}
+                    alt="Imagem do curso"
+                    width="100%"
+                    height="100%"
+                  />
+                )}
+                {(course.video || course.short_video) && (
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={course.video || course.short_video}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
               </div>
               <div className="course__info__content">
                 <div className="tags">

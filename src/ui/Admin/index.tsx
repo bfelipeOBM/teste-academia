@@ -23,7 +23,7 @@ export const Admin = () => {
   }, [user.isLoggedIn, dispatch]);
 
   return (
-    <Flex w="100%">
+    <Flex flexDir={['column', 'row']} w={["100%"]}>
       <Sidebar />
       <Courses />
     </Flex>

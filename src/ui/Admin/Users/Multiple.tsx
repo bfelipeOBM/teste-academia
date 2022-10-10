@@ -44,7 +44,7 @@ export const UsersAdminMultiple = () => {
 
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
       <Box w="100%">
         <Header>

@@ -55,9 +55,8 @@ export const InfosCreateMaterialAdmin = () => {
       gap={4}
       my={8}>
       <Heading fontSize={"3xl"}>Material de apoio</Heading>
-      <Grid templateColumns='repeat(4, 1fr)' minH={100} gap={6}>
+      <Grid templateColumns={['repeat(2, 1fr)', 'repeat(4, 1fr)']} minH={100} gap={6}>
         {materials?.map((material, index) => (
-          
             <GridItem
               key={material.id}
               w='100%'

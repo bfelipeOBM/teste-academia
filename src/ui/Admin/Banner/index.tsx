@@ -80,9 +80,9 @@ export const BannersInfoAdmin = () => {
   }
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
-      <Box w="100%">
+      <Box w="100%" px={8}>
         <Header>
           <HStack justifyContent="space-between">
             <Heading>Banners</Heading>
@@ -96,9 +96,9 @@ export const BannersInfoAdmin = () => {
             </Box>
           </HStack>
         </Header>
-        <Box w="100%" maxW={1120} mx="auto">
+        <Box w="100%" maxW={1120} mx="auto" px={8}>
           <Box py={8}>
-            <Grid templateColumns='repeat(2, 1fr)' gap={6}>
+            <Grid templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']} gap={6}>
               {banners?.map(banner => (
                 <GridItem
                   key={banner.id}

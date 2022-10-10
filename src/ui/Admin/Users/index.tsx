@@ -80,7 +80,7 @@ export const UsersAdminInfos = () => {
     })
   }
 
-  const regex = /[\s+]|[\.+]|[\D+]/g
+  const regex = /[\s+]|[\.+]|[\+]/g
 
   function searchUser(e: any) {
     const search = e.target.value;
@@ -105,11 +105,11 @@ export const UsersAdminInfos = () => {
   }
 
   return (
-    <Flex w={"100%"}>
+    <Flex w={"100%"} flexDir={['column', 'row']}>
       <Sidebar />
       <VStack w="100%" bg={"gray.100"}>
         <Header>
-          <HStack justifyContent="space-between">
+          <HStack justifyContent="space-between" flexDir={['column', 'row']}>
             <Heading>Usuários</Heading>
             <HStack spacing={6}>
               <Button
@@ -117,6 +117,7 @@ export const UsersAdminInfos = () => {
                 to="/admin/users/create/multiple"
                 colorScheme="blue"
                 size={"lg"}
+                display={['none', 'flex']}
                 leftIcon={<Plus />}>
                 Adicionar arquivos via CSV
               </Button>
@@ -131,7 +132,7 @@ export const UsersAdminInfos = () => {
             </HStack>
           </HStack>
         </Header>
-        <Box as="main" w={"100%"} maxW={1120} mx="auto">
+        <Box as="main" w={"100%"} maxW={1120} mx="auto" px={8}>
           <Input
             w={"100%"}
             maxW={1120}
@@ -142,7 +143,7 @@ export const UsersAdminInfos = () => {
             placeholder="Pesquisar usuário"
             onChange={searchUser}
           />
-          <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+          <Grid templateColumns={['repeat(1, 1fr)','repeat(4, 1fr)']} gap={6}>
             {filteredUsers.map(user => (
               <GridItem
                 key={user.id}

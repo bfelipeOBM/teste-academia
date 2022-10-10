@@ -179,7 +179,7 @@ export const ClassesInfoAdmin = () => {
               placeholder="Pesquisar usuário"
               onChange={searchUser}
             />
-            <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+            <Grid templateColumns={['repeat(1, 1fr)', 'repeat(4, 1fr)']} gap={6}>
               {filteredUsers?.map(user => (
                 <GridItem
                   key={user.id}

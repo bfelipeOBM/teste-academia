@@ -11,6 +11,7 @@ import {
   HStack,
   IconButton,
   Image,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -34,6 +35,7 @@ import { Course } from "../interface/course";
 
 export const Courses = () => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [courseToDelete, setCourseToDelete] = useState<Course>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userState = useSelector((state: ApplicationState) => state.user);
@@ -54,8 +56,21 @@ export const Courses = () => {
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses`).then((res) => {
       setCourses(res.data);
+      setFilteredCourses(res.data)
     });
   }, []);
+
+  function searchCourses(e: any) {
+    const search = e.target.value;
+
+    const searchCourses: any = [];
+    courses.filter(course => {
+      if (course.name?.toLowerCase().includes(search.toLowerCase())) {
+        searchCourses.push(course);
+      }
+    })
+    setFilteredCourses(searchCourses);
+  }
 
   function handleDeleteButton(course: Course) {
     setCourseToDelete(course);
@@ -80,7 +95,7 @@ export const Courses = () => {
           progress: undefined,
           theme: 'colored'
         });
-        setCourses(
+        setFilteredCourses(
           courses.filter((course) => course.id !== courseToDelete?.id)
         );
         onClose();
@@ -115,9 +130,19 @@ export const Courses = () => {
           </Button>
         </HStack>
       </Header>
-      <Box as="main" w={"100%"} maxW={1120} mx="auto">
-        <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-          {courses.map((course) => (
+      <Box as="main" w={"100%"} maxW={1120} mx="auto" px={8}>
+          <Input
+            w={"100%"}
+            maxW={1120}
+            mx="auto"
+            mt={4}
+            mb={4}
+            bg="white"
+            placeholder="Pesquisar curso"
+            onChange={searchCourses}
+          />
+        <Grid templateColumns={["repeat(1, 1ft)", "repeat(3, 1fr)"]} gap={6}>
+          {filteredCourses.map((course) => (
             <GridItem
               key={course.id}
               w="100%"

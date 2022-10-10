@@ -3,9 +3,9 @@ import { Link } from "react-router-dom"
 
 export const Sidebar = () => {
   return (
-    <Box w="200px">
-      <Box w={"200px"} bg={"#EF7F00"} minH={"100vh"} position={"fixed"}>
-        <VStack h={"100vh"} justifyContent="center" alignItems={"center"}>
+    <Box w={['100%', "200px"]}>
+      <Box w={['100%', "200px"]} bg={"#EF7F00"} minH={['100%', "100vh"]} position={["relative", "fixed"]}>
+        <VStack h={['100%', "100vh"]} justifyContent="center" alignItems={"center"}>
           <Text fontSize={"2xl"}>
             <Link to={"/admin/"}>
               Cursos

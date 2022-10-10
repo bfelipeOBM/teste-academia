@@ -61,9 +61,9 @@ export const CourseAdminInfos = () => {
   }
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
-      <Box w="100%">
+      <Box w="100%" >
         <Header>
         <HStack justifyContent="space-between">
           <BackButton />
@@ -78,19 +78,19 @@ export const CourseAdminInfos = () => {
           </Box>
         </HStack>
         </Header>
-        <Box>
+        <Box px={8}>
           <AspectRatio ratio={16 / 4}>
             <Image src={course?.image} objectFit="cover"/>
           </AspectRatio>
         </Box>
-        <Box w="100%" maxW={1120} mx="auto">
+        <Box w="100%" maxW={1120} mx="auto" px={8}>
           <Box py={8}>
             <Heading fontSize={"6xl"}>{course?.name}</Heading>
             <Text>{course?.description}</Text>
           </Box>
           <Box py={8}>
             <Heading fontSize={"4xl"}>Turmas</Heading>
-            <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+            <Grid templateColumns={['repeat(1, 1fr)', 'repeat(4, 1fr)']} gap={6}>
         {classes.map(classe => (
           <GridItem
             key={classe.class_id}

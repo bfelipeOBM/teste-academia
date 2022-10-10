@@ -19,7 +19,7 @@
     height: 25%;
     position: relative;
     overflow: hidden;
-    z-index: 1090;
+    z-index: 1060;
     margin-top: -1px;
 
     &__image {
@@ -52,7 +52,7 @@
     justify-content: flex-end;
     margin-bottom: -20px;
     margin-right: 0;
-    z-index: 9999;
+    z-index: 1060;
 
     button {
       width: 73px !important;

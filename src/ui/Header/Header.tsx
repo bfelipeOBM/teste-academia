@@ -179,8 +179,9 @@ const Header = () => {
                 onHover={handleOnHover}
                 onSelect={handleOnSelect}
                 onFocus={handleOnFocus}
+                showNoResultsText={"Nenhum resultado encontrado"}
                 autoFocus
-                styling={{ zIndex: 9999 }}
+                styling={{ zIndex: 1090 }}
               />
             </div>
           </div>

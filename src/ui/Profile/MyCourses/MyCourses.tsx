@@ -1,3 +1,4 @@
+import { Course } from "@/application/models/course";
 import { ApplicationState } from "@/application/store";
 import { clearCourses, getMyCourses } from "@/application/store/courses/action";
 import SimpleCourseCard from "@/ui/Courses/SimpleCourseCard/SimpleCourseCard";
@@ -16,6 +17,7 @@ const MyCourses = () => {
   const [isTypesOpen, setIsTypesOpen] = useState(false);
   const [typesIcon, setTypesIcon] = useState("expand_more");
   const [currentTab, setCurrentTab] = useState<currentTabT>("all");
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
 
   const dispatch = useDispatch();
 
@@ -48,6 +50,17 @@ const MyCourses = () => {
       dispatch(clearCourses() as any);
     };
   }, []);
+
+  useEffect(() => {
+    if (mycourses)
+      setFilteredCourses(
+        mycourses.filter(
+          (course) =>
+            course.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+            course?.status?.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+  }, [searchValue, mycourses]);
 
   return (
     <>
@@ -151,6 +164,12 @@ const MyCourses = () => {
                   course={course}
                 ></SimpleCourseCard>
               ))}
+              {filteredCourses.length < 1 && searchValue === "" && (
+                <h1>Nenhum curso matriculado</h1>
+              )}
+              {filteredCourses.length < 1 && searchValue !== "" && (
+                <h1>Nenhum curso encontrado</h1>
+              )}
             </div>
           </div>
         </div>

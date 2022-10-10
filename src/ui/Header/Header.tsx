@@ -6,6 +6,7 @@ import AuthService from "@/services/auth";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import "./Header.scss";
 import SideBar from "./SideBar/SideBar";
 
@@ -29,14 +30,22 @@ const CategoryListRight = [
   { title: "Engenheiro", link: "/" },
 ];
 
+type Item = {
+  id: number;
+  name: string;
+};
+
 const Header = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [searchebaleItems, setSearchebaleItems] = useState<Item[]>([]);
 
   const user = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const { courses } = useSelector((state: ApplicationState) => state.courses);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { width } = useWindowSize();
@@ -66,11 +75,33 @@ const Header = () => {
     }
   };
 
+  const handleOnSearch = (string: string, results: any) => {};
+
+  const handleOnHover = (result: any) => {};
+
+  const handleOnSelect = (course: any) => {
+    navigate(`/course/${course.id}`, { state: { id: course.id } });
+  };
+
+  const handleOnFocus = () => {};
+
   useEffect(() => {
     if (user.isLoggedIn) {
       dispatch(userProfile() as any);
     }
   }, [user.isLoggedIn, dispatch]);
+
+  useEffect(() => {
+    if (courses) {
+      const items: Item[] = courses.map((course) => {
+        return {
+          id: course.id,
+          name: course.name,
+        };
+      });
+      setSearchebaleItems(items);
+    }
+  }, [courses]);
 
   return (
     <>
@@ -140,17 +171,18 @@ const Header = () => {
           </div>
 
           <div className="header__items__search">
-            <form className="header__items__search__form">
-              <i className="material-icons">search</i>
-              <input
-                type="search"
-                className="header__items__search__form__input"
+            <div style={{ width: "100%" }}>
+              <ReactSearchAutocomplete
                 placeholder="Pesquise por qualquer coisa"
-                spellCheck={false}
-                value={searchValue}
-                onChange={handleSearch}
+                items={searchebaleItems}
+                onSearch={handleOnSearch}
+                onHover={handleOnHover}
+                onSelect={handleOnSelect}
+                onFocus={handleOnFocus}
+                autoFocus
+                styling={{ zIndex: 9999 }}
               />
-            </form>
+            </div>
           </div>
 
           {/* TODO: Adicionar novamente quando tiver a página de Todos os cursos */}

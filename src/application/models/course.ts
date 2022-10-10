@@ -2,7 +2,7 @@ import { CourseClass } from "./class";
 
 export type Course = {
   workload: number;
-  id?: number;
+  id: number;
   name: string;
   description: string;
   image: string;

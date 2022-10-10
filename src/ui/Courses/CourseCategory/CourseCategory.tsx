@@ -17,6 +17,7 @@ const CourseCategory = () => {
   const [locationIcon, setLocationIcon] = useState("expand_more");
   const [isTypesOpen, setIsTypesOpen] = useState(false);
   const [typesIcon, setTypesIcon] = useState("expand_more");
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
 
   const { courses } = useSelector((state: ApplicationState) => state.courses);
 
@@ -48,6 +49,23 @@ const CourseCategory = () => {
       dispatch(clearCourses() as any);
     };
   }, []);
+
+  useEffect(() => {
+    if (courses)
+      setFilteredCourses(
+        courses.filter(
+          (course) =>
+            course.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+            course.description
+              .toLowerCase()
+              .includes(searchValue.toLowerCase()) ||
+            (course.category?.length &&
+              course.category.filter((tag) =>
+                tag.toLowerCase().includes(searchValue.toLowerCase())
+              ).length)
+        )
+      );
+  }, [searchValue, courses]);
 
   return (
     <>
@@ -106,9 +124,10 @@ const CourseCategory = () => {
 
           <div className="content__courses">
             <div className="cards">
-              {courses?.map((course: Course) => (
+              {filteredCourses?.map((course: Course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
+              {filteredCourses.length < 1 && <h1>Nenhum curso encontrado</h1>}
             </div>
           </div>
         </div>

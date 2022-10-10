@@ -84,6 +84,10 @@ export const ClassesInfoAdmin = () => {
   function handleUpdateUserParticipated(e: any, user_id: number) {
     axios.patch(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments/${user_id}`, {
       user_participated: e.target.checked,
+    }, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+      }
     })
 
     const updatedUsers = users?.map(user => {

@@ -16,4 +16,6 @@ export type Course = {
   status?: string;
   inserted_at?: string;
   updated_at?: string;
+  course_image?: string;
+  course_id?: number;
 };

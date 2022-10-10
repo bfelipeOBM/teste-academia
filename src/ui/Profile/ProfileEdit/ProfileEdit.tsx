@@ -106,7 +106,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
         theme: "colored",
       });
     } catch {
-      toast.error(`Erro! ${message.detail}`, {
+      toast.error(`${message.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -151,7 +151,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
         });
       }
     } catch {
-      toast.error(`Erro! ${message.detail}`, {
+      toast.error(`${message.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

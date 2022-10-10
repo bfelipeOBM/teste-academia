@@ -59,7 +59,7 @@ const ChangePassword = () => {
       await AuthService.changePassword(userDocument, userPassword);
       navigate("/login");
     } catch (error: AxiosError | any) {
-      toast.error(`Erro! ${error.response.data.detail}`, {
+      toast.error(`${error.response.data.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

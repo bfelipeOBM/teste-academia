@@ -64,7 +64,7 @@ const Login = () => {
       };
       await dispatch(login(loginData) as any);
     } catch {
-      toast.error(`Erro! ${message.detail}`, {
+      toast.error(`${message.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -92,7 +92,7 @@ const Login = () => {
           break;
       }
     } catch {
-      toast.error(`Erro! ${message.detail}`, {
+      toast.error(`${message.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

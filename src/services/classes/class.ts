@@ -16,9 +16,9 @@ const getCourseClasses = async ({ id }: Course) => {
   return response.data;
 };
 
-const getEnrolledClasses = async ({ id }: User) => {
+const getEnrolledClasses = async ({ id }: User, classId: number) => {
   const response = await axios.get(
-    `${Constants.API_URL}courses/${id}/classes`,
+    `${Constants.API_URL}courses/${id}/classes/${classId}/enrollments`,
     {
       headers: authHeader() as AxiosRequestHeaders,
     }

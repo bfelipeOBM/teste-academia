@@ -80,7 +80,7 @@ const Register = () => {
       await dispatch(register(registerData) as any);
       navigate("/");
     } catch {
-      toast.error(`Erro! ${message.detail}`, {
+      toast.error(`${message.detail}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

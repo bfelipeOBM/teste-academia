@@ -17,15 +17,20 @@ const FeaturedCourses = () => {
 
   const dispatch = useDispatch();
 
+  // TODO: Melhorar isso ou usar slides infinitos
+  const limitedCourses = courses.slice(0, 5);
+
   const next = () => {
     if (animating) return;
-    const nextIndex = activeIndex === courses.length - 1 ? 0 : activeIndex + 1;
+    const nextIndex =
+      activeIndex === limitedCourses.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
 
   const previous = () => {
     if (animating) return;
-    const nextIndex = activeIndex === 0 ? courses.length - 1 : activeIndex - 1;
+    const nextIndex =
+      activeIndex === 0 ? limitedCourses.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
 
@@ -33,9 +38,6 @@ const FeaturedCourses = () => {
     if (animating) return;
     setActiveIndex(newIndex);
   };
-
-  // TODO: Melhorar isso ou usar slides infinitos
-  const limitedCourses = courses.slice(0, 6);
 
   const slides = limitedCourses?.map((item, index) => {
     return (

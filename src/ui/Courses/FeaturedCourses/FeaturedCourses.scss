@@ -1,5 +1,5 @@
 .featured-courses {
-  @media only screen and (min-width: 769px) {
+  @media only screen and (min-width: 768px) {
     width: 100%;
     height: 471px;
     position: relative;
@@ -53,9 +53,10 @@
 
   @media (min-width: 320px) and (max-width: 767.98px) {
     width: 100%;
-    height: 398px;
+    height: 100%;
     position: relative;
     margin-top: 30px;
+    margin-bottom: 80px;
     padding: 0 16px;
 
     &__title {
@@ -83,7 +84,7 @@
       .carousel-indicators {
         width: 100%;
         justify-content: flex-end;
-        margin-bottom: -45px;
+        margin-bottom: -10px;
         margin-left: 0;
         margin-right: 0;
 

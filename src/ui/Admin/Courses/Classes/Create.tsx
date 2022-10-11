@@ -78,9 +78,9 @@ export const CreateClassAdmin = () => {
   }
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
-      <Box w="100%">
+      <Box w="100%" px={8}>
         <Header>
         <HStack justifyContent="space-between">
           <BackButton />

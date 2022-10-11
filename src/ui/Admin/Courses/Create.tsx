@@ -127,7 +127,7 @@ export const CreateCourseAdmin = () => {
 
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
       <Box w="100%">
         <Header>
@@ -136,31 +136,31 @@ export const CreateCourseAdmin = () => {
           </HStack>
         </Header>
 
-        <Box w="100%" maxW={1120} mx="auto">
+        <Box w="100%" maxW={1120} mx="auto" px={8}>
           <Box py={8}>
             <Text fontSize={"2xl"}>Criar um novo curso</Text>
           </Box>
-          <VStack as="form" spacing={6}>
+          <VStack as="form" spacing={6} onSubmit={(e) => { handleCreateCourse(e)}}>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
                 <Input type="text" onChange={(e) => setName(e.target.value)} maxLength={105} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
                 <Textarea onChange={(e) => setDescription(e.target.value)} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Especialidade</FormLabel>
                 <Input type="text" onChange={(e) => setSpecialty(e.target.value)} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Carga horária</FormLabel>
                 <NumberInput defaultValue={1} precision={1} min={1} onChange={(value) => setWorkload(+value)} >
                   <NumberInputField />
@@ -191,22 +191,21 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Link do vídeo</FormLabel>
-                <Input type="text" onChange={(e) => setVideo(e.target.value)} required placeholder='Link do vídeo no youtube' />
+                <Input type="text" onChange={(e) => setVideo(e.target.value)} placeholder='Link do vídeo no youtube' />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Imagem do curso (apenas PNG, GIF, JPEG e JPG)</FormLabel>
                 <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required />
               </FormControl>
             </Box>
             <Button
-              type='button'
+              type='submit'
               colorScheme="green"
               w={"full"}
               size={"lg"}
               disabled={loadingCreateCourse}
-              onClick={(e) => { handleCreateCourse(e) }}
             >{loadingCreateCourse ? "Criando curso..." : "Criar curso"}</Button>
           </VStack>
         </Box>

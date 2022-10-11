@@ -7,7 +7,7 @@ import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { toast } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
 import { Sidebar } from "../Components/Sidebar"
@@ -75,6 +75,7 @@ export const EditCourseAdmin = () => {
   }
 
   function handleUpdateCourse(e: any) {
+    e.preventDefault();
     setLoading(true)
     const updatedCourse: UpdatedCorse = {}
 
@@ -89,7 +90,6 @@ export const EditCourseAdmin = () => {
     const xhr = new XMLHttpRequest();
     setTimeout(() => {
       xhr.addEventListener("readystatechange", function () {
-        setLoading(false)
         if (this.readyState === this.DONE) {
           if (this.status === 201) {
             toast.success('Curso editado!', {
@@ -106,6 +106,7 @@ export const EditCourseAdmin = () => {
               navigate(-1);
             }, 4000)
           } else {
+            setLoading(false)
             toast.error('Erro ao editar curso!', {
               position: "top-right",
               autoClose: 5000,
@@ -139,7 +140,7 @@ export const EditCourseAdmin = () => {
   
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
       <Box w="100%">
         <Header>
@@ -157,11 +158,11 @@ export const EditCourseAdmin = () => {
         </HStack>
         </Header>
         
-        <Box w="100%" maxW={1120} mx="auto">
+        <Box w="100%" maxW={1120} mx="auto" px={8}>
           <Box py={8}>
             <Text fontSize={"2xl"}>Editar curso</Text>
           </Box>
-          <VStack as="form" spacing={6} onSubmit={(e) => {handleUpdateCourse(e)}}>
+          <VStack as="form" spacing={6} method="POST" onSubmit={(e) => {handleUpdateCourse(e)}}>
             {course && (
               <>
                 <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
@@ -252,6 +253,7 @@ export const EditCourseAdmin = () => {
           </VStack>
         </Box>
       </Box>
+      <ToastContainer />
     </Flex>
   )
 }

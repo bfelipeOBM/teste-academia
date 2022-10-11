@@ -84,12 +84,9 @@ const Course = () => {
     setLoading(false);
   };
 
+  console.log(classes.length > 0)
   const enrolledStudentsText = (enrolled: number) => {
-    return enrolled && enrolled > 1
-      ? "pessoas já se inscreveram nesse curso"
-      : enrolled == 1
-      ? "pessoa já se inscreveu nesse curso"
-      : "Nenhuma pessoa se inscreveu nesse curso";
+      return classes.length > 0 ? `${enrolled} de ${classes[0].max_students} alunos matriculados` : "";
   };
 
   const handleEnroll = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -302,10 +299,10 @@ const Course = () => {
                   </div>
 
                   <div className="enrollments">
-                    {classes.length > 0 && classes[0]?.students_count > 0 && (
-                      <span>{classes[0].students_count} </span>
-                    )}{" "}
                     {enrolledStudentsText(classes[0]?.students_count)}
+                    {classes.length > 0 && classes[0]?.students_count == classes[0].max_students && (
+                      <span> - Turma lotada</span>
+                    )}
                   </div>
                 </div>
 

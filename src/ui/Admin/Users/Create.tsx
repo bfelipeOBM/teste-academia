@@ -79,7 +79,7 @@ export const UsersAdminCreate = () => {
   }
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
       <Box w="100%">
         <Header>
@@ -88,7 +88,7 @@ export const UsersAdminCreate = () => {
           </HStack>
         </Header>
 
-        <Box w="100%" maxW={1120} mx="auto">
+        <Box w="100%" maxW={1120} mx="auto" px={8}>
           <Box py={8}>
             <Text fontSize={"2xl"}>Criar usuário</Text>
           </Box>

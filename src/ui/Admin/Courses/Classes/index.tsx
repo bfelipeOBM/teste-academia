@@ -84,6 +84,10 @@ export const ClassesInfoAdmin = () => {
   function handleUpdateUserParticipated(e: any, user_id: number) {
     axios.patch(`${Constants.API_URL}courses/${id}/classes/${class_id}/enrollments/${user_id}`, {
       user_participated: e.target.checked,
+    }, {
+      headers: {
+        Bearer: `${userState.data?.access_token}`
+      }
     })
 
     const updatedUsers = users?.map(user => {
@@ -179,7 +183,7 @@ export const ClassesInfoAdmin = () => {
               placeholder="Pesquisar usuário"
               onChange={searchUser}
             />
-            <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+            <Grid templateColumns={['repeat(1, 1fr)', 'repeat(4, 1fr)']} gap={6}>
               {filteredUsers?.map(user => (
                 <GridItem
                   key={user.id}

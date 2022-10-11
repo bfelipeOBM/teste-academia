@@ -158,7 +158,7 @@ const MyCourses = () => {
 
           <div className="my-courses__content__courses">
             <div className="cards">
-              {mycourses.map((course) => (
+              {filteredCourses.map((course) => (
                 <SimpleCourseCard
                   key={course.id}
                   course={course}

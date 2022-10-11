@@ -5,7 +5,12 @@ interface Props {
   course: Course;
 }
 
-type courseStatus = "13/10/2022" | "Cancelado" | "Concluído";
+type courseStatus =
+  | "PAST"
+  | "UPCOMING"
+  | "FINISHED"
+  | "CANCELLED"
+  | "IN PROGRESS";
 
 const SimpleCourseCard = (props: Props) => {
   const { course } = props;
@@ -14,12 +19,27 @@ const SimpleCourseCard = (props: Props) => {
     if (!status) return "";
 
     switch (status) {
-      case "13/10/2022":
+      case "IN PROGRESS":
         return "in-progress";
-      case "Cancelado":
+      case "CANCELLED":
         return "canceled";
-      case "Concluído":
+      case "FINISHED":
         return "finished";
+      default:
+        return "";
+    }
+  };
+
+  const status = (status: courseStatus) => {
+    if (!status) return "";
+
+    switch (status) {
+      case "IN PROGRESS":
+        return "In Progress";
+      case "CANCELLED":
+        return "Cancelado";
+      case "FINISHED":
+        return "Concluído";
       default:
         return "";
     }
@@ -30,7 +50,7 @@ const SimpleCourseCard = (props: Props) => {
       <div className="simple-course-card__header">
         <div className="simple-course-card__header__status">
           <span className={currentStatus(course.status as courseStatus)}>
-            {course.status}
+            {status(course.status as courseStatus)}
           </span>
         </div>
         <div className="simple-course-card__header__image">

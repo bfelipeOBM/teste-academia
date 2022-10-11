@@ -13,7 +13,7 @@ export type Course = {
   tags?: string[];
   upcoming_classes?: CourseClass[];
   active?: boolean;
-  status?: string;
+  status: string;
   inserted_at?: string;
   updated_at?: string;
   course_image?: string;

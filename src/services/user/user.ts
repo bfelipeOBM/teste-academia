@@ -39,28 +39,32 @@ const updateInfo = async (data: User) => {
 //   return response.data;
 // };
 
+
 const updatePhoto = async (image: string, { id }: User) => {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify({ image });
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `${Constants.API_URL}users/${id}/profile_image`);
+    xhr.open('POST', `${Constants.API_URL}users/${id}/profile_image`);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.setRequestHeader("Authorization", authHeader().bearer as string);
+    xhr.setRequestHeader("Bearer", authHeader().bearer as string)
 
     xhr.send(data);
 
-    xhr.addEventListener("load", () => {
-      const response = JSON.parse(xhr.responseText);
-      resolve(response);
-    });
-    xhr.addEventListener("error", () => {
-      const error = JSON.parse(xhr.responseText);
-      reject(error);
-    });
+    setTimeout(() => {
+      xhr.addEventListener("readystatechange", function () {
+        if (this.status === 201) {
+          const response = JSON.parse(xhr.responseText);
+          resolve(response);
+        } else {
+          const error = JSON.parse(xhr.responseText);
+          reject(error);
+        }
+      });
+    }, 1000);
   });
 };
+
 
 export default {
   userInfo,

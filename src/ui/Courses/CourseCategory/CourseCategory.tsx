@@ -69,6 +69,7 @@ const CourseCategory = () => {
     } else if (type === "Presencial") {
       setShowLocationFilter(true);
     } else if (type === "Online") {
+      setSearchValue(type);
       setShowLocationFilter(false);
     }
   };

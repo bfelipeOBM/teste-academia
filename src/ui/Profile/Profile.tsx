@@ -1,4 +1,5 @@
 import { ApplicationState } from "@/application/store";
+import defaultProfileImage from "@/assets/default_profile_image@2x.png";
 import Footer from "@/ui/Footer/Footer";
 import Header from "@/ui/Header/Header";
 import MyCertificates from "@/ui/Profile/MyCertificates/MyCertificates";
@@ -52,7 +53,7 @@ const Profile = () => {
     setProfileCardProps({
       name,
       email,
-      profile_image: profile_image || "https://i.pravatar.cc/300",
+      profile_image: profile_image || defaultProfileImage,
       onEdit: () => {
         setCurrentPage("profile");
       },

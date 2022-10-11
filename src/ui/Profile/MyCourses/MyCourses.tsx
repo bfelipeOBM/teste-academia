@@ -6,6 +6,7 @@ import {
   getMyCourses,
 } from "@/application/store/courses/action";
 import SimpleCourseCard from "@/ui/Courses/SimpleCourseCard/SimpleCourseCard";
+import Fuse from "fuse.js";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MyCourses.scss";
@@ -58,6 +59,21 @@ const MyCourses = () => {
     (state: ApplicationState) => state.courses_locations
   );
 
+  const handleFuseSearch = (value: string) => {
+    const fuse = new Fuse(mycourses, {
+      keys: ["name", "status", "category", "upcoming_classes.location"],
+    });
+
+    if (!value) {
+      setFilteredCourses(mycourses);
+      return;
+    }
+
+    const result = fuse.search(value);
+
+    setFilteredCourses(result.map((item) => item.item));
+  };
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
@@ -103,18 +119,7 @@ const MyCourses = () => {
   }, []);
 
   useEffect(() => {
-    if (mycourses)
-      setFilteredCourses(
-        mycourses.filter(
-          (course) =>
-            course.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            course?.status?.toLowerCase().includes(searchValue.toLowerCase()) ||
-            (course.upcoming_classes?.length &&
-              course.upcoming_classes[0].location
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()))
-        )
-      );
+    if (mycourses) handleFuseSearch(searchValue);
   }, [searchValue, mycourses]);
 
   return (

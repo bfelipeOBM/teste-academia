@@ -7,7 +7,7 @@ import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { toast } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
 import { Sidebar } from "../Components/Sidebar"
@@ -253,6 +253,7 @@ export const EditCourseAdmin = () => {
           </VStack>
         </Box>
       </Box>
+      <ToastContainer />
     </Flex>
   )
 }

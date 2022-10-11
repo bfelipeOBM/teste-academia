@@ -12,11 +12,17 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentClass?: Class;
+  enrolledOnClass: () => void;
 }
 
 //TODO: Make this modal customizable!
 
-const CustomModal = ({ isOpen, onClose, currentClass }: ModalProps) => {
+const CustomModal = ({
+  isOpen,
+  onClose,
+  currentClass,
+  enrolledOnClass,
+}: ModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
   const { data: message } = useSelector(
@@ -55,6 +61,7 @@ const CustomModal = ({ isOpen, onClose, currentClass }: ModalProps) => {
           theme: "colored",
         });
       }
+      enrolledOnClass();
       handleClose();
     } catch {
       toast.error(`${message.detail}`, {

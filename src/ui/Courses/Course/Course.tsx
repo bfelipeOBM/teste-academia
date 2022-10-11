@@ -32,6 +32,12 @@ const Course = () => {
   const [nextClassDate, setNextClassDate] = useState("");
   const [disabledEnrollButton, setDisabledEnrollButton] = useState(true);
   const [enrollButtonText, setEnrollButtonText] = useState("Inscreva-se");
+  const [downloadMaterialButtonText, setDownloadMaterialButtonText] = useState(
+    "Material indisponível"
+  );
+  const [disabledDownloadMaterialButton, setDisabledDownloadMaterialButton] =
+    useState(true);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentClass, setCurrentClass] = useState<Class>();
 
@@ -153,9 +159,23 @@ const Course = () => {
     } else if (!classes.length || !classes[0]) {
       setDisabledEnrollButton(true);
       setEnrollButtonText("Em breve");
+    } else if (
+      classes.length &&
+      classes[0].max_students <= classes[0].students_count
+    ) {
+      setDisabledEnrollButton(true);
+      setEnrollButtonText("Inscrição Indisponível");
     } else {
       setDisabledEnrollButton(false);
       setEnrollButtonText("Inscreva-se");
+    }
+
+    if (classes.length && classes[0].hasMaterials) {
+      setDisabledDownloadMaterialButton(false);
+      setDownloadMaterialButtonText("Baixar material de apoio");
+    } else {
+      setDisabledDownloadMaterialButton(true);
+      setDownloadMaterialButtonText("Material indisponível");
     }
   }, [mycourses]);
 
@@ -165,6 +185,10 @@ const Course = () => {
         isOpen={isModalOpen}
         currentClass={currentClass}
         onClose={() => setIsModalOpen(false)}
+        enrolledOnClass={() => {
+          setDisabledEnrollButton(true);
+          setEnrollButtonText("Inscrito");
+        }}
       ></CustomModal>
       <ToastContainer />
       <Header></Header>
@@ -286,9 +310,12 @@ const Course = () => {
                 </div>
 
                 <div className="download">
-                  <button onClick={downloadCourseMaterial}>
+                  <button
+                    disabled={disabledDownloadMaterialButton}
+                    onClick={downloadCourseMaterial}
+                  >
                     <i className="material-icons-outlined">cloud_download</i>{" "}
-                    Baixar material de apoio
+                    {downloadMaterialButtonText}
                   </button>
                 </div>
               </div>

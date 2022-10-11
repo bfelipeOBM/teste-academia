@@ -27,4 +27,5 @@ export type Class = {
   specialty: string;
   workload: number;
   students_count: number;
+  hasMaterials: boolean;
 };

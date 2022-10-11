@@ -3,7 +3,7 @@ import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
 import headerLogo from "@/assets/logo-PB@2x.png";
 import AuthService from "@/services/auth";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
@@ -39,7 +39,6 @@ const Header = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
   const [searchebaleItems, setSearchebaleItems] = useState<Item[]>([]);
 
   const user = useSelector((state: ApplicationState) => state.user);
@@ -53,10 +52,6 @@ const Header = () => {
   const handleMenuItemClick = (path: string) => {
     setIsMenuOpen(false);
     navigate(path);
-  };
-
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
   };
 
   const logOut = () => {

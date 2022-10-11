@@ -1,3 +1,4 @@
+import { FormatToBrazilianDate } from "@/application/common/Utils";
 import { Course } from "@/application/models/course";
 import "./SimpleCourseCard.scss";
 
@@ -25,6 +26,10 @@ const SimpleCourseCard = (props: Props) => {
         return "canceled";
       case "FINISHED":
         return "finished";
+      case "UPCOMING":
+        return "in-progress";
+      case "PAST":
+        return "canceled";
       default:
         return "";
     }
@@ -35,11 +40,15 @@ const SimpleCourseCard = (props: Props) => {
 
     switch (status) {
       case "IN PROGRESS":
-        return "In Progress";
+        return "Em andamento";
       case "CANCELLED":
         return "Cancelado";
       case "FINISHED":
         return "Concluído";
+      case "UPCOMING":
+        return course?.date && FormatToBrazilianDate(course.date);
+      case "PAST":
+        return "Encerrado";
       default:
         return "";
     }

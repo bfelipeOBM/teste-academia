@@ -2,6 +2,8 @@ import { SET_MESSAGE } from "@/application/store/message/types";
 import {
   CLEAR_COURSES,
   GET_COURSES_FAIL,
+  GET_COURSES_LOCATIONS_FAIL,
+  GET_COURSES_LOCATIONS_SUCCESS,
   GET_COURSES_SUCCESS,
   GET_COURSE_FAIL,
   GET_COURSE_MATERIAL_FAIL,
@@ -115,6 +117,34 @@ export const getCourseMaterial = (id: number) => (dispatch: Dispatch) => {
 
       dispatch({
         type: GET_COURSE_MATERIAL_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
+};
+
+export const getCoursesLocations = () => (dispatch: Dispatch) => {
+  return CoursesService.getCoursesLocations().then(
+    (data) => {
+      dispatch({
+        type: GET_COURSES_LOCATIONS_SUCCESS,
+        payload: { data },
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      const message =
+        error?.response?.data || error?.message || error.toString();
+
+      dispatch({
+        type: GET_COURSES_LOCATIONS_FAIL,
       });
 
       dispatch({

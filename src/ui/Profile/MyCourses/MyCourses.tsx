@@ -1,12 +1,42 @@
 import { Course } from "@/application/models/course";
 import { ApplicationState } from "@/application/store";
-import { clearCourses, getMyCourses } from "@/application/store/courses/action";
+import {
+  clearCourses,
+  getCoursesLocations,
+  getMyCourses,
+} from "@/application/store/courses/action";
 import SimpleCourseCard from "@/ui/Courses/SimpleCourseCard/SimpleCourseCard";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MyCourses.scss";
 
 type currentTabT = "all" | "in-progress" | "finished" | "canceled";
+
+const CategoryListLeft = [
+  { title: "Eletricista" },
+  { title: "Pedreiro" },
+  { title: "Mestre de Obras" },
+  { title: "Encanador" },
+  { title: "Jardineiro" },
+  { title: "Empreiteiro" },
+  { title: "Azulejista" },
+  { title: "Hidráulico" },
+];
+
+const CategoryListRight = [
+  { title: "Técnico em construção civil/edificações" },
+  { title: "Arquiteto" },
+  { title: "Assentador de pisos" },
+  { title: "Marceneiro" },
+  { title: "Pintor" },
+  { title: "Engenheiro" },
+];
+
+const FilterCoursesTypes = [
+  { title: "Todos" },
+  { title: "Presencial" },
+  { title: "Online" },
+];
 
 const MyCourses = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -18,33 +48,53 @@ const MyCourses = () => {
   const [typesIcon, setTypesIcon] = useState("expand_more");
   const [currentTab, setCurrentTab] = useState<currentTabT>("all");
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
+  const [showLocationFilter, setShowLocationFilter] = useState(false);
 
   const dispatch = useDispatch();
 
   const { mycourses } = useSelector((state: ApplicationState) => state.courses);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const { courses_locations } = useSelector(
+    (state: ApplicationState) => state.courses_locations
+  );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
+  const handleSelectedFilter = (filter: string) => {
+    setSearchValue(filter);
+  };
+
+  const handleSelectedType = (type: string) => {
+    if (type === "Todos") {
+      setSearchValue("");
+      setShowLocationFilter(false);
+    } else if (type === "Presencial") {
+      setShowLocationFilter(true);
+    } else if (type === "Online") {
+      setShowLocationFilter(false);
+    }
+  };
+
   const handleCategoryClick = () => {
     setIsCategoryOpen(!isCategoryOpen);
-    setCategoryIcon(!isCategoryOpen ? "expand_more" : "expand_less");
+    setCategoryIcon(!isCategoryOpen ? "expand_less" : "expand_more");
   };
 
   const handleTypesClick = () => {
     setIsTypesOpen(!isTypesOpen);
-    setTypesIcon(!isTypesOpen ? "expand_more" : "expand_less");
+    setTypesIcon(!isTypesOpen ? "expand_less" : "expand_more");
   };
 
   const handleLocationClick = () => {
     setIsLocationOpen(!isLocationOpen);
-    setLocationIcon(!isLocationOpen ? "expand_more" : "expand_less");
+    setLocationIcon(!isLocationOpen ? "expand_less" : "expand_more");
   };
 
   useEffect(() => {
     dispatch(getMyCourses(profile) as any);
+    dispatch(getCoursesLocations() as any);
 
     return () => {
       dispatch(clearCourses() as any);
@@ -57,7 +107,11 @@ const MyCourses = () => {
         mycourses.filter(
           (course) =>
             course.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            course?.status?.toLowerCase().includes(searchValue.toLowerCase())
+            course?.status?.toLowerCase().includes(searchValue.toLowerCase()) ||
+            (course.upcoming_classes?.length &&
+              course.upcoming_classes[0].location
+                .toLowerCase()
+                .includes(searchValue.toLowerCase()))
         )
       );
   }, [searchValue, mycourses]);
@@ -140,17 +194,93 @@ const MyCourses = () => {
               <div className="item-category" onClick={handleCategoryClick}>
                 <span className="title">Categorias</span>
                 <i className="material-icons ">{categoryIcon}</i>
+                <div
+                  className={`item-category__categories__dropdown-menu__menu ${
+                    isCategoryOpen ? "active" : ""
+                  }`}
+                >
+                  <div className="item-category__categories__dropdown-menu__menu__items__left">
+                    {CategoryListLeft.map((category, index) => (
+                      <div
+                        key={index}
+                        className="item-category__categories__dropdown-menu__menu__items__left__item"
+                        onClick={() => {
+                          handleSelectedFilter(category.title);
+                          handleCategoryClick();
+                        }}
+                      >
+                        <span>{category.title}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="item-category__categories__dropdown-menu__menu__items__right">
+                    {CategoryListRight.map((category, index) => (
+                      <div
+                        key={index}
+                        className="item-category__categories__dropdown-menu__menu__items__right__item"
+                        onClick={() => handleSelectedFilter(category.title)}
+                      >
+                        <span>{category.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              <div className="item-category" onClick={handleTypesClick}>
+              <div className="item-type" onClick={handleTypesClick}>
                 <span className="title">Tipos</span>
                 <i className="material-icons ">{typesIcon}</i>
+
+                <div
+                  className={`item-type__courses-types__dropdown-menu__menu ${
+                    isTypesOpen ? "active" : ""
+                  }`}
+                >
+                  <div className="item-type__courses-types__dropdown-menu__menu__items__left">
+                    {FilterCoursesTypes.map((courseType, index) => (
+                      <div
+                        key={index}
+                        className="item-type__courses-types__dropdown-menu__menu__items__left__item"
+                        onClick={() => {
+                          handleSelectedType(courseType.title);
+                          handleTypesClick();
+                        }}
+                      >
+                        <span>{courseType.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              <div className="item-location" onClick={handleLocationClick}>
-                <span className="title">Localização</span>
-                <i className="material-icons ">{locationIcon}</i>
-              </div>
+              {showLocationFilter && (
+                <div className="item-location" onClick={handleLocationClick}>
+                  <span className="title">Localização</span>
+                  <i className="material-icons ">{locationIcon}</i>
+
+                  <div
+                    className={`item-location__locations__dropdown-menu__menu ${
+                      isLocationOpen ? "active" : ""
+                    }`}
+                  >
+                    <div className="item-location__locations__dropdown-menu__menu__items__left">
+                      {courses_locations.map((location, index) => (
+                        <div
+                          key={index}
+                          className="item-location__locations__dropdown-menu__menu__items__left__item"
+                          onClick={() => {
+                            handleSelectedFilter(location.name);
+                            handleLocationClick();
+                          }}
+                        >
+                          <span>{location.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

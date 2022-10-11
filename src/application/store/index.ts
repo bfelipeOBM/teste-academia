@@ -25,6 +25,7 @@ export interface ApplicationState {
   course: CoursesState;
   classes: ClassState;
   myclasses: ClassState;
+  courses_locations: CoursesState;
 }
 
 export type RootReducer = ReturnType<typeof rootReducer>;

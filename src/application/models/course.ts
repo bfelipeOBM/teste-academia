@@ -18,4 +18,10 @@ export type Course = {
   updated_at?: string;
   course_image?: string;
   course_id?: number;
+  date?: string;
+};
+
+export type CourseLocation = {
+  id: number;
+  name: string;
 };

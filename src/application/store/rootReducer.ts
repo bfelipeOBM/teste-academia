@@ -3,6 +3,7 @@ import { default as classes, default as myclasses } from "./classes";
 import {
   default as course,
   default as courses,
+  default as courses_locations,
   default as mycourses,
 } from "./courses";
 import message from "./message";
@@ -18,4 +19,5 @@ export default combineReducers({
   course,
   classes,
   myclasses,
+  courses_locations,
 });

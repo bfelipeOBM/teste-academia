@@ -1,6 +1,7 @@
 export type CourseClass = {
   id: number;
   date: string;
+  location: string;
 };
 
 export type Class = {

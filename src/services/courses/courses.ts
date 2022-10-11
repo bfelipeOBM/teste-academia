@@ -46,9 +46,15 @@ const getCourseMaterial = async (id: number) => {
   return response.data;
 };
 
+const getCoursesLocations = async () => {
+  const response = await axios.get(Constants.API_URL + "courses/locations");
+  return response.data;
+};
+
 export default {
   getCourse,
   getAllCourses,
   getEnrolledCourses,
   getCourseMaterial,
+  getCoursesLocations,
 };

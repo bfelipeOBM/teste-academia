@@ -6,6 +6,7 @@ import {
   getCoursesLocations,
 } from "@/application/store/courses/action";
 import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
+import Fuse from "fuse.js";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./CourseCategory.scss";
@@ -54,6 +55,21 @@ const CourseCategory = () => {
 
   const dispatch = useDispatch();
 
+  const handleFuseSearch = (value: string) => {
+    const fuse = new Fuse(courses, {
+      keys: ["title", "description", "category", "upcoming_classes.location"],
+    });
+
+    if (!value) {
+      setFilteredCourses(courses);
+      return;
+    }
+
+    const result = fuse.search(value);
+
+    setFilteredCourses(result.map((item) => item.item));
+  };
+
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
@@ -99,24 +115,7 @@ const CourseCategory = () => {
   }, []);
 
   useEffect(() => {
-    if (courses)
-      setFilteredCourses(
-        courses.filter(
-          (course) =>
-            course.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            course.description
-              .toLowerCase()
-              .includes(searchValue.toLowerCase()) ||
-            (course.category?.length &&
-              course.category.filter((tag) =>
-                tag.toLowerCase().includes(searchValue.toLowerCase())
-              ).length) ||
-            (course.upcoming_classes?.length &&
-              course.upcoming_classes[0].location
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()))
-        )
-      );
+    if (courses) handleFuseSearch(searchValue);
   }, [searchValue, courses]);
 
   return (

@@ -7,6 +7,7 @@ import {
 import { User } from "@/application/models/user";
 import { ApplicationState } from "@/application/store";
 import { updatePhoto, updateProfile } from "@/application/store/profile/action";
+import defaultProfileImage from "@/assets/default_profile_image.png";
 import facebookLogo from "@/assets/facebook@2x.png";
 import googleLogo from "@/assets/google@2x.png";
 import obramaxLogo from "@/assets/obramax@2x.png";
@@ -43,7 +44,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
   const { userInfo } = props;
   const [loading, setLoading] = useState(false);
   const [userImage, setUserImage] = useState(
-    userInfo.profile_image || "https://i.pravatar.cc/300"
+    userInfo.profile_image || defaultProfileImage
   );
   const [userImageFile, setUserImageFile] = useState<string>();
   const dispatch = useDispatch();

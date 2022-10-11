@@ -75,6 +75,7 @@ export const EditCourseAdmin = () => {
   }
 
   function handleUpdateCourse(e: any) {
+    e.preventDefault();
     setLoading(true)
     const updatedCourse: UpdatedCorse = {}
 
@@ -89,7 +90,6 @@ export const EditCourseAdmin = () => {
     const xhr = new XMLHttpRequest();
     setTimeout(() => {
       xhr.addEventListener("readystatechange", function () {
-        setLoading(false)
         if (this.readyState === this.DONE) {
           if (this.status === 201) {
             toast.success('Curso editado!', {
@@ -106,6 +106,7 @@ export const EditCourseAdmin = () => {
               navigate(-1);
             }, 4000)
           } else {
+            setLoading(false)
             toast.error('Erro ao editar curso!', {
               position: "top-right",
               autoClose: 5000,
@@ -161,7 +162,7 @@ export const EditCourseAdmin = () => {
           <Box py={8}>
             <Text fontSize={"2xl"}>Editar curso</Text>
           </Box>
-          <VStack as="form" spacing={6} onSubmit={(e) => {handleUpdateCourse(e)}}>
+          <VStack as="form" spacing={6} method="POST" onSubmit={(e) => {handleUpdateCourse(e)}}>
             {course && (
               <>
                 <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

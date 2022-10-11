@@ -153,6 +153,9 @@ const Course = () => {
     } else if (!classes.length || !classes[0]) {
       setDisabledEnrollButton(true);
       setEnrollButtonText("Em breve");
+    } else if (classes[0].students_count === classes[0].max_students) {
+      setDisabledEnrollButton(true);
+      setEnrollButtonText("Turma cheia"); 
     } else {
       setDisabledEnrollButton(false);
       setEnrollButtonText("Inscreva-se");

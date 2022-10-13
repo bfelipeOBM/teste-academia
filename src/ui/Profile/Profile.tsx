@@ -69,8 +69,8 @@ const Profile = () => {
         <div className="profile__header">
           <span className="profile__header-title">minha conta</span>
           <span className="profile__header-description">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy
+            {/* Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy */}
           </span>
         </div>
         <div className="profile__content">

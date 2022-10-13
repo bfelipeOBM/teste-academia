@@ -16,6 +16,10 @@
     &__image {
       width: 45%;
       height: 100%;
+
+      img {
+        object-fit: cover;
+      }
     }
 
     &__content {

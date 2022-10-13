@@ -1,6 +1,8 @@
 import { getFirstAndLastName, useWindowSize } from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
+import { clearMessage } from "@/application/store/message/action";
 import { userProfile } from "@/application/store/profile/action";
+import defaultProfileImage from "@/assets/default_profile_image@2x.png";
 import headerLogo from "@/assets/logo-PB@2x.png";
 import AuthService from "@/services/auth";
 import { useEffect, useState } from "react";
@@ -55,6 +57,7 @@ const Header = () => {
   };
 
   const logOut = () => {
+    dispatch(clearMessage as any);
     AuthService.logout();
     setIsUserMenuOpen(false);
     navigate(0);
@@ -189,7 +192,16 @@ const Header = () => {
             onClick={() => handleAvatarClick()}
           >
             <div className="header__items__login__info__avatar">
-              <i className="material-icons">account_circle</i>
+              {user.isLoggedIn ? (
+                <img
+                  src={profile?.profile_image || defaultProfileImage}
+                  alt="avatar"
+                  width="100%"
+                  height="100%"
+                />
+              ) : (
+                <i className="material-icons">account_circle</i>
+              )}
             </div>
 
             {!user?.isLoggedIn && (

@@ -198,6 +198,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-left: 10px;
 
         &__buttons {
           display: flex;
@@ -219,14 +220,22 @@
         }
 
         &__avatar {
-          width: 36px;
-          height: 36px;
+          width: 40px;
+          height: 40px;
           background: #fff 0% 0% no-repeat padding-box;
           border-radius: 50%;
           margin-right: 10px;
+          cursor: pointer;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
 
           i {
-            font-size: 36px;
+            font-size: 40px;
             color: #b9bbbe;
             align-self: baseline;
           }
@@ -419,14 +428,21 @@
         }
 
         &__avatar {
-          width: 36px;
-          height: 36px;
+          width: 40px;
+          height: 40px;
           background: #fff 0% 0% no-repeat padding-box;
           border-radius: 50%;
           margin-right: 10px;
 
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
           i {
-            font-size: 36px;
+            font-size: 40px;
             color: #b9bbbe;
             align-self: baseline;
           }

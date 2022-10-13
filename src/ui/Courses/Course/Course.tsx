@@ -102,9 +102,10 @@ const Course = () => {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+    console.log(currentClass)
     try {
-      if (course.id) {
-        await dispatch(getCourseMaterial(course.id) as any);
+      if (course.id && currentClass) {
+        await dispatch(getCourseMaterial(course.id, currentClass.class_id) as any);
       }
     } catch {
       toast.warn(`${message.detail}`, {

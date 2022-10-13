@@ -15,7 +15,7 @@ const reducer: Reducer<MessageState> = (
       return { data: payload };
 
     case CLEAR_MESSAGE:
-      return { data: "" };
+      return { data: initialState };
 
     default:
       return state;

@@ -1,24 +1,19 @@
-import { useState } from "react";
+import { Banner } from "@/application/models/banner";
+import { ApplicationState } from "@/application/store";
+import { getBanners } from "@/application/store/banners/action";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
-import slider1 from "../../../assets/slider-1@2x.png";
-import slider2 from "../../../assets/slider-2@2x.png";
 import "./CarouselBanner.scss";
 
 const CarouselBanner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
-  const [carouselItems, setCarouselItems] = useState([
-    {
-      src: slider1,
-      altText: "Slide 1",
-      caption: "Slide 1",
-    },
-    {
-      src: slider2,
-      altText: "Slide 2",
-      caption: "Slide 2",
-    },
-  ]);
+  const [carouselItems, setCarouselItems] = useState<Banner[]>([]);
+
+  const dispatch = useDispatch();
+
+  const { banners } = useSelector((state: ApplicationState) => state.banners);
 
   const next = () => {
     if (animating) return;
@@ -46,14 +41,20 @@ const CarouselBanner = () => {
         onExited={() => setAnimating(false)}
         key={index}
       >
-        <img
-          src={item.src}
-          alt={item.altText}
-          className="carousel-banner__image"
-        />
+        <img src={item.url} className="carousel-banner__image" />
       </CarouselItem>
     );
   });
+
+  useEffect(() => {
+    if (banners.length) {
+      setCarouselItems(banners);
+    }
+  }, [banners]);
+
+  useEffect(() => {
+    dispatch(getBanners() as any);
+  }, []);
 
   return (
     <Carousel

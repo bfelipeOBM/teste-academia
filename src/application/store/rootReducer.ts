@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import banners from "./banners";
 import { default as classes, default as myclasses } from "./classes";
 import {
   default as course,
@@ -20,4 +21,5 @@ export default combineReducers({
   classes,
   myclasses,
   courses_locations,
+  banners,
 });

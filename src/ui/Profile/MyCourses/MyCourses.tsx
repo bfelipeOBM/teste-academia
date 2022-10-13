@@ -109,6 +109,29 @@ const MyCourses = () => {
     setLocationIcon(!isLocationOpen ? "expand_less" : "expand_more");
   };
 
+  const handleTabClick = (tab: currentTabT) => {
+    setCurrentTab(tab);
+
+    if (tab === "all") {
+      setFilteredCourses(mycourses);
+      console.log("all");
+    } else if (tab === "in-progress") {
+      setFilteredCourses(
+        mycourses.filter((course) => course.status === "IN PROGRESS")
+      );
+    } else if (tab === "finished") {
+      setFilteredCourses(
+        mycourses.filter((course) => course.status === "FINISHED")
+      );
+    } else if (tab === "canceled") {
+      setFilteredCourses(
+        mycourses.filter(
+          (course) => course.status === "PAST" || course.status === "CANCELLED"
+        )
+      );
+    }
+  };
+
   useEffect(() => {
     dispatch(getMyCourses(profile) as any);
     dispatch(getCoursesLocations() as any);
@@ -139,7 +162,7 @@ const MyCourses = () => {
             className={`my-courses__tabs__tab ${
               currentTab === "all" ? "tab-active" : ""
             }`}
-            onClick={() => setCurrentTab("all")}
+            onClick={() => handleTabClick("all")}
           >
             <span className="my-courses__tabs__tab__all-courses">
               Todos os cursos
@@ -150,7 +173,7 @@ const MyCourses = () => {
             className={`my-courses__tabs__tab ${
               currentTab === "in-progress" ? "tab-active" : ""
             }`}
-            onClick={() => setCurrentTab("in-progress")}
+            onClick={() => handleTabClick("in-progress")}
           >
             <span className="my-courses__tabs__tab__in-progress">
               <i className="material-icons">circle</i> Cursos a concluir
@@ -160,7 +183,7 @@ const MyCourses = () => {
             className={`my-courses__tabs__tab ${
               currentTab === "finished" ? "tab-active" : ""
             }`}
-            onClick={() => setCurrentTab("finished")}
+            onClick={() => handleTabClick("finished")}
           >
             <span className="my-courses__tabs__tab__finished">
               <i className="material-icons">circle</i> Cursos concluídos
@@ -170,7 +193,7 @@ const MyCourses = () => {
             className={`my-courses__tabs__tab ${
               currentTab === "canceled" ? "tab-active" : ""
             }`}
-            onClick={() => setCurrentTab("canceled")}
+            onClick={() => handleTabClick("canceled")}
           >
             <span className="my-courses__tabs__tab__canceled">
               <i className="material-icons">circle</i> Cursos cancelados

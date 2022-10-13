@@ -101,8 +101,8 @@ export const getMyCourses = (user: User) => (dispatch: Dispatch) => {
   );
 };
 
-export const getCourseMaterial = (id: number) => (dispatch: Dispatch) => {
-  return CoursesService.getCourseMaterial(id).then(
+export const getCourseMaterial = (id: number, class_id: number) => (dispatch: Dispatch) => {
+  return CoursesService.getCourseMaterial(id, class_id).then(
     (data) => {
       dispatch({
         type: GET_COURSE_MATERIAL_SUCCESS,

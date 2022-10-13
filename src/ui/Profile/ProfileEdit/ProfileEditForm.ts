@@ -10,7 +10,7 @@ export const schema = Yup.object().shape({
     .notRequired(),
   confirmPassword: Yup.string()
     .when("password", {
-      is: (val: string) => val !== "",
+      is: (val: string) => val && val !== "",
       then: Yup.string()
         .oneOf([Yup.ref("password"), null], "*Senhas não conferem")
         .required("*Confirmação de senha é obrigatória"),

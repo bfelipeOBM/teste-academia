@@ -9,6 +9,8 @@ import {
   GET_COURSES_SUCCESS,
   GET_COURSE_FAIL,
   GET_COURSE_SUCCESS,
+  GET_FEATURED_COURSES_FAIL,
+  GET_FEATURED_COURSES_SUCCESS,
   GET_MYCOURSES_FAIL,
   GET_MYCOURSES_SUCCESS,
 } from "./types";
@@ -18,6 +20,7 @@ const initialState: CoursesState = {
   mycourses: [] as Course[],
   course: {} as Course,
   courses_locations: [] as CourseLocation[],
+  featured_courses: [] as Course[],
 };
 
 const reducer: Reducer<CoursesState> = (
@@ -66,6 +69,16 @@ const reducer: Reducer<CoursesState> = (
       return {
         ...state,
         courses_locations: [],
+      };
+    case GET_FEATURED_COURSES_SUCCESS:
+      return {
+        ...state,
+        featured_courses: payload.data,
+      };
+    case GET_FEATURED_COURSES_FAIL:
+      return {
+        ...state,
+        featured_courses: [],
       };
     case CLEAR_COURSES:
       return initialState;

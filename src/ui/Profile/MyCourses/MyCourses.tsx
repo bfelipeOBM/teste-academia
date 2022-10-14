@@ -114,7 +114,6 @@ const MyCourses = () => {
 
     if (tab === "all") {
       setFilteredCourses(mycourses);
-      console.log("all");
     } else if (tab === "in-progress") {
       setFilteredCourses(
         mycourses.filter((course) => course.status === "IN PROGRESS")

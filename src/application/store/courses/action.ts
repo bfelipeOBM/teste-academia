@@ -9,6 +9,8 @@ import {
   GET_COURSE_MATERIAL_FAIL,
   GET_COURSE_MATERIAL_SUCCESS,
   GET_COURSE_SUCCESS,
+  GET_FEATURED_COURSES_FAIL,
+  GET_FEATURED_COURSES_SUCCESS,
   GET_MYCOURSES_FAIL,
   GET_MYCOURSES_SUCCESS,
 } from "./types";
@@ -101,33 +103,34 @@ export const getMyCourses = (user: User) => (dispatch: Dispatch) => {
   );
 };
 
-export const getCourseMaterial = (id: number, class_id: number) => (dispatch: Dispatch) => {
-  return CoursesService.getCourseMaterial(id, class_id).then(
-    (data) => {
-      dispatch({
-        type: GET_COURSE_MATERIAL_SUCCESS,
-        payload: { data },
-      });
+export const getCourseMaterial =
+  (id: number, class_id: number) => (dispatch: Dispatch) => {
+    return CoursesService.getCourseMaterial(id, class_id).then(
+      (data) => {
+        dispatch({
+          type: GET_COURSE_MATERIAL_SUCCESS,
+          payload: { data },
+        });
 
-      return Promise.resolve();
-    },
-    (error) => {
-      const message =
-        error?.response?.data || error?.message || error.toString();
+        return Promise.resolve();
+      },
+      (error) => {
+        const message =
+          error?.response?.data || error?.message || error.toString();
 
-      dispatch({
-        type: GET_COURSE_MATERIAL_FAIL,
-      });
+        dispatch({
+          type: GET_COURSE_MATERIAL_FAIL,
+        });
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-      });
+        dispatch({
+          type: SET_MESSAGE,
+          payload: message,
+        });
 
-      return Promise.reject();
-    }
-  );
-};
+        return Promise.reject();
+      }
+    );
+  };
 
 export const getCoursesLocations = () => (dispatch: Dispatch) => {
   return CoursesService.getCoursesLocations().then(
@@ -145,6 +148,34 @@ export const getCoursesLocations = () => (dispatch: Dispatch) => {
 
       dispatch({
         type: GET_COURSES_LOCATIONS_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
+};
+
+export const getFeaturedCourses = () => (dispatch: Dispatch) => {
+  return CoursesService.getFeaturedCourses().then(
+    (data) => {
+      dispatch({
+        type: GET_FEATURED_COURSES_SUCCESS,
+        payload: { data },
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      const message =
+        error?.response?.data || error?.message || error.toString();
+
+      dispatch({
+        type: GET_FEATURED_COURSES_FAIL,
       });
 
       dispatch({

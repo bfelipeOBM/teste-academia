@@ -1,7 +1,7 @@
 import { ApplicationState } from "@/application/store";
 import {
   clearCourses,
-  getAllCourses,
+  getFeaturedCourses,
 } from "@/application/store/courses/action";
 import CourseCard from "@/ui/Courses/CourseCard/CourseCard";
 import { useEffect, useState } from "react";
@@ -13,12 +13,14 @@ const FeaturedCourses = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
-  const { courses } = useSelector((state: ApplicationState) => state.courses);
+  const { featured_courses } = useSelector(
+    (state: ApplicationState) => state.featured_courses
+  );
 
   const dispatch = useDispatch();
 
   // TODO: Melhorar isso ou usar slides infinitos
-  const limitedCourses = courses.slice(0, 5);
+  const limitedCourses = featured_courses.slice(0, 5);
 
   const next = () => {
     if (animating) return;
@@ -52,7 +54,7 @@ const FeaturedCourses = () => {
   });
 
   useEffect(() => {
-    dispatch(getAllCourses() as any);
+    dispatch(getFeaturedCourses() as any);
 
     return () => {
       dispatch(clearCourses() as any);

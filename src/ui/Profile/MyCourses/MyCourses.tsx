@@ -50,6 +50,9 @@ const MyCourses = () => {
   const [currentTab, setCurrentTab] = useState<currentTabT>("all");
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [showLocationFilter, setShowLocationFilter] = useState(false);
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState("");
+  const [selectedLocationItem, setSelectedLocationItem] = useState("");
+  const [selectedTypesItem, setSelectedTypesItem] = useState("");
 
   const dispatch = useDispatch();
 
@@ -94,14 +97,26 @@ const MyCourses = () => {
     }
   };
 
+  const handleSelectedCategory = (category: string) => {
+    setSelectedCategoryItem(category);
+  };
+
   const handleCategoryClick = () => {
     setIsCategoryOpen(!isCategoryOpen);
     setCategoryIcon(!isCategoryOpen ? "expand_less" : "expand_more");
   };
 
+  const handleSelectedTypes = (type: string) => {
+    setSelectedTypesItem(type);
+  };
+
   const handleTypesClick = () => {
     setIsTypesOpen(!isTypesOpen);
     setTypesIcon(!isTypesOpen ? "expand_less" : "expand_more");
+  };
+
+  const handleSelectedLocation = (location: string) => {
+    setSelectedLocationItem(location);
   };
 
   const handleLocationClick = () => {
@@ -232,10 +247,15 @@ const MyCourses = () => {
                     {CategoryListLeft.map((category, index) => (
                       <div
                         key={index}
-                        className="item-category__categories__dropdown-menu__menu__items__left__item"
+                        className={`item-category__categories__dropdown-menu__menu__items__left__item ${
+                          selectedCategoryItem === category.title
+                            ? "active"
+                            : ""
+                        }`}
                         onClick={() => {
                           handleSelectedFilter(category.title);
                           handleCategoryClick();
+                          handleSelectedCategory(category.title);
                         }}
                       >
                         <span>{category.title}</span>
@@ -247,8 +267,16 @@ const MyCourses = () => {
                     {CategoryListRight.map((category, index) => (
                       <div
                         key={index}
-                        className="item-category__categories__dropdown-menu__menu__items__right__item"
-                        onClick={() => handleSelectedFilter(category.title)}
+                        className={`item-category__categories__dropdown-menu__menu__items__right__item ${
+                          selectedCategoryItem === category.title
+                            ? "active"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          handleSelectedFilter(category.title);
+                          handleCategoryClick();
+                          handleSelectedCategory(category.title);
+                        }}
                       >
                         <span>{category.title}</span>
                       </div>
@@ -270,10 +298,13 @@ const MyCourses = () => {
                     {FilterCoursesTypes.map((courseType, index) => (
                       <div
                         key={index}
-                        className="item-type__courses-types__dropdown-menu__menu__items__left__item"
+                        className={`item-type__courses-types__dropdown-menu__menu__items__left__item ${
+                          selectedTypesItem === courseType.title ? "active" : ""
+                        }`}
                         onClick={() => {
                           handleSelectedType(courseType.title);
                           handleTypesClick();
+                          handleSelectedTypes(courseType.title);
                         }}
                       >
                         <span>{courseType.title}</span>
@@ -297,10 +328,15 @@ const MyCourses = () => {
                       {courses_locations.map((location, index) => (
                         <div
                           key={index}
-                          className="item-location__locations__dropdown-menu__menu__items__left__item"
+                          className={`item-location__locations__dropdown-menu__menu__items__left__item ${
+                            selectedLocationItem === location.name
+                              ? "active"
+                              : ""
+                          }`}
                           onClick={() => {
                             handleSelectedFilter(location.name);
                             handleLocationClick();
+                            handleSelectedLocation(location.name);
                           }}
                         >
                           <span>{location.name}</span>

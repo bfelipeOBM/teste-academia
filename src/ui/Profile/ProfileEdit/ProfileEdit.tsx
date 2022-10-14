@@ -66,6 +66,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
     value: userInfo.occupation,
     label: userInfo.occupation && capitalize(userInfo.occupation),
   } as Option);
+  const [disableUploadButton, setDisableUploadButton] = useState(true);
 
   const { data: message } = useSelector(
     (state: ApplicationState) => state.message
@@ -126,6 +127,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
     e.preventDefault();
     const reader = new FileReader();
     if (e.target.files && e.target.files[0]) {
+      setDisableUploadButton(false);
       const file = e.target.files[0];
       reader.onload = () => {
         setUserImageFile(reader?.result as string);
@@ -136,6 +138,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
   };
 
   const uploadProfileImage = async () => {
+    setDisableUploadButton(true);
     try {
       if (userImageFile) {
         await dispatch(updatePhoto(userImageFile, userInfo) as any);
@@ -477,7 +480,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
                   type="button"
                   className="profile-edit__form__avatar-upload__button-button"
                   onClick={uploadProfileImage}
-                  disabled={loading || !userImageFile}
+                  disabled={loading || !userImageFile || disableUploadButton}
                 >
                   Enviar Imagem
                 </button>

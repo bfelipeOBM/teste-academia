@@ -45,12 +45,15 @@ const reducer: Reducer<ProfileState> = (
     case UPDATE_PROFILE_IMAGE_SUCCESS:
       return {
         ...state,
-        profile: { profile_image: payload.data },
+        profile: {
+          ...state.profile,
+          profile_image: payload.data.profile_image,
+        },
       };
     case UPDATE_PROFILE_IMAGE_FAIL:
       return {
         ...state,
-        profile: { profile_image: null },
+        profile: { ...state.profile, profile_image: null },
       };
     case CLEAR_PROFILE:
       return initialState;

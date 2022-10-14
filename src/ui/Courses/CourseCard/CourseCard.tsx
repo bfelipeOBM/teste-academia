@@ -18,7 +18,9 @@ const CourseCard = (props: Props) => {
 
   const goToCourse = () => {
     user.isLoggedIn
-      ? navigate(`/course/${course.id}`, { state: { id: course.id } })
+      ? navigate(`/course/${course.course_id || course.id}`, {
+          state: { id: course.course_id || course.id },
+        })
       : navigate(`/login`);
   };
 
@@ -34,7 +36,7 @@ const CourseCard = (props: Props) => {
 
   return (
     <div className="course-card">
-      <div className="course-card__image">
+      <div className="course-card__image" onClick={goToCourse}>
         <img src={course.image} alt={course.name} width="100%" height="100%" />
       </div>
       <div className="course-card__content">

@@ -10,6 +10,8 @@ export const GET_COURSE_MATERIAL_SUCCESS = "GET_COURSE_MATERIAL_SUCCESS";
 export const GET_COURSE_MATERIAL_FAIL = "GET_COURSE_MATERIAL_FAIL";
 export const GET_COURSES_LOCATIONS_SUCCESS = "GET_COURSES_LOCATIONS_SUCCESS";
 export const GET_COURSES_LOCATIONS_FAIL = "GET_COURSES_LOCATIONS_FAIL";
+export const GET_FEATURED_COURSES_SUCCESS = "GET_FEATURED_COURSES_SUCCESS";
+export const GET_FEATURED_COURSES_FAIL = "GET_FEATURED_COURSES_FAIL";
 export const CLEAR_COURSES = "CLEAR_COURSES";
 
 export interface CoursesState {
@@ -17,4 +19,5 @@ export interface CoursesState {
   mycourses: Course[];
   course: Course;
   courses_locations: CourseLocation[];
+  featured_courses: Course[];
 }

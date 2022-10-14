@@ -51,10 +51,16 @@ const getCoursesLocations = async () => {
   return response.data;
 };
 
+const getFeaturedCourses = async () => {
+  const response = await axios.get(Constants.API_URL + "courses/featured/");
+  return response.data;
+};
+
 export default {
   getCourse,
   getAllCourses,
   getEnrolledCourses,
   getCourseMaterial,
   getCoursesLocations,
+  getFeaturedCourses,
 };

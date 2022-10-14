@@ -17,7 +17,7 @@ const userInfo = async () => {
 const updateInfo = async (data: User) => {
   const response = await axios.patch(
     Constants.API_URL + "users/" + data.id,
-    { ...data },
+    data,
     {
       headers: authHeader() as AxiosRequestHeaders,
     }

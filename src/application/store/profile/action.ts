@@ -46,7 +46,7 @@ export const updateProfile = (data: User) => (dispatch: Dispatch) => {
     (data) => {
       dispatch({
         type: UPDATE_PROFILE_SUCCESS,
-        payload: { data },
+        payload: data,
       });
 
       return Promise.resolve();

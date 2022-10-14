@@ -64,16 +64,19 @@ const Login = () => {
       };
       await dispatch(login(loginData) as any);
     } catch {
-      toast.error(`${message.detail}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.error(
+        `${message.detail || "As credenciais fornecidas não são válidas."}`,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        }
+      );
     }
 
     setLoading(false);

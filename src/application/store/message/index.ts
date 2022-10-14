@@ -12,10 +12,10 @@ const reducer: Reducer<MessageState> = (
 
   switch (type) {
     case SET_MESSAGE:
-      return { data: payload };
+      return { ...state, data: payload };
 
     case CLEAR_MESSAGE:
-      return { data: initialState };
+      return initialState;
 
     default:
       return state;

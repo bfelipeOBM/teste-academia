@@ -84,7 +84,6 @@ const Course = () => {
     setLoading(false);
   };
 
-  console.log(classes.length > 0)
   const enrolledStudentsText = (enrolled: number) => {
       return classes.length > 0 ? `${enrolled} de ${classes[0].max_students} alunos matriculados` : "";
   };
@@ -102,7 +101,6 @@ const Course = () => {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    console.log(currentClass)
     try {
       if (course.id && currentClass) {
         await dispatch(getCourseMaterial(course.id, currentClass.class_id) as any);

@@ -86,7 +86,6 @@ export const UsersAdminInfos = () => {
     const search = e.target.value;
     const withourSpecialCharacters = search.replace(regex, '');
 
-    console.log({search, withourSpecialCharacters})
     const searchUsers: any = [];
     users.filter(user => {
       const userDocument = user.document?.replaceAll(regex, '')

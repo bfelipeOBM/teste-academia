@@ -42,7 +42,7 @@ export const EditClassAdmin = () => {
   useEffect(() => {
     axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}`).then((response) => {
       setClasse(response.data);
-      setActive(response.data.active)
+      setActive(response.data.class_active)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -59,7 +59,7 @@ export const EditClassAdmin = () => {
       sympla_url: sympla,
       active: sendActive,
       email_observation: observation,
-      send_email: sendEmail
+      send_email: sendEmail,
     }, { headers: { Bearer: `${userState.data?.access_token}` } }).then((response) => {
       toast.success('Turma editada!', {
         position: "top-right",
@@ -160,6 +160,12 @@ export const EditClassAdmin = () => {
             </Box>
 
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+            <FormControl>
+              <FormLabel>Curso ativo</FormLabel>
+              <Checkbox
+                onChange={(e) => {setActive(e.target.checked); setSendActive(e.target.checked)}}
+                isChecked={active}/>
+            </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
             <FormControl>

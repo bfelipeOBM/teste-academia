@@ -24,7 +24,6 @@ export const ClassesInfoAdmin = () => {
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
   
-  console.log(searchUsers)
   useEffect(() => {
     if (userState.isLoggedIn) {
       dispatch(userProfile() as any);
@@ -223,7 +222,6 @@ export const ClassesInfoAdmin = () => {
               placeholder="Pesquise o usuário"
               list="users"
               onChange={(e) => {
-                console.log("To aqui")
                 handleSearchUser(e.target.value);
               }}
             />

@@ -36,13 +36,22 @@ const CarouselBanner = () => {
 
   const slides = carouselItems.map((item, index) => {
     return (
-      <CarouselItem
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
-        key={index}
-      >
-        <img src={item.url} className="carousel-banner__image" />
-      </CarouselItem>
+      
+        <CarouselItem
+          onExiting={() => setAnimating(true)}
+          onExited={() => setAnimating(false)}
+          key={index}
+        >
+          {item.link ? (
+            <a href={item.link} target="_blank" key={index} rel="noreferrer">
+              <img src={item.url} className="carousel-banner__image" />
+            </a>
+          ) : (
+            <img src={item.url} className="carousel-banner__image" />
+          )}
+          
+        </CarouselItem>
+      
     );
   });
 

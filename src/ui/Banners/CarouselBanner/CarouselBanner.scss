@@ -5,6 +5,7 @@
     position: relative;
     overflow: hidden;
     margin-top: 69px;
+    cursor: pointer;
 
     &__image {
       width: 100%;
@@ -21,6 +22,7 @@
     overflow: hidden;
     z-index: 1060;
     margin-top: -1px;
+    cursor: pointer;
 
     &__image {
       width: 100%;

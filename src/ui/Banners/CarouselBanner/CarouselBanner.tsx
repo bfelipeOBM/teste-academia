@@ -1,3 +1,4 @@
+import { navigateToExternalUrl } from "@/application/common/Utils";
 import { Banner } from "@/application/models/banner";
 import { ApplicationState } from "@/application/store";
 import { getBanners } from "@/application/store/banners/action";
@@ -34,24 +35,25 @@ const CarouselBanner = () => {
     setActiveIndex(newIndex);
   };
 
+  const openExternalUrl = (url: string) => {
+    if (url) {
+      navigateToExternalUrl(url);
+    }
+  };
+
   const slides = carouselItems.map((item, index) => {
     return (
-      
-        <CarouselItem
-          onExiting={() => setAnimating(true)}
-          onExited={() => setAnimating(false)}
-          key={index}
-        >
-          {item.link ? (
-            <a href={item.link} target="_blank" key={index} rel="noreferrer">
-              <img src={item.url} className="carousel-banner__image" />
-            </a>
-          ) : (
-            <img src={item.url} className="carousel-banner__image" />
-          )}
-          
-        </CarouselItem>
-      
+      <CarouselItem
+        onExiting={() => setAnimating(true)}
+        onExited={() => setAnimating(false)}
+        key={index}
+      >
+        <img
+          src={item.url}
+          onClick={() => openExternalUrl(item.link)}
+          className="carousel-banner__image"
+        />
+      </CarouselItem>
     );
   });
 

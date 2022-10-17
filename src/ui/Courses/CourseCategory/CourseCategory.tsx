@@ -60,6 +60,10 @@ const CourseCategory = () => {
 
   const handleFuseSearch = (value: string) => {
     const fuse = new Fuse(courses, {
+      includeMatches: true,
+      includeScore: true,
+      location: 3,
+      threshold: 0.3,
       keys: ["title", "description", "category", "upcoming_classes.location"],
     });
 

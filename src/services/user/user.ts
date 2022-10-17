@@ -22,7 +22,7 @@ const updateInfo = async (data: User) => {
       headers: authHeader() as AxiosRequestHeaders,
     }
   );
-  return response.data;
+  return response.data[0];
 };
 
 const updatePhoto = async (image: string, { id }: User) => {

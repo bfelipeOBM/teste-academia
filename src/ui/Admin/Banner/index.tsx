@@ -37,7 +37,7 @@ export const BannersInfoAdmin = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
-    axios.get(`${Constants.API_URL}banners/`).then((response) => {
+    axios.get(`${Constants.API_URL}banners/all`).then((response) => {
       setBanners(response.data)
     })
   }, [])

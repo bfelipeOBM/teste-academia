@@ -30,7 +30,7 @@ const reducer: Reducer<ProfileState> = (
     case GET_PROFILE_FAIL:
       return {
         ...state,
-        profile: null,
+        profile: {},
       };
     case UPDATE_PROFILE_SUCCESS:
       return {
@@ -40,7 +40,7 @@ const reducer: Reducer<ProfileState> = (
     case UPDATE_PROFILE_FAIL:
       return {
         ...state,
-        profile: null,
+        profile: {},
       };
     case UPDATE_PROFILE_IMAGE_SUCCESS:
       return {

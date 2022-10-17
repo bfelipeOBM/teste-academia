@@ -38,12 +38,12 @@
       justify-content: center;
       background-color: #fff;
       border-top: #ef7f00 6px solid;
-      padding: 90px 126px 29px 81px;
+      padding: 90px 25px 29px 25px;
 
       &__inputs-group {
         display: flex;
         flex-direction: column;
-        width: 674px;
+        width: 100%;
         margin-bottom: 10px;
         position: relative;
       }
@@ -51,7 +51,7 @@
       &__inputs-row-direction {
         display: flex;
         flex-direction: row;
-        width: 674px;
+        width: 100%;
         align-items: self-end;
         margin-bottom: 10px;
         position: relative;
@@ -60,7 +60,7 @@
       &__inputs-row-direction-space-between {
         display: flex;
         flex-direction: row;
-        width: 674px;
+        width: 100%;
         justify-content: space-between;
         align-items: center;
       }

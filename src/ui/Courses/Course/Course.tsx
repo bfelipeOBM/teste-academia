@@ -182,7 +182,7 @@ const Course = () => {
       ></CustomModal>
       <ToastContainer />
       <Header></Header>
-      {!loading && course && (
+      {!loading && course && mycourses && (
         <div className="course">
           <div className="course__header">
             <div className="course__header__title">

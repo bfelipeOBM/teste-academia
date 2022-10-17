@@ -13,6 +13,7 @@ import { Sidebar } from "../Components/Sidebar";
 interface Banner {
   id: number;
   url: string;
+  link: string;
   active: boolean;
 }
 
@@ -36,7 +37,7 @@ export const BannersInfoAdmin = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
-    axios.get(`${Constants.API_URL}banners/`).then((response) => {
+    axios.get(`${Constants.API_URL}banners/all`).then((response) => {
       setBanners(response.data)
     })
   }, [])
@@ -112,7 +113,9 @@ export const BannersInfoAdmin = () => {
                   <AspectRatio ratio={16 / 9}>
                     <Image src={banner.url} objectFit="cover" />
                   </AspectRatio>
+                  
                   <Box p={8}>
+                    {banner.link && <Text>Link: {banner.link}</Text>}
                     <Text as="span">Ativo: </Text>
                     <Checkbox mt={4}
                       defaultChecked={banner.active}

@@ -13,6 +13,7 @@ import { Sidebar } from '../Components/Sidebar';
 
 export const CreateBannerAdmin = () => {
   const [image, setImage] = useState<any>("")
+  const [link, setLink] = useState<any>(null);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export const CreateBannerAdmin = () => {
   }
 
   function handleCreateBanner(e: any) {
-    const data = JSON.stringify({"file": image})
+    const data = JSON.stringify({"file": image, "link": link});
     setLoading(true)
     let xhr = new XMLHttpRequest();
     // setTimeout(() => {
@@ -103,6 +104,12 @@ export const CreateBannerAdmin = () => {
               <FormControl>
                 <FormLabel>Banner (apenas PNG, GIF, JPEG e JPG)</FormLabel>
                 <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required />
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Link</FormLabel>
+                <Input type="url" name="link" onChange={(e) => setLink(e.target.value)} />
               </FormControl>
             </Box>
             <Button

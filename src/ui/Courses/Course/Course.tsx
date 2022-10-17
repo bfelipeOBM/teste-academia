@@ -30,7 +30,7 @@ const Course = () => {
   const { id } = location.state;
   const [loading, setLoading] = useState(false);
   const [nextClassDate, setNextClassDate] = useState("");
-  const [disabledEnrollButton, setDisabledEnrollButton] = useState(true);
+  const [disabledEnrollButton, setDisabledEnrollButton] = useState(false);
   const [enrollButtonText, setEnrollButtonText] = useState("Inscreva-se");
   const [downloadMaterialButtonText, setDownloadMaterialButtonText] = useState(
     "Material indisponível"
@@ -161,17 +161,11 @@ const Course = () => {
     ) {
       setDisabledEnrollButton(true);
       setEnrollButtonText("Inscrição Indisponível");
-    } else {
-      setDisabledEnrollButton(false);
-      setEnrollButtonText("Inscreva-se");
     }
 
     if (classes.length && classes[0].hasMaterials) {
       setDisabledDownloadMaterialButton(false);
       setDownloadMaterialButtonText("Baixar material de apoio");
-    } else {
-      setDisabledDownloadMaterialButton(true);
-      setDownloadMaterialButtonText("Material indisponível");
     }
   }, [mycourses]);
 
@@ -188,7 +182,7 @@ const Course = () => {
       ></CustomModal>
       <ToastContainer />
       <Header></Header>
-      {!loading && course && (
+      {!loading && course && mycourses && (
         <div className="course">
           <div className="course__header">
             <div className="course__header__title">

@@ -28,7 +28,7 @@
       position: relative;
       left: -5px;
       width: 20px;
-      height: 700px;
+      height: 90%;
       background: #ef7f00 0% 0% no-repeat padding-box;
     }
 
@@ -37,12 +37,12 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      height: 100vh;
-      width: 100vw;
-      padding-left: 146px;
+      height: 100%;
+      width: 100%;
+      padding: 10% 7% 0 7%;
 
       &__title {
-        width: 314px;
+        width: 100%;
         height: 39px;
         margin-bottom: 10px;
         text-align: left;
@@ -53,7 +53,7 @@
       }
 
       p {
-        width: 674px;
+        width: 100%;
         height: 48px;
         text-align: left;
         font-size: 18px;
@@ -64,17 +64,16 @@
       &__backbutton {
         display: flex;
         align-items: center;
-        width: 120px;
+        width: 100%;
         height: 24px;
         text-align: left;
         font-size: 18px;
         font-weight: bold;
         letter-spacing: 0px;
         color: #141b23;
-        margin-bottom: 110px;
-        position: absolute;
         top: 0;
-        margin-top: 70px;
+        margin-bottom: 10%;
+        margin-top: 10%;
         cursor: pointer;
 
         &:hover {
@@ -96,8 +95,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      width: 100vw;
+      width: 100%;
+      height: 1080px;
     }
 
     &__img {
@@ -107,6 +106,7 @@
     }
 
     &__form {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -116,11 +116,13 @@
       &__user {
         display: flex;
         flex-direction: column;
+        width: 50%;
       }
 
       &__password {
         display: flex;
         flex-direction: column;
+        width: 50%;
       }
 
       &__title {
@@ -138,7 +140,7 @@
         padding: 0 10px;
         border-radius: 5px;
         outline: none;
-        width: 674px;
+        width: 100%;
         height: 45px;
         border: 1px solid #dce6f4;
       }
@@ -148,7 +150,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        width: 696px;
+        width: 100%;
         height: 22px;
         margin-bottom: 20px;
         margin-top: 10px;
@@ -324,13 +326,10 @@
 
     &__footer {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      margin-left: 200px;
-      width: 313px;
+      width: 100%;
       height: 19px;
-      position: absolute;
       bottom: 0;
       margin-bottom: 17px;
 

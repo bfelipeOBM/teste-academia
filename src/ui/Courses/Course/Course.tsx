@@ -169,7 +169,7 @@ const Course = () => {
       setDisabledDownloadMaterialButton(false);
       setDownloadMaterialButtonText("Baixar material de apoio");
     }
-    
+
     setTimeout(() => {
       setLoadingButton(false);
     }, 1100);
@@ -181,9 +181,10 @@ const Course = () => {
         isOpen={isModalOpen}
         currentClass={currentClass}
         onClose={() => setIsModalOpen(false)}
-        enrolledOnClass={() => {
+        enrolledOnClass={async () => {
           setDisabledEnrollButton(true);
           setEnrollButtonText("Inscrito");
+          await dispatch(getCourseClasses(course) as any);
         }}
       ></CustomModal>
       <ToastContainer />

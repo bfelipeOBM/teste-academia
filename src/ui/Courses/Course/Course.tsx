@@ -29,6 +29,7 @@ const Course = () => {
   const location = useLocation();
   const { id } = location.state;
   const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(true);
   const [nextClassDate, setNextClassDate] = useState("");
   const [disabledEnrollButton, setDisabledEnrollButton] = useState(false);
   const [enrollButtonText, setEnrollButtonText] = useState("Inscreva-se");
@@ -146,6 +147,7 @@ const Course = () => {
   }, [course]);
 
   useEffect(() => {
+    setLoadingButton(true);
     if (
       mycourses.length > 0 &&
       mycourses.some((c) => c.course_id == course.id)
@@ -162,6 +164,10 @@ const Course = () => {
       setDisabledEnrollButton(true);
       setEnrollButtonText("Inscrição Indisponível");
     }
+
+    setTimeout(() => {
+      setLoadingButton(false);
+    }, 500)
 
     if (classes.length && classes[0].hasMaterials) {
       setDisabledDownloadMaterialButton(false);
@@ -299,22 +305,26 @@ const Course = () => {
                   </div>
                 </div>
 
-                <div className="download">
-                  <button
-                    disabled={disabledDownloadMaterialButton}
-                    onClick={downloadCourseMaterial}
-                  >
-                    <i className="material-icons-outlined">cloud_download</i>{" "}
-                    {downloadMaterialButtonText}
-                  </button>
-                </div>
+                {!loadingButton && (
+                  <div className="download">
+                    <button
+                      disabled={disabledDownloadMaterialButton}
+                      onClick={downloadCourseMaterial}
+                    >
+                      <i className="material-icons-outlined">cloud_download</i>{" "}
+                      {downloadMaterialButtonText}
+                    </button>
+                  </div>
+                )}
               </div>
 
-              <div className="course__details__subscribe">
-                <button disabled={disabledEnrollButton} onClick={handleEnroll}>
-                  {enrollButtonText}
-                </button>
-              </div>
+              {!loadingButton && (
+                <div className="course__details__subscribe">
+                  <button disabled={disabledEnrollButton} onClick={handleEnroll}>
+                    {enrollButtonText}
+                  </button>
+                </div>
+              )}
 
               <div className="course__details__next-dates">
                 <span className="title">Próximas datas</span>

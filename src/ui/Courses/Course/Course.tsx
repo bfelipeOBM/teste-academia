@@ -165,14 +165,14 @@ const Course = () => {
       setEnrollButtonText("Inscrição Indisponível");
     }
 
-    setTimeout(() => {
-      setLoadingButton(false);
-    }, 500)
-
     if (classes.length && classes[0].hasMaterials) {
       setDisabledDownloadMaterialButton(false);
       setDownloadMaterialButtonText("Baixar material de apoio");
     }
+    
+    setTimeout(() => {
+      setLoadingButton(false);
+    }, 1100);
   }, [mycourses]);
 
   return (

@@ -105,7 +105,7 @@ export const CourseAdminInfos = () => {
             <Image src={classe.image} objectFit="cover"/>
           </AspectRatio>
           <Box p={8}>
-            <Heading size="lg">{new Intl.DateTimeFormat('pt-BR').format(new Date(classe.date))}</Heading>
+            <Heading size="lg">{new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(classe.date))}</Heading>
             <Text>
               {classe.students_count > 0 ? `${classe.students_count} aluno(s)` : "Sem alunos"}
               </Text>

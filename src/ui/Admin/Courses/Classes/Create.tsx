@@ -94,7 +94,7 @@ export const CreateClassAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Data</FormLabel>
-                <Input type="date" required onChange={(e) => setDate(new Date(e.target.value))} />
+                <Input type="datetime-local" required onChange={(e) => setDate(new Date(e.target.value))} />
               </FormControl>
             </Box>
 

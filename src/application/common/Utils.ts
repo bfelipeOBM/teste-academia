@@ -174,7 +174,10 @@ const capitalize = (string: string) => {
 };
 
 const FormatToBrazilianDate = (date: string) => {
-  return date && new Intl.DateTimeFormat("pt-BR").format(new Date(date));
+  return date && new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: 'short',
+    timeStyle: 'short'
+  }).format(new Date(date));
 };
 
 const navigateToExternalUrl = (url: string, shouldOpenNewTab: boolean = true) =>

@@ -62,8 +62,8 @@ const CourseCategory = () => {
     const fuse = new Fuse(courses, {
       includeMatches: true,
       includeScore: true,
-      location: 3,
-      threshold: 0.3,
+      location: 0,
+      threshold: 0.4,
       keys: ["title", "description", "category", "upcoming_classes.location"],
     });
 

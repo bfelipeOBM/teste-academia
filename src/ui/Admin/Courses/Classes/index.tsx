@@ -148,6 +148,31 @@ export const ClassesInfoAdmin = () => {
     setSearchUsers([]);
   }
 
+  function createCSV() {
+    const rows = [
+      ["Nome", "Email", "Telefone", "CPF", "Participou"],
+      ...users.map(user => {
+        return [
+          user.name,
+          user.email,
+          user.phone,
+          user.document,
+          user.user_participated ? "Sim" : "Não"
+        ]
+      })
+    ]
+    let csvContent = "data:text/csv;charset=utf-8," 
+    + rows.map(e => e.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `${classe.name}-${new Intl.DateTimeFormat('pt-BR').format(new Date(classe?.date))}.csv`);
+    document.body.appendChild(link);
+
+    link.click();
+  }
+
   return (
     <Flex w="100%">
       <Sidebar />
@@ -170,8 +195,7 @@ export const ClassesInfoAdmin = () => {
             <InfosCreateMaterialAdmin />
           </Box>
           <Box py={8}>
-            
-            <Heading fontSize={"4xl"}>Alunos inscritos</Heading>
+            <Heading fontSize={"4xl"}>Alunos inscritos <Button onClick={createCSV} colorScheme={"blue"}>Gerar CSV</Button></Heading>
             <Input
               w={"100%"}
               maxW={1120}
@@ -215,7 +239,7 @@ export const ClassesInfoAdmin = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Deletar banner</ModalHeader>
+          <ModalHeader>Deletar</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Input

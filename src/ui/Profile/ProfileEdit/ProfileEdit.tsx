@@ -485,7 +485,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
                   Enviar Imagem
                 </button>
               </div>
-              <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
+              {/* <div className="profile-edit__form__avatar-upload__register__buttons__socialregister">
                 <span className="profile-edit__form__avatar-upload__register__buttons__socialregister__title">
                   Vincular conta:
                 </span>
@@ -527,7 +527,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
         </div>

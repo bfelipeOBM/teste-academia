@@ -155,6 +155,7 @@ export const EditClassAdmin = () => {
                   <option value='2'>Mooca</option>
                   <option value='3'>Praia Grande</option>
                   <option value='4'>Benfica</option>
+                  <option value='5'>Paraisópolis</option>
                 </Select>
               </FormControl>
             </Box>

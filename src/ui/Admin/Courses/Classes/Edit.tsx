@@ -108,10 +108,10 @@ export const EditClassAdmin = () => {
               <FormControl>
                 <FormLabel>Data</FormLabel>
                 <Input
-                  type="date"
+                  type="datetime-local"
                   required
                   onChange={(e) => setDate(new Date(e.target.value))}
-                  defaultValue={classe?.date.split("T")[0] || ''}
+                  defaultValue={classe?.date.slice(0, -3) || ''}
                   />
               </FormControl>
             </Box>

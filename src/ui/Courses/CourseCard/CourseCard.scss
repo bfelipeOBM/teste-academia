@@ -19,7 +19,7 @@
       cursor: pointer;
 
       img {
-        object-fit: cover;
+        object-fit: fill;
       }
     }
 
@@ -27,8 +27,8 @@
       display: flex;
       flex-direction: column;
       width: 55%;
-      height: 264px;
-      margin: 0 49.5px;
+      height: 100%;
+      padding: 20px 49.5px;
 
       &__header {
         display: flex;

@@ -44,6 +44,7 @@
         display: flex;
         flex-direction: column;
         margin-right: 16px;
+        width: min(100%, 1226px);
 
         &__video {
           width: 100%;
@@ -51,7 +52,7 @@
           margin-bottom: 21px;
 
           img {
-            object-fit: cover;
+            object-fit: fill;
           }
         }
 
@@ -129,7 +130,7 @@
       .course__details {
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: min(100%, 400px);
 
         &__content {
           display: flex;
@@ -193,7 +194,7 @@
             margin: 13px 41px 24px 41px;
 
             button {
-              width: 100%;
+              width: min(100%, 320px);
               height: 51px;
               background: #ef7f00 0% 0% no-repeat padding-box;
               border: 1px solid #ef7f00;
@@ -234,7 +235,7 @@
           margin-bottom: 30px;
 
           button {
-            width: 100%;
+            width: min(100%, 400px);
             height: 68px;
             background: #ef7f00 0% 0% no-repeat padding-box;
             border: 1px solid #ef7f00;

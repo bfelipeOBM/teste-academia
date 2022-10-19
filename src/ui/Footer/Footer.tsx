@@ -26,7 +26,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="footer__items__divider__middle"></div>
+        {/* <div className="footer__items__divider__middle"></div>
 
         <div className="footer__items__middle">
           <div className="footer__items__middle__reputation-certified">
@@ -88,7 +88,7 @@ const Footer = () => {
               />
             </span>
           </div>
-        </div>
+        </div> */}
 
         <div className="footer__items__divider__down"></div>
 

@@ -44,15 +44,19 @@
         display: flex;
         flex-direction: column;
         margin-right: 16px;
-        width: min(100%, 1226px);
+        width: 70%;
 
         &__video {
           width: 100%;
-          height: 453px;
+          height: auto;
           margin-bottom: 21px;
 
           img {
             object-fit: fill;
+          }
+
+          iframe {
+            height: 453px;
           }
         }
 
@@ -130,7 +134,7 @@
       .course__details {
         display: flex;
         flex-direction: column;
-        width: min(100%, 400px);
+        width: 30%;
 
         &__content {
           display: flex;
@@ -194,7 +198,7 @@
             margin: 13px 41px 24px 41px;
 
             button {
-              width: min(100%, 320px);
+              width: 100%;
               height: 51px;
               background: #ef7f00 0% 0% no-repeat padding-box;
               border: 1px solid #ef7f00;
@@ -235,7 +239,7 @@
           margin-bottom: 30px;
 
           button {
-            width: min(100%, 400px);
+            width: 100%;
             height: 68px;
             background: #ef7f00 0% 0% no-repeat padding-box;
             border: 1px solid #ef7f00;

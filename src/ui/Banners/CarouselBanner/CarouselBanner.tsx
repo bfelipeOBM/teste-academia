@@ -37,7 +37,7 @@ const CarouselBanner = () => {
 
   const openExternalUrl = (url: string) => {
     if (url) {
-      navigateToExternalUrl(url);
+      navigateToExternalUrl(url, false);
     }
   };
 

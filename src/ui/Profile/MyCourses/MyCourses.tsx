@@ -14,23 +14,19 @@ import "./MyCourses.scss";
 type currentTabT = "all" | "in-progress" | "finished" | "canceled";
 
 const CategoryListLeft = [
-  { title: "Eletricista" },
   { title: "Pedreiro" },
+  { title: "Eletricista" },
   { title: "Mestre de Obras" },
   { title: "Encanador" },
-  { title: "Jardineiro" },
-  { title: "Empreiteiro" },
-  { title: "Azulejista" },
-  { title: "Hidráulico" },
+  { title: "Serralheiro" },
+  { title: "Gesseiro" },
 ];
 
 const CategoryListRight = [
-  { title: "Técnico em construção civil/edificações" },
-  { title: "Arquiteto" },
-  { title: "Assentador de pisos" },
+  { title: "Aplicador de drywall" },
+  { title: "Marido de aluguel" },
   { title: "Marceneiro" },
   { title: "Pintor" },
-  { title: "Engenheiro" },
 ];
 
 const FilterCoursesTypes = [
@@ -49,7 +45,6 @@ const MyCourses = () => {
   const [typesIcon, setTypesIcon] = useState("expand_more");
   const [currentTab, setCurrentTab] = useState<currentTabT>("all");
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
-  const [showLocationFilter, setShowLocationFilter] = useState(false);
   const [selectedCategoryItem, setSelectedCategoryItem] = useState("");
   const [selectedLocationItem, setSelectedLocationItem] = useState("");
   const [selectedTypesItem, setSelectedTypesItem] = useState("");
@@ -92,12 +87,8 @@ const MyCourses = () => {
   const handleSelectedType = (type: string) => {
     if (type === "Todos") {
       setSearchValue("");
-      setShowLocationFilter(false);
-    } else if (type === "Presencial") {
-      setShowLocationFilter(true);
-    } else if (type === "Online") {
+    } else {
       setSearchValue(type);
-      setShowLocationFilter(false);
     }
   };
 
@@ -318,38 +309,34 @@ const MyCourses = () => {
                 </div>
               </div>
 
-              {showLocationFilter && (
-                <div className="item-location" onClick={handleLocationClick}>
-                  <span className="title">Localização</span>
-                  <i className="material-icons ">{locationIcon}</i>
+              <div className="item-location" onClick={handleLocationClick}>
+                <span className="title">Localização</span>
+                <i className="material-icons ">{locationIcon}</i>
 
-                  <div
-                    className={`item-location__locations__dropdown-menu__menu ${
-                      isLocationOpen ? "active" : ""
-                    }`}
-                  >
-                    <div className="item-location__locations__dropdown-menu__menu__items__left">
-                      {courses_locations.map((location, index) => (
-                        <div
-                          key={index}
-                          className={`item-location__locations__dropdown-menu__menu__items__left__item ${
-                            selectedLocationItem === location.name
-                              ? "active"
-                              : ""
-                          }`}
-                          onClick={() => {
-                            handleSelectedFilter(location.name);
-                            handleLocationClick();
-                            handleSelectedLocation(location.name);
-                          }}
-                        >
-                          <span>{location.name}</span>
-                        </div>
-                      ))}
-                    </div>
+                <div
+                  className={`item-location__locations__dropdown-menu__menu ${
+                    isLocationOpen ? "active" : ""
+                  }`}
+                >
+                  <div className="item-location__locations__dropdown-menu__menu__items__left">
+                    {courses_locations.map((location, index) => (
+                      <div
+                        key={index}
+                        className={`item-location__locations__dropdown-menu__menu__items__left__item ${
+                          selectedLocationItem === location.name ? "active" : ""
+                        }`}
+                        onClick={() => {
+                          handleSelectedFilter(location.name);
+                          handleLocationClick();
+                          handleSelectedLocation(location.name);
+                        }}
+                      >
+                        <span>{location.name}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
 

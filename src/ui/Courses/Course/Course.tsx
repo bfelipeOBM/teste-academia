@@ -1,5 +1,6 @@
 import { FormatToBrazilianDate } from "@/application/common/Utils";
 import { Class } from "@/application/models/class";
+import { Course as currentCourse } from "@/application/models/course";
 import { ApplicationState } from "@/application/store";
 import { getCourseClasses } from "@/application/store/classes/action";
 import {
@@ -70,8 +71,6 @@ const Course = () => {
       await dispatch(getCourseClasses(course) as any);
       if (classes.length && classes[0]) {
         setCurrentClass(classes[0]);
-      } else {
-        setDisabledEnrollButton(true);
       }
     }
     setLoading(false);
@@ -86,7 +85,9 @@ const Course = () => {
   };
 
   const enrolledStudentsText = (enrolled: number) => {
-      return classes.length > 0 ? `${enrolled} de ${classes[0].max_students} alunos matriculados` : "";
+    return classes.length > 0
+      ? `${enrolled} de ${classes[0].max_students} alunos matriculados`
+      : "";
   };
 
   const handleEnroll = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -104,7 +105,9 @@ const Course = () => {
     e.preventDefault();
     try {
       if (course.id && currentClass) {
-        await dispatch(getCourseMaterial(course.id, currentClass.class_id) as any);
+        await dispatch(
+          getCourseMaterial(course.id, currentClass.class_id) as any
+        );
       }
     } catch {
       toast.warn(`${message.detail}`, {
@@ -118,6 +121,40 @@ const Course = () => {
         theme: "colored",
       });
     }
+  };
+
+  const handleDisabledButtons = async (
+    myCourses: currentCourse[],
+    currentClasses: Class
+  ) => {
+    setLoadingButton(true);
+
+    if (
+      myCourses.length > 0 &&
+      myCourses.some((c) => c.course_id == course.id)
+    ) {
+      setDisabledEnrollButton(true);
+      setEnrollButtonText("Inscrito");
+    } else if (!currentClasses) {
+      setDisabledEnrollButton(true);
+      setEnrollButtonText("Em breve");
+    } else if (
+      currentClasses &&
+      currentClasses.max_students <= currentClasses.students_count
+    ) {
+      setDisabledEnrollButton(true);
+      setEnrollButtonText("Inscrição Indisponível");
+    } else {
+      setDisabledEnrollButton(false);
+      setEnrollButtonText("Inscreva-se");
+    }
+
+    if (currentClasses && currentClasses.hasMaterials) {
+      setDisabledDownloadMaterialButton(false);
+      setDownloadMaterialButtonText("Baixar material de apoio");
+    }
+
+    setLoadingButton(false);
   };
 
   useEffect(() => {
@@ -147,33 +184,8 @@ const Course = () => {
   }, [course]);
 
   useEffect(() => {
-    setLoadingButton(true);
-    if (
-      mycourses.length > 0 &&
-      mycourses.some((c) => c.course_id == course.id)
-    ) {
-      setDisabledEnrollButton(true);
-      setEnrollButtonText("Inscrito");
-    } else if (!classes.length || !classes[0]) {
-      setDisabledEnrollButton(true);
-      setEnrollButtonText("Em breve");
-    } else if (
-      classes.length &&
-      classes[0].max_students <= classes[0].students_count
-    ) {
-      setDisabledEnrollButton(true);
-      setEnrollButtonText("Inscrição Indisponível");
-    }
-
-    if (classes.length && classes[0].hasMaterials) {
-      setDisabledDownloadMaterialButton(false);
-      setDownloadMaterialButtonText("Baixar material de apoio");
-    }
-
-    setTimeout(() => {
-      setLoadingButton(false);
-    }, 1100);
-  }, [mycourses]);
+    handleDisabledButtons(mycourses, classes[0]);
+  }, [mycourses, classes]);
 
   return (
     <>
@@ -184,7 +196,7 @@ const Course = () => {
         enrolledOnClass={async () => {
           setDisabledEnrollButton(true);
           setEnrollButtonText("Inscrito");
-          await dispatch(getCourseClasses(course) as any);
+          loadClasses();
         }}
       ></CustomModal>
       <ToastContainer />
@@ -300,9 +312,10 @@ const Course = () => {
 
                   <div className="enrollments">
                     {enrolledStudentsText(classes[0]?.students_count)}
-                    {classes.length > 0 && classes[0]?.students_count == classes[0].max_students && (
-                      <span> - Turma lotada</span>
-                    )}
+                    {classes.length > 0 &&
+                      classes[0]?.students_count == classes[0].max_students && (
+                        <span> - Turma lotada</span>
+                      )}
                   </div>
                 </div>
 
@@ -321,7 +334,10 @@ const Course = () => {
 
               {!loadingButton && (
                 <div className="course__details__subscribe">
-                  <button disabled={disabledEnrollButton} onClick={handleEnroll}>
+                  <button
+                    disabled={disabledEnrollButton}
+                    onClick={handleEnroll}
+                  >
                     {enrollButtonText}
                   </button>
                 </div>

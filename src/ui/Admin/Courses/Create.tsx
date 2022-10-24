@@ -1,7 +1,7 @@
 import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, FormErrorMessage } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,7 @@ export const CreateCourseAdmin = () => {
   const [video, setVideo] = useState("")
   const [image, setImage] = useState<any>("")
   const [workload, setWorkload] = useState(0.0);
+  const [checkboxError, setCheckboxError] = useState(false);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const [loadingCreateCourse, setLoadingCreateCourse] = useState(false);
@@ -36,6 +37,14 @@ export const CreateCourseAdmin = () => {
       window.location.href = "/";
     }
   }, [userState.isLoggedIn, dispatch]);
+
+  useEffect(() => {
+    if (selectedOptions.length > 0) {
+      setCheckboxError(false);
+    } else {
+      setCheckboxError(true);
+    }
+  }, [selectedOptions])
 
 
   function handleAddCategory(e: any) {
@@ -67,64 +76,69 @@ export const CreateCourseAdmin = () => {
   async function handleCreateCourse(e: any) {
     e.preventDefault()
 
-    const data = JSON.stringify({
-      "name": name,
-      "description": description,
-      "image": image,
-      "video": video,
-      "specialty": specialty,
-      "category": selectedOptions,
-      "workload": workload,
-      "location_id": 1,
-      "active": true
-    });
-
-
-    setLoadingCreateCourse(true)
-
-    setTimeout(() => {
-      const xhr = new XMLHttpRequest();
-      setLoadingCreateCourse(false);
-      xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === this.DONE) {
-          setLoadingCreateCourse(false)
-          if (this.status === 201) {
-            toast.success('Curso criado!', {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'colored'
-            });
-            setTimeout(() => {
-              navigate(-1);
-            }, 4000)
-          } else {
-            toast.error('Erro ao criar curso!', {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'colored'
-            });
-          }
-        }
+    if (selectedOptions.length > 0) {
+      const data = JSON.stringify({
+        "name": name,
+        "description": description,
+        "image": image,
+        "video": video,
+        "specialty": specialty,
+        "category": selectedOptions,
+        "workload": workload,
+        "location_id": 1,
+        "active": true
       });
   
-      xhr.open('POST', `${Constants.API_URL}courses/`);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-
-      xhr.send(data);
-    }, 10000);
+  
+      setLoadingCreateCourse(true)
+  
+      setTimeout(() => {
+        const xhr = new XMLHttpRequest();
+        setLoadingCreateCourse(false);
+        xhr.addEventListener("readystatechange", function () {
+          if (this.readyState === this.DONE) {
+            setLoadingCreateCourse(false)
+            if (this.status === 201) {
+              toast.success('Curso criado!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+              });
+              setTimeout(() => {
+                navigate(-1);
+              }, 4000)
+            } else {
+              toast.error('Erro ao criar curso!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+              });
+            }
+          }
+        });
+    
+        xhr.open('POST', `${Constants.API_URL}courses/`);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+  
+        xhr.send(data);
+      }, 1000);
+    } else {
+      setCheckboxError(true);
+    }
   }
 
+  // console.log(checkboxError)
 
   return (
     <Flex w="100%" flexDir={['column', 'row']}>
@@ -150,7 +164,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
-                <Textarea onChange={(e) => setDescription(e.target.value)} required />
+                <Textarea onChange={(e) => setDescription(e.target.value)} required  maxLength={2000} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
@@ -173,7 +187,9 @@ export const CreateCourseAdmin = () => {
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormLabel>Profissão</FormLabel>
+              {checkboxError && <Text mb={3} color="red.500">Selecione pelo menos uma profissão</Text>}
               <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                
                 <Checkbox
                   value="Todos"
                   onChange={(e) => {handleAddAllCategories(e)}}
@@ -186,7 +202,9 @@ export const CreateCourseAdmin = () => {
                     isChecked={selectedOptions.includes(value)}
                   >{value}</Checkbox>
                 ))}
+                
               </Grid>
+              
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>

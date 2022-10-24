@@ -27,6 +27,7 @@ export const EditCourseAdmin = () => {
   const [video, setVideo] = useState("")
   const [image, setImage] = useState<any>("")
   const [active, setActive] = useState<boolean>()
+  const [checkboxError, setCheckboxError] = useState(false);
   const [workload, setWorkload] = useState(0.0);
   const [loading, setLoading] = useState(false)
   const userState = useSelector((state: ApplicationState) => state.user);
@@ -52,6 +53,14 @@ export const EditCourseAdmin = () => {
       window.location.href = "/";
     }
   }, [userState.isLoggedIn, dispatch]);
+
+  useEffect(() => {
+    if (selectedOptions.length > 0) {
+      setCheckboxError(false);
+    } else {
+      setCheckboxError(true);
+    }
+  }, [selectedOptions])
 
   const {id} = useParams();
   const [course, setCourse] = useState<Course>();
@@ -87,7 +96,8 @@ export const EditCourseAdmin = () => {
     updatedCourse.video = video;
     updatedCourse.category = selectedOptions;
     updatedCourse.active = active;
-    const xhr = new XMLHttpRequest();
+    if (selectedOptions.length > 0) {
+      const xhr = new XMLHttpRequest();
     setTimeout(() => {
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
@@ -127,6 +137,9 @@ export const EditCourseAdmin = () => {
       const updatedCourseString = JSON.stringify(updatedCourse);
       xhr.send(updatedCourseString);
     }, 10000);
+    } else {
+      setCheckboxError(true);
+    }
   }
 
   function handleAddImage(e: any) {
@@ -174,7 +187,7 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
-                <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={course?.description} required />
+                <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={course?.description} required maxLength={2000}/>
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
@@ -196,7 +209,9 @@ export const EditCourseAdmin = () => {
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
-                <FormLabel>Categoria</FormLabel>
+                <FormLabel>Profissão</FormLabel>
+                {checkboxError && <Text mb={3} color="red.500">Selecione pelo menos uma profissão</Text>}
+              <Grid templateColumns='repeat(4, 1fr)' gap={6}></Grid>
                 <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 <Checkbox
                   value="Todos"

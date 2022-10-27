@@ -13,7 +13,7 @@ import Header from "@/ui/Header/Header";
 import CustomModal from "@/ui/Modal/Modal";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -27,8 +27,7 @@ import RelatedCourses from "../RelatedCourses/RelatedCourses";
 import "./Course.scss";
 
 const Course = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(true);
   const [nextClassDate, setNextClassDate] = useState("");
@@ -60,7 +59,7 @@ const Course = () => {
   const loadCourse = async () => {
     setLoading(true);
     if (id) {
-      await dispatch(getCourse(id) as any);
+      await dispatch(getCourse(parseInt(id)) as any);
     }
     setLoading(false);
   };

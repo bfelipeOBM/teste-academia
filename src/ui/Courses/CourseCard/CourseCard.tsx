@@ -61,7 +61,9 @@ const CourseCard = (props: Props) => {
         </div>
         <div className="course-card__content__title__description">
           <span className="title">{course.name}</span>
-          <span className="description">{course.description}</span>
+          <span className="description">
+            <div dangerouslySetInnerHTML={{__html: course.description}} ></div>
+          </span>
         </div>
         <div className="course-card__content__footer">
           <button className="goto__button" onClick={goToCourse}>

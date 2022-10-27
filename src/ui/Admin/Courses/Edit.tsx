@@ -188,7 +188,7 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
-                <ReactQuill theme='snow' value={course.description} onChange={setDescription} />
+                <ReactQuill theme='snow' defaultValue={course.description} onChange={setDescription} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

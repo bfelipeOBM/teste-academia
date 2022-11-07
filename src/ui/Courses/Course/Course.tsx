@@ -240,7 +240,7 @@ const Course = () => {
                 </div>
                 <div className="title">{course.name}</div>
                 <div className="description">
-                  <p>{course.description}</p>
+                  <div dangerouslySetInnerHTML={{ __html: course.description }} />
                 </div>
                 <div className="share">
                   <span className="share__title">Compartilhar: </span>

@@ -5,7 +5,6 @@ import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textare
 import axios from "axios"
 import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
-import ReactQuill from "react-quill"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify"
@@ -13,7 +12,6 @@ import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
 import { Sidebar } from "../Components/Sidebar"
 import { Course } from "../interface/course"
-import 'react-quill/dist/quill.snow.css';
 
 type UpdatedCorse = {
   [key: string]: any;
@@ -176,7 +174,7 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
-                <ReactQuill theme='snow' value={course.description} onChange={setDescription} />
+                <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={course?.description} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

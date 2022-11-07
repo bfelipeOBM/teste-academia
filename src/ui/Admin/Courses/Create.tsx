@@ -3,15 +3,12 @@ import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
 import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import ReactQuill from 'react-quill';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { BackButton } from '../Components/BackButton';
 import { Header } from '../Components/Header';
 import { Sidebar } from '../Components/Sidebar';
-import 'react-quill/dist/quill.snow.css';
 
 export const CreateCourseAdmin = () => {
   const options = ["Pedreiro", "Encanador", "Eletricista", "Marceneiro", "Pintor", "Serralheiro", "Gesseiro", "Aplicador de drywall", "Marido de aluguel", "Mestre de obras"]
@@ -153,7 +150,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
-                <ReactQuill theme='snow' onChange={setDescription} />
+                <Textarea onChange={(e) => setDescription(e.target.value)} required />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

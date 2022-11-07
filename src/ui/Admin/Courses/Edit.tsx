@@ -1,10 +1,11 @@
 import Constants from "@/application/common/Constants"
 import { ApplicationState } from "@/application/store"
 import { userProfile } from "@/application/store/profile/action"
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Image } from "@chakra-ui/react"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Image } from "@chakra-ui/react"
 import axios from "axios"
 import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
+import ReactQuill from "react-quill"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify"
@@ -12,6 +13,7 @@ import { BackButton } from "../Components/BackButton"
 import { Header } from "../Components/Header"
 import { Sidebar } from "../Components/Sidebar"
 import { Course } from "../interface/course"
+import 'react-quill/dist/quill.snow.css';
 
 type UpdatedCorse = {
   [key: string]: any;
@@ -174,7 +176,7 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Descrição</FormLabel>
-                <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={course?.description} required />
+                <ReactQuill theme='snow' value={course.description} onChange={setDescription} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

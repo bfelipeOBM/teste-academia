@@ -177,8 +177,7 @@ const MyCourses = () => {
               Todos os cursos
             </span>
           </div>
-          {/* TODO: add this when inprogress and finished courses will be implemented */}
-          {/* <div
+          <div
             className={`my-courses__tabs__tab ${
               currentTab === "in-progress" ? "tab-active" : ""
             }`}
@@ -197,7 +196,7 @@ const MyCourses = () => {
             <span className="my-courses__tabs__tab__finished">
               <i className="material-icons">circle</i> Cursos concluídos
             </span>
-          </div> */}
+          </div>
           <div
             className={`my-courses__tabs__tab ${
               currentTab === "canceled" ? "tab-active" : ""

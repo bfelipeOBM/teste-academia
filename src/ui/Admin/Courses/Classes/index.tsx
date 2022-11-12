@@ -6,7 +6,7 @@ import axios from "axios";
 import { Plus } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
@@ -195,7 +195,7 @@ export const ClassesInfoAdmin = () => {
             <InfosCreateMaterialAdmin />
           </Box>
           <Box py={8}>
-            <Heading fontSize={"4xl"}>Alunos inscritos <Button onClick={createCSV} colorScheme={"blue"}>Gerar CSV</Button></Heading>
+            <Heading fontSize={"4xl"}>Alunos inscritos <Button onClick={createCSV} colorScheme={"blue"}>Gerar CSV</Button> <Link to={`/admin/courses/${id}/class/${class_id}/certificate`}><Button colorScheme={"orange"}>Gerar Certificado</Button></Link></Heading>
             <Input
               w={"100%"}
               maxW={1120}

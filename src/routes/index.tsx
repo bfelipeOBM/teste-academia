@@ -2,6 +2,7 @@ import { Admin } from "@/ui/Admin";
 import { BannersInfoAdmin } from "@/ui/Admin/Banner";
 import { CreateBannerAdmin } from "@/ui/Admin/Banner/Create";
 import { ClassesInfoAdmin } from "@/ui/Admin/Courses/Classes";
+import { CreateCertificateClass } from "@/ui/Admin/Courses/Classes/Certificates/Create";
 import { CreateClassAdmin } from "@/ui/Admin/Courses/Classes/Create";
 import { EditClassAdmin } from "@/ui/Admin/Courses/Classes/Edit";
 import { CreateCourseAdmin } from "@/ui/Admin/Courses/Create";
@@ -135,6 +136,14 @@ const RouteWrapper = () => {
             element={
               <ChakraProvider>
                 <ClassesInfoAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/courses/:id/class/:class_id/certificate"
+            element={
+              <ChakraProvider>
+                <CreateCertificateClass />
               </ChakraProvider>
             }
           />

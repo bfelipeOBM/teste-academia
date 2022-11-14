@@ -98,6 +98,12 @@ export const ClassesInfoAdmin = () => {
     setFilteredUsers(updatedUsers)
   }
 
+  function sendCertificates(e: any) {
+    axios.post(`${Constants.API_URL}courses/${id}/class/${class_id}/certificate/send`, {}, {headers: {
+      Bearer: `${userState.data?.access_token}`
+    }})
+  }
+
   function handleSearchUser(text: string) {
     axios.get(`${Constants.API_URL}users?search=${text}`, {
       headers: {
@@ -195,7 +201,12 @@ export const ClassesInfoAdmin = () => {
             <InfosCreateMaterialAdmin />
           </Box>
           <Box py={8}>
-            <Heading fontSize={"4xl"}>Alunos inscritos <Button onClick={createCSV} colorScheme={"blue"}>Gerar CSV</Button> <Link to={`/admin/courses/${id}/class/${class_id}/certificate`}><Button colorScheme={"orange"}>Gerar Certificado</Button></Link></Heading>
+            <Heading fontSize={"4xl"}>Alunos inscritos</Heading>
+              <HStack>
+                <Button onClick={createCSV} colorScheme={"blue"}>Gerar CSV</Button>
+                <Link to={`/admin/courses/${id}/class/${class_id}/certificate`}><Button colorScheme={"orange"}>Gerar Certificado</Button></Link>
+                <Button colorScheme={"green"} onClick={sendCertificates}>Enviar certificados</Button>
+              </HStack>
             <Input
               w={"100%"}
               maxW={1120}

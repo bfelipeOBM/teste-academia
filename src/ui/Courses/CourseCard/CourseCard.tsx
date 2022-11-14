@@ -61,7 +61,7 @@ const CourseCard = (props: Props) => {
         </div>
         <div className="course-card__content__title__description">
           <span className="title">{course.name}</span>
-          <span className="description">{course.description}</span>
+          <p className="description">{course.summary}</p>
         </div>
         <div className="course-card__content__footer">
           <button className="goto__button" onClick={goToCourse}>

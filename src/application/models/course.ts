@@ -4,6 +4,7 @@ export type Course = {
   workload: number;
   id: number;
   name: string;
+  summary: string;
   description: string;
   image: string;
   video?: string;

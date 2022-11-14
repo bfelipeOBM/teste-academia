@@ -101,10 +101,6 @@ const Header = () => {
     }
   }, [courses]);
 
-  useEffect(() => {
-    console.log("width", width);
-  }, [width]);
-
   return (
     <>
       <SideBar isSideBarOpen={isSideBarOpen}></SideBar>

@@ -16,6 +16,7 @@ export const CreateCourseAdmin = () => {
   const options = ["Pedreiro", "Encanador", "Eletricista", "Marceneiro", "Pintor", "Serralheiro", "Gesseiro", "Aplicador de drywall", "Marido de aluguel", "Mestre de obras"]
 
   const [name, setName] = useState("")
+  const [summary, setSummary] = useState("")
   const [description, setDescription] = useState("")
   const [specialty, setSpecialty] = useState("")
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
@@ -71,6 +72,7 @@ export const CreateCourseAdmin = () => {
 
     const data = JSON.stringify({
       "name": name,
+      "summary": summary,
       "description": description,
       "image": image,
       "video": video,
@@ -147,6 +149,12 @@ export const CreateCourseAdmin = () => {
               <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
                 <Input type="text" onChange={(e) => setName(e.target.value)} maxLength={105} required />
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Resumo</FormLabel>
+                <Input type="text" onChange={e => {setSummary(e.target.value)}} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

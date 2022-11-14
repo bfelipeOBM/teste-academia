@@ -23,6 +23,7 @@ export const EditCourseAdmin = () => {
   const options = ["Pedreiro", "Encanador", "Eletricista", "Marceneiro", "Pintor", "Serralheiro", "Gesseiro", "Aplicador de drywall", "Marido de aluguel", "Mestre de obras"];
   
   const [name, setName] = useState("")
+  const [summary, setSummary] = useState("")
   const [description, setDescription] = useState("")
   const [specialty, setSpecialty] = useState("")
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
@@ -76,12 +77,14 @@ export const EditCourseAdmin = () => {
     }
   }
 
+
   function handleUpdateCourse(e: any) {
     e.preventDefault();
     setLoading(true)
     const updatedCourse: UpdatedCorse = {}
 
     if (name !== "") updatedCourse.name = name;
+    if (summary !== "") updatedCourse.summary = summary;
     if (description !== "") updatedCourse.description = description;
     if (image !== "") updatedCourse.image = image;
     if (specialty !== "") updatedCourse.specialty = specialty;
@@ -171,6 +174,12 @@ export const EditCourseAdmin = () => {
               <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
                 <Input type="text" onChange={(e) => setName(e.target.value)} defaultValue={course?.name} maxLength={105} required/>
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Resumo</FormLabel>
+                <Input type="text" value={course?.summary} onChange={e => {setSummary(e.target.value)}} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

@@ -86,7 +86,7 @@ export const CourseAdminInfos = () => {
         <Box w="100%" maxW={1120} mx="auto" px={8}>
           <Box py={8}>
             <Heading fontSize={"6xl"}>{course?.name}</Heading>
-            <Text>{course?.description}</Text>
+            {course && <div dangerouslySetInnerHTML={{__html: course.description}} ></div>}
           </Box>
           <Box py={8}>
             <Heading fontSize={"4xl"}>Turmas</Heading>

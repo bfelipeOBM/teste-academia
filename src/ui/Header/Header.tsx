@@ -68,7 +68,7 @@ const Header = () => {
       setIsUserMenuOpen(!isUserMenuOpen);
     }
 
-    if (width <= 783) {
+    if (width < 1200) {
       user.isLoggedIn ? navigate("/profile") : navigate("/login");
     }
   };

@@ -1,7 +1,7 @@
 import Constants from "@/application/common/Constants"
 import { ApplicationState } from "@/application/store"
 import { userProfile } from "@/application/store/profile/action"
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Image } from "@chakra-ui/react"
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Image, Textarea } from "@chakra-ui/react"
 import axios from "axios"
 import { Plus } from "phosphor-react"
 import { useEffect, useState } from "react"
@@ -179,7 +179,7 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Resumo</FormLabel>
-                <Input type="text" value={course?.summary} onChange={e => {setSummary(e.target.value)}} />
+                <Textarea value={course?.summary} onChange={e => {setSummary(e.target.value)}} size={"sm"} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

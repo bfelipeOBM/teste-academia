@@ -154,7 +154,7 @@ export const EditClassAdmin = () => {
                   <option value='1'>Online</option>
                   <option value='2'>Mooca</option>
                   <option value='3'>Praia Grande</option>
-                  <option value='4'>Benfica</option>
+                  <option value='4'>RJ - Benfica</option>
                   <option value='5'>Paraisópolis</option>
                 </Select>
               </FormControl>
@@ -162,7 +162,7 @@ export const EditClassAdmin = () => {
 
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
             <FormControl>
-              <FormLabel>Curso ativo</FormLabel>
+              <FormLabel>Turma ativa</FormLabel>
               <Checkbox
                 onChange={(e) => {setActive(e.target.checked); setSendActive(e.target.checked)}}
                 isChecked={active}/>

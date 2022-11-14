@@ -2,6 +2,7 @@ export interface Course {
   upcoming_classes: any[],
   id: number,
   name: string,
+  summary: string,
   description: string,
   image: string,
   video: string,

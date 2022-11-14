@@ -38,29 +38,19 @@ type UpdatedCorse = {
 };
 
 export const EditCourseAdmin = () => {
-  const options = [
-    "Pedreiro",
-    "Encanador",
-    "Eletricista",
-    "Marceneiro",
-    "Pintor",
-    "Serralheiro",
-    "Gesseiro",
-    "Aplicador de drywall",
-    "Marido de aluguel",
-    "Mestre de obras",
-  ];
-
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [specialty, setSpecialty] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [video, setVideo] = useState("");
-  const [image, setImage] = useState<any>("");
-  const [active, setActive] = useState<boolean>();
-  const [checkboxError, setCheckboxError] = useState(false);
+  const options = ["Pedreiro", "Encanador", "Eletricista", "Marceneiro", "Pintor", "Serralheiro", "Gesseiro", "Aplicador de drywall", "Marido de aluguel", "Mestre de obras"];
+  
+  const [name, setName] = useState("")
+  const [summary, setSummary] = useState("")
+  const [description, setDescription] = useState("")
+  const [specialty, setSpecialty] = useState("")
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
+  const [video, setVideo] = useState("")
+  const [image, setImage] = useState<any>("")
+  const [active, setActive] = useState<boolean>()
   const [workload, setWorkload] = useState(0.0);
   const [loading, setLoading] = useState(false);
+  const [checkboxError, setCheckboxError] = useState(false);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -114,12 +104,14 @@ export const EditCourseAdmin = () => {
     }
   }
 
+
   function handleUpdateCourse(e: any) {
     e.preventDefault();
     setLoading(true);
     const updatedCourse: UpdatedCorse = {};
 
     if (name !== "") updatedCourse.name = name;
+    if (summary !== "") updatedCourse.summary = summary;
     if (description !== "") updatedCourse.description = description;
     if (image !== "") updatedCourse.image = image;
     if (specialty !== "") updatedCourse.specialty = specialty;
@@ -217,178 +209,95 @@ export const EditCourseAdmin = () => {
           >
             {course && (
               <>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormControl isRequired>
-                    <FormLabel>Nome</FormLabel>
-                    <Input
-                      type="text"
-                      onChange={(e) => setName(e.target.value)}
-                      defaultValue={course?.name}
-                      maxLength={105}
-                      required
-                    />
-                  </FormControl>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormControl isRequired>
-                    <FormLabel>Descrição</FormLabel>
-                    <ReactQuill
-                      theme="snow"
-                      value={course.description}
-                      onChange={setDescription}
-                    />
-                  </FormControl>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormControl isRequired>
-                    <FormLabel>Especialidade</FormLabel>
-                    <Input
-                      type="text"
-                      onChange={(e) => setSpecialty(e.target.value)}
-                      defaultValue={course?.specialty}
-                    />
-                  </FormControl>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormControl isRequired>
-                    <FormLabel>Carga horária</FormLabel>
-                    <NumberInput
-                      defaultValue={course?.workload}
-                      precision={1}
-                      min={1}
-                      onChange={(value) => setWorkload(+value)}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                  </FormControl>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormLabel>Profissão</FormLabel>
-                  {checkboxError && (
-                    <Text mb={3} color="red.500">
-                      Selecione pelo menos uma profissão
-                    </Text>
-                  )}
-                  <Grid templateColumns="repeat(4, 1fr)" gap={6}></Grid>
-                  <Grid templateColumns="repeat(4, 1fr)" gap={6}>
-                    <Checkbox
-                      value="Todos"
-                      onChange={(e) => {
-                        handleAddAllCategories(e);
-                      }}
-                      isChecked={selectedOptions.length === options.length}
-                    >
-                      Todos
-                    </Checkbox>
-                    {options.map((value) => (
-                      <Checkbox
-                        value={value}
-                        key={value}
-                        onChange={(e) => handleAddCategory(e)}
-                        isChecked={selectedOptions.includes(value)}
-                      >
-                        {value}
-                      </Checkbox>
-                    ))}
-                  </Grid>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormControl>
-                    <FormLabel>Link do vídeo</FormLabel>
-                    <Input
-                      type="text"
-                      onChange={(e) => setVideo(e.target.value)}
-                      defaultValue={course?.video}
-                    />
-                  </FormControl>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormControl>
-                    <FormLabel>
-                      Imagem do curso (apenas PNG, GIF, JPEG e JPG)
-                    </FormLabel>
-                    <Input
-                      type="file"
-                      name="file"
-                      onChange={(e) => handleAddImage(e)}
-                      accept="image/png, image/gif, image/jpeg, image/jpg "
-                    />
-                    <Box>
-                      <Image src={course.image} alt="Dan Abramov" />
-                    </Box>
-                  </FormControl>
-                </Box>
-                <Box
-                  borderWidth={1}
-                  borderStyle={"solid"}
-                  p={4}
-                  borderRadius={8}
-                  w={"100%"}
-                >
-                  <FormControl>
-                    <FormLabel>Curso ativo</FormLabel>
-                    <Checkbox
-                      onChange={(e) => setActive(e.target.checked)}
-                      // onChange={(e) => handleAddImage(e)}
-                      isChecked={active}
-                    />
-                  </FormControl>
-                </Box>
-                <Button
-                  type="submit"
-                  colorScheme="green"
-                  w={"full"}
-                  size={"lg"}
-                  disabled={loading}
-                >
-                  {loading ? "Atualizando curso" : "Atualizar curso"}
-                </Button>
+                <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Nome</FormLabel>
+                <Input type="text" onChange={(e) => setName(e.target.value)} defaultValue={course?.name} maxLength={105} required/>
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Resumo</FormLabel>
+                <Input type="text" value={course?.summary} onChange={e => {setSummary(e.target.value)}} />
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Descrição</FormLabel>
+                <ReactQuill theme='snow' value={course.description} onChange={setDescription} />
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Especialidade</FormLabel>
+                <Input type="text" onChange={(e) => setSpecialty(e.target.value)} defaultValue={course?.specialty}/>
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Carga horária</FormLabel>
+                <NumberInput defaultValue={course?.workload} precision={1} min={1} onChange={(value) => setWorkload(+value)} >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+                <FormLabel>Categoria</FormLabel>
+                <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                <Checkbox
+                  value="Todos"
+                  onChange={(e) => {handleAddAllCategories(e)}}
+                  isChecked={selectedOptions.length === options.length}
+                  >Todos</Checkbox>
+                {options.map((value) => (
+                  <Checkbox
+                    value={value}
+                    key={value}
+                    onChange={(e) => handleAddCategory(e)}
+                    isChecked={selectedOptions.includes(value)}
+                  >{value}</Checkbox>
+                ))}
+              </Grid>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Link do vídeo</FormLabel>
+                <Input type="text" onChange={(e) => setVideo(e.target.value)} defaultValue={course?.video}/>
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Imagem do curso (apenas PNG, GIF, JPEG e JPG)</FormLabel>
+                <Input
+                  type="file"
+                  name="file"
+                  onChange={(e) => handleAddImage(e)}
+                  accept="image/png, image/gif, image/jpeg, image/jpg "/>
+                  <Box>
+                    <Image src={course.image} alt='Dan Abramov' />
+                  </Box>
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl>
+                <FormLabel>Curso ativo</FormLabel>
+                <Checkbox
+                  onChange={(e) => setActive(e.target.checked)}
+                  // onChange={(e) => handleAddImage(e)}
+                  isChecked={active}/>
+              </FormControl>
+            </Box>
+            <Button
+              type='submit'
+              colorScheme="green"
+              w={"full"}
+              size={"lg"}
+              disabled={loading}
+            >{loading ? "Atualizando curso" : "Atualizar curso"}</Button>
               </>
             )}
           </VStack>

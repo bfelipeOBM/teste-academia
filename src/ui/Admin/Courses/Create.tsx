@@ -16,6 +16,7 @@ export const CreateCourseAdmin = () => {
   const options = ["Pedreiro", "Encanador", "Eletricista", "Marceneiro", "Pintor", "Serralheiro", "Gesseiro", "Aplicador de drywall", "Marido de aluguel", "Mestre de obras"]
 
   const [name, setName] = useState("")
+  const [summary, setSummary] = useState("")
   const [description, setDescription] = useState("")
   const [specialty, setSpecialty] = useState("")
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
@@ -78,66 +79,57 @@ export const CreateCourseAdmin = () => {
   async function handleCreateCourse(e: any) {
     e.preventDefault()
 
-    if (selectedOptions.length > 0) {
-      const data = JSON.stringify({
-        "name": name,
-        "description": description,
-        "image": image,
-        "video": video,
-        "specialty": specialty,
-        "category": selectedOptions,
-        "workload": workload,
-        "location_id": 1,
-        "active": true
-      });
-  
-  
-      setLoadingCreateCourse(true)
-  
-      setTimeout(() => {
-        const xhr = new XMLHttpRequest();
-        setLoadingCreateCourse(false);
-        xhr.addEventListener("readystatechange", function () {
-          if (this.readyState === this.DONE) {
-            setLoadingCreateCourse(false)
-            if (this.status === 201) {
-              toast.success('Curso criado!', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: 'colored'
-              });
-              setTimeout(() => {
-                navigate(-1);
-              }, 4000)
-            } else {
-              toast.error('Erro ao criar curso!', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: 'colored'
-              });
-            }
+    const data = JSON.stringify({
+      "name": name,
+      "summary": summary,
+      "description": description,
+      "image": image,
+      "video": video,
+      "specialty": specialty,
+      "category": selectedOptions,
+      "workload": workload,
+      "location_id": 1,
+      "active": true
+    });
+
+
+    setLoadingCreateCourse(true)
+
+    setTimeout(() => {
+      const xhr = new XMLHttpRequest();
+      setLoadingCreateCourse(false);
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+          setLoadingCreateCourse(false)
+          if (this.status === 201) {
+            toast.success('Curso criado!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
+            setTimeout(() => {
+              navigate(-1);
+            }, 4000)
+          } else {
+            toast.error('Erro ao criar curso!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'colored'
+            });
           }
-        });
-    
-        xhr.open('POST', `${Constants.API_URL}courses/`);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
-  
-        xhr.send(data);
-      }, 1000);
-    } else {
-      setCheckboxError(true);
-    }
+        }
+      });
+    })
   }
 
   return (
@@ -159,6 +151,12 @@ export const CreateCourseAdmin = () => {
               <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
                 <Input type="text" onChange={(e) => setName(e.target.value)} maxLength={105} required />
+              </FormControl>
+            </Box>
+            <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
+              <FormControl isRequired>
+                <FormLabel>Resumo</FormLabel>
+                <Input type="text" onChange={e => {setSummary(e.target.value)}} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

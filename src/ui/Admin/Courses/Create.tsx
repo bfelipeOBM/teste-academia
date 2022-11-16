@@ -156,7 +156,7 @@ export const CreateCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Resumo</FormLabel>
-                <Textarea onChange={e => {setSummary(e.target.value)}} size={"sm"} />
+                <Textarea onChange={e => {setSummary(e.target.value)}} size={"sm"} maxLength={350} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

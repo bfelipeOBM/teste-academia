@@ -15,7 +15,7 @@ interface DataObject {
 }
 
 export const CreateCertificateClass = () => {
-  const {id, classId} = useParams();
+  const {id, class_id} = useParams();
   const [filesInput, setFilesInput] = useState<any[]>([])
   const [files, setFiles] = useState<any[]>([])
   const [nomes, setNomes] = useState<any[]>([])
@@ -98,7 +98,6 @@ export const CreateCertificateClass = () => {
     })
 
     const sendData = JSON.stringify(data);
-    // console.log(sendData)
     setTimeout(() => {
       let xhr = new XMLHttpRequest();
       xhr.addEventListener("readystatechange", function () {
@@ -114,9 +113,9 @@ export const CreateCertificateClass = () => {
               progress: undefined,
               theme: 'colored'
             });
-            // setTimeout(() => {
-            //   navigate(-1);
-            // }, 3000)
+            setTimeout(() => {
+              navigate(-1);
+            }, 3000)
           } else {
             setLoading(false)
             toast.error('Erro ao gerar o certificado!', {
@@ -132,7 +131,7 @@ export const CreateCertificateClass = () => {
           }
         }
       });
-      xhr.open('POST', `${Constants.API_URL}courses/${id}/class/${classId}/certificate`);
+      xhr.open('POST', `${Constants.API_URL}courses/${id}/class/${class_id}/certificate`);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
       xhr.send(sendData);

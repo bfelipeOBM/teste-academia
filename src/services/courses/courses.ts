@@ -34,7 +34,7 @@ const getCourseMaterial = async (id: number, class_id: number) => {
     const link = document.createElement("a");
     link.setAttribute(
       "download",
-      /(?<=\/)[^\/\?#]+(?=[^\/]*$)/g.exec(material.file_url)![0]
+      /[^\/\?#]+(?=[^\/]*$)/g.exec(material.file_url)![0]
     );
     link.href = material.file_url;
     link.download = material.file_url;

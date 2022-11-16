@@ -109,7 +109,7 @@ const CustomModal = ({
               </div>
               <div className="current-class-card__content__name-description">
                 <div className="name">{currentClass?.name}</div>
-                <div className="description">{currentClass?.description}</div>
+                <div className="description">{currentClass?.summary}</div>
               </div>
             </div>
           </div>

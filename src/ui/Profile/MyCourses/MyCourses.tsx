@@ -127,7 +127,8 @@ const MyCourses = () => {
     } else if (tab === "in-progress") {
       setFilteredCourses(
         mycourses.filter(
-          (course) => course.status === "IN PROGRESS" || "UPCOMING"
+          (course) =>
+            course.status === "IN PROGRESS" || course.status === "UPCOMING"
         )
       );
     } else if (tab === "finished") {

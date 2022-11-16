@@ -24,6 +24,7 @@ export type Class = {
   short_video: string;
   category: string;
   active?: boolean;
+  summary: string;
   specialty: string;
   workload: number;
   students_count: number;

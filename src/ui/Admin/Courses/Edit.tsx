@@ -18,6 +18,7 @@ import {
   NumberInputField,
   NumberInputStepper,
   Text,
+  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -218,7 +219,7 @@ export const EditCourseAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl isRequired>
                 <FormLabel>Resumo</FormLabel>
-                <Input type="text" value={course?.summary} onChange={e => {setSummary(e.target.value)}} />
+                <Textarea value={course?.summary} onChange={e => {setSummary(e.target.value)}} size={"sm"} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>

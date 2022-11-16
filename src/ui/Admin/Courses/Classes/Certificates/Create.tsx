@@ -132,7 +132,7 @@ export const CreateCertificateClass = () => {
           }
         }
       });
-      xhr.open('POST', `${Constants.API_URL}courses/${id}/class/2/certificate`);
+      xhr.open('POST', `${Constants.API_URL}courses/${id}/class/${classId}/certificate`);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
       xhr.send(sendData);

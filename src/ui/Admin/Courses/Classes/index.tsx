@@ -11,6 +11,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
 import { InfosCreateMaterialAdmin } from "../Material/Infos";
+import { CertificateModal } from "./Certificates/Modal"
 
 export const ClassesInfoAdmin = () => {
   const {id, class_id} = useParams();
@@ -205,7 +206,8 @@ export const ClassesInfoAdmin = () => {
               <HStack>
                 <Button onClick={createCSV} colorScheme={"blue"}>Gerar CSV</Button>
                 <Link to={`/admin/courses/${id}/class/${class_id}/certificate`}><Button colorScheme={"orange"}>Gerar Certificado</Button></Link>
-                <Button colorScheme={"green"} onClick={sendCertificates}>Enviar certificados</Button>
+               
+                <CertificateModal users={users} />
               </HStack>
             <Input
               w={"100%"}
@@ -247,6 +249,38 @@ export const ClassesInfoAdmin = () => {
           </Box>
         </Box>
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Deletar</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input
+              placeholder="Pesquise o usuário"
+              list="users"
+              onChange={(e) => {
+                handleSearchUser(e.target.value);
+              }}
+            />
+            <datalist id="users">
+              {searchUsers?.map(user => (
+                <option value={user.name} />
+              ))}
+            </datalist>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button variant={'outline'} mr={3} onClick={onClose}>
+              Fechar
+            </Button>
+            <Button
+              colorScheme={'green'}
+              onClick={() => {handleAddUserToClass(); onClose()}}
+            >Adicionar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

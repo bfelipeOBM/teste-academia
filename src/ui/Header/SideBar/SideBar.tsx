@@ -2,23 +2,13 @@ import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
 import AuthService from "@/services/auth";
 import { useEffect } from "react";
-import {
-  ProSidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-} from "react-pro-sidebar";
+import { slide as Menu } from "react-burger-menu";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import "./SideBar.scss";
 
-interface SideBarProps {
-  isSideBarOpen: boolean;
-}
-
-const SideBar = (props: SideBarProps) => {
-  const { isSideBarOpen } = props;
-
+const SideBar = () => {
   const user = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const navigate = useNavigate();
@@ -37,23 +27,19 @@ const SideBar = (props: SideBarProps) => {
 
   return (
     <div className="sidebar">
-      <ProSidebar toggled={isSideBarOpen}>
-        <SidebarHeader>
-          {/**
-           *  You can add a header for the sidebar ex: logo
-           */}
-        </SidebarHeader>
-        <SidebarContent>
-          {/**
-           *  You can add the content of the sidebar ex: menu, profile details, ...
-           */}
-        </SidebarContent>
-        <SidebarFooter>
-          {/**
-           *  You can add a footer for the sidebar ex: copyright
-           */}
-        </SidebarFooter>
-      </ProSidebar>
+      <Menu width={"100%"}>
+        <span id="home" className="menu-item">
+          <i className="material-icons-outlined">home</i>
+          Home
+        </span>
+        <span id="about" className="menu-item">
+          About
+        </span>
+        <span id="contact" className="menu-item">
+          Contact
+        </span>
+        <span className="menu-item--small">Settings</span>
+      </Menu>
     </div>
   );
 };

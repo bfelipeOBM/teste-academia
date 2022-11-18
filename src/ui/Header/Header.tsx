@@ -38,7 +38,6 @@ type Item = {
 };
 
 const Header = () => {
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchebaleItems, setSearchebaleItems] = useState<Item[]>([]);
@@ -103,16 +102,10 @@ const Header = () => {
 
   return (
     <>
-      <SideBar isSideBarOpen={isSideBarOpen}></SideBar>
       <header className="header">
         <div className="header__items">
-          <div
-            className="header__items__menu"
-            onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-          >
-            <div className="header__items__menu__icon">
-              <span className="material-icons">menu</span>
-            </div>
+          <div className="header__items__menu">
+            <SideBar></SideBar>
           </div>
 
           <div className="header__items__logo">

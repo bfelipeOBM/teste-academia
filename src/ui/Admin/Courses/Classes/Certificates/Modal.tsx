@@ -58,11 +58,11 @@ export function CertificateModal({users} : CertificateModalProps) {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
+            <ModalHeader>Participantes</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
             <CheckboxGroup>
-              <VStack>
+              <VStack alignItems={'left'}>
                 {users.map((user) => {
                   if (user.user_participated) {
                     return <Checkbox value={user.id} defaultChecked={true} key={user.id} onChange={e => {toggleUser(user)}}>{user.name}</Checkbox>

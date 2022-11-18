@@ -65,8 +65,8 @@ export const CreateCertificateClass = () => {
             <Input type="text" placeholder="Nome do parceiro" name={`nome-${filesInput.length}`}/>
             <Input type="text" placeholder="Cargo do parceiro" name={`cargo-${filesInput.length}`}/>
             <Box w={'full'}>
-              <FormLabel>Assinatura</FormLabel>
-              <Input type="file" name={`assinatura-${filesInput.length}`} onChange={(handleAddFile)} required/>
+              <FormLabel>Assinatura (Apenas arquivos .PNG)</FormLabel>
+              <Input type="file" accept="image/png" name={`assinatura-${filesInput.length}`} onChange={(handleAddFile)} required/>
             </Box>
             <Box w={'full'}>
               <FormLabel>Logo da empresa</FormLabel>

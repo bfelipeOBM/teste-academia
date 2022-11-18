@@ -1,7 +1,8 @@
 import Constants from "@/application/common/Constants"
 import { ApplicationState } from "@/application/store";
-import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, OrderedList, ListItem, UnorderedList } from "@chakra-ui/react"
+import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, OrderedList, ListItem, UnorderedList, CheckboxGroup, VStack, Checkbox } from "@chakra-ui/react"
 import axios from "axios"
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,13 +12,31 @@ interface CertificateModalProps {
 }
 
 export function CertificateModal({users} : CertificateModalProps) {
-    console.log(users)
+    const [selectedUsers, setSelectedUsers] = useState<any[]>([])
     const userState = useSelector((state: ApplicationState) => state.user);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {id, class_id} = useParams();
+
+    useEffect(() => {
+      const participatedUsers = users.filter(user => user.user_participated)
+      setSelectedUsers(participatedUsers)
+    }, [users])
+
+    console.log(selectedUsers)
+
+    function toggleUser(user: any) {
+      
+      if (selectedUsers.includes(user)) {
+        setSelectedUsers(selectedUsers.filter(item => item !== user))
+      } else {
+        setSelectedUsers([...selectedUsers, user])
+      }
+    }
     
     function sendCertificates(e: any) {
-        axios.post(`${Constants.API_URL}courses/${id}/class/${class_id}/certificate/send`, {}, {headers: {
+        axios.post(`${Constants.API_URL}courses/${id}/class/${class_id}/certificate/send`, {
+            users: selectedUsers
+        }, {headers: {
             Bearer: `${userState.data?.access_token}`
         }})
         toast.success('Certificados sendo gerados e enviados.', {
@@ -43,17 +62,15 @@ export function CertificateModal({users} : CertificateModalProps) {
             <ModalHeader>Modal Title</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-            <UnorderedList maxH={'600px'} overflowY={'auto'}>
-                {users.map((user, index) => {
-                    if (user.user_participated) {
-                        return (
-                            <ListItem key={index}>&#8226;	 {user.name}</ListItem>
-                        )
-                    }
-                })
-                }
-                
-            </UnorderedList>
+            <CheckboxGroup>
+              <VStack>
+                {users.map((user) => {
+                  if (user.user_participated) {
+                    return <Checkbox value={user.id} defaultChecked={true} key={user.id} onChange={e => {toggleUser(user)}}>{user.name}</Checkbox>
+                  }
+              })}
+              </VStack>
+            </CheckboxGroup>
             </ModalBody>
   
             <ModalFooter>

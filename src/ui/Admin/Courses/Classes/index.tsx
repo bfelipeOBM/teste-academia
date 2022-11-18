@@ -1,7 +1,7 @@
 import Constants from "@/application/common/Constants";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
-import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
+import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure, Link as ChakraLink } from "@chakra-ui/react";
 import axios from "axios";
 import { Plus } from "phosphor-react";
 import { useEffect, useState } from "react";
@@ -19,6 +19,7 @@ export const ClassesInfoAdmin = () => {
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [classe, setClasse] = useState<any>();
   const [searchUsers, setSearchUsers] = useState<any[]>([]);
+  const [templateURL, setTemplateURL] = useState<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userState = useSelector((state: ApplicationState) => state.user);
   const [updateUsers, setUpdateUsers] = useState(false);
@@ -43,6 +44,10 @@ export const ClassesInfoAdmin = () => {
       }
     }).then((res) => {
       setClasse(res.data);
+    })
+
+    axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}/certificate_template`).then((res) => {
+      setTemplateURL(res.data['url']);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -206,8 +211,12 @@ export const ClassesInfoAdmin = () => {
               <HStack>
                 <Button onClick={createCSV} colorScheme={"blue"}>Gerar CSV</Button>
                 <Link to={`/admin/courses/${id}/class/${class_id}/certificate`}><Button colorScheme={"orange"}>Gerar Certificado</Button></Link>
-               
-                <CertificateModal users={users} />
+                {templateURL !== undefined && (
+                  <>
+                    <CertificateModal users={users}/>
+                    <ChakraLink href={templateURL}><Button colorScheme={"facebook"}>Download do template</Button></ChakraLink>
+                  </>
+                )}
               </HStack>
             <Input
               w={"100%"}

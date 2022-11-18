@@ -38,7 +38,6 @@ export const CreateCertificateClass = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   function handleAddFile(e: any) {
-    console.log(e.target.name)
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = function() {

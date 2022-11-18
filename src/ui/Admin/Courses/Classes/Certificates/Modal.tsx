@@ -22,7 +22,6 @@ export function CertificateModal({users} : CertificateModalProps) {
       setSelectedUsers(participatedUsers)
     }, [users])
 
-    console.log(selectedUsers)
 
     function toggleUser(user: any) {
       

@@ -1,4 +1,14 @@
 import { Certificate } from "@/application/models/certificate";
+import {
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from "react-share";
 import "./CertificateCard.scss";
 
 interface CertificateCardProps {
@@ -13,8 +23,8 @@ const CertificateCard = (props: CertificateCardProps) => {
       <div className="certificate-card__header">
         <div className="certificate-card__header__image">
           <img
-            src={certificate.image}
-            alt={certificate.title}
+            src={certificate.certificate_url}
+            alt={certificate.name}
             width="100%"
             height="100%"
           />
@@ -23,33 +33,49 @@ const CertificateCard = (props: CertificateCardProps) => {
 
       <div className="certificate-card__content">
         <div className="certificate-card__content__title">
-          <span className="title">{certificate.title}</span>
+          <span className="title">{certificate.name}</span>
         </div>
         <div className="certificate-card__content__buttons" onClick={() => {}}>
           <span className="download-button">
             <i className="material-icons-outlined">cloud_download</i>
-            <span>Baixar certificado</span>
+            <a target="_parent" href={certificate.certificate_url}>
+              Baixar certificado
+            </a>
           </span>
           <div className="social-buttons">
             <span className="social-buttons__images">
-              <img
-                src="https://www.obramax.com.br/media/wysiwyg/icon_linkedin.png"
-                alt="linkedin"
-                width="100%"
-                height="100%"
-              />
-              <img
-                src="https://www.obramax.com.br/media/wysiwyg/icon_facebook.png"
-                alt="facebook"
-                width="100%"
-                height="100%"
-              />
-              <img
-                src="https://www.obramax.com.br/media/wysiwyg/icon-whatsapp.png"
-                alt="twitter"
-                width="100%"
-                height="100%"
-              />
+              <EmailShareButton
+                url={window.location.href}
+                subject={certificate.name}
+                body={certificate.image}
+                className="share__button"
+              >
+                <EmailIcon size={32} round></EmailIcon>
+              </EmailShareButton>
+              <LinkedinShareButton
+                url={window.location.href}
+                title={certificate.name}
+                summary={certificate.name}
+                source="https://academiadeprofissionais.obramax.com.br"
+                className="share__button"
+              >
+                <LinkedinIcon size={32} round />
+              </LinkedinShareButton>
+
+              <FacebookShareButton
+                url={window.location.href}
+                quote={certificate.name}
+                className="share__button"
+              >
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+              <WhatsappShareButton
+                url={window.location.href}
+                title={certificate.name}
+                className="share__button"
+              >
+                <WhatsappIcon size={32} round />
+              </WhatsappShareButton>
             </span>
           </div>
         </div>

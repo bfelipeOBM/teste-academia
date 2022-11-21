@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 import { BannersState } from "./banners/types";
+import { CertificatesState } from "./certificates/types";
 import { ClassState } from "./classes/types";
 import { CoursesState } from "./courses/types";
 import { MessageState } from "./message/types";
@@ -29,6 +30,7 @@ export interface ApplicationState {
   courses_locations: CoursesState;
   banners: BannersState;
   featured_courses: CoursesState;
+  certificates: CertificatesState;
 }
 
 export type RootReducer = ReturnType<typeof rootReducer>;

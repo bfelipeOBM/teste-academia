@@ -45,17 +45,17 @@ const CertificateCard = (props: CertificateCardProps) => {
           <div className="social-buttons">
             <span className="social-buttons__images">
               <EmailShareButton
-                url={window.location.href}
+                url={certificate.certificate_url}
                 subject={certificate.name}
-                body={certificate.image}
+                body={certificate.certificate_url}
                 className="share__button"
               >
                 <EmailIcon size={32} round></EmailIcon>
               </EmailShareButton>
               <LinkedinShareButton
-                url={window.location.href}
+                url={certificate.certificate_url}
                 title={certificate.name}
-                summary={certificate.name}
+                summary={certificate.certificate_url}
                 source="https://academiadeprofissionais.obramax.com.br"
                 className="share__button"
               >
@@ -63,14 +63,14 @@ const CertificateCard = (props: CertificateCardProps) => {
               </LinkedinShareButton>
 
               <FacebookShareButton
-                url={window.location.href}
+                url={certificate.certificate_url}
                 quote={certificate.name}
                 className="share__button"
               >
                 <FacebookIcon size={32} round />
               </FacebookShareButton>
               <WhatsappShareButton
-                url={window.location.href}
+                url={certificate.certificate_url}
                 title={certificate.name}
                 className="share__button"
               >

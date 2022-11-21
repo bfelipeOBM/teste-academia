@@ -283,9 +283,9 @@ const MyCertificates = () => {
 
           <div className="my-certificates__content__certificates">
             <div className="cards">
-              {filteredCertificates.map((certificate) => (
+              {filteredCertificates.map((certificate, index) => (
                 <CertificateCard
-                  key={certificate.id}
+                  key={index}
                   certificate={certificate}
                 ></CertificateCard>
               ))}

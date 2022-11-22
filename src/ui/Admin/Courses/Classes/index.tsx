@@ -162,11 +162,12 @@ export const ClassesInfoAdmin = () => {
 
   function createCSV() {
     const rows = [
-      ["Nome", "Email", "Telefone", "CPF", "Participou"],
+      ["Nome", "Email", "Profissão", "Telefone", "CPF", "Participou"],
       ...users.map(user => {
         return [
           user.name,
           user.email,
+          user.occupation,
           user.phone,
           user.document,
           user.user_participated ? "Sim" : "Não"

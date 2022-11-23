@@ -165,7 +165,7 @@ export const EditClassAdmin = () => {
 
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
             <FormControl>
-              <FormLabel>Curso ativo</FormLabel>
+              <FormLabel>Turma ativa</FormLabel>
               <Checkbox
                 onChange={(e) => {setActive(e.target.checked); setSendActive(e.target.checked)}}
                 isChecked={active}/>

@@ -34,10 +34,8 @@ export const EditLocationAdmin = () => {
             setName(res.data.name);
         })
     }, [])
-
     function handleUpdateLocation(e: any) {
         e.preventDefault();
-
         axios.patch(`${Constants.API_URL}courses/locations/${id}`, {
             name: name
         }, {
@@ -81,7 +79,6 @@ export const EditLocationAdmin = () => {
                 <BackButton />
               </HStack>
             </Header>
-
             <Box w="100%" maxW={1120} mx="auto" px={8}>
               <Box py={8}>
                 <Text fontSize={"2xl"}>Editar localização</Text>
@@ -93,7 +90,6 @@ export const EditLocationAdmin = () => {
                     <Input type="text" defaultValue={name} onChange={(e) => setName(e.target.value)} />
                   </FormControl>
                 </Box>
-
                 <Button
                   type='submit'
                   colorScheme="blue"

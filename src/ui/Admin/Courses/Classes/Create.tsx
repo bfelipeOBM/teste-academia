@@ -20,6 +20,7 @@ export const CreateClassAdmin = () => {
   const [locationId, setLocationId] = useState(1);
   const [active, setActive] = useState(true);
   const [sympla, setSympla] = useState<any>(null);
+  const [locations, setLocations] = useState<any>([]);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -35,6 +36,13 @@ export const CreateClassAdmin = () => {
       window.location.href = "/";
     }
   }, [userState.isLoggedIn, dispatch]);
+
+  useEffect(() => {
+    axios.get(`${Constants.API_URL}courses/locations`).then(res => {
+      setLocations(res.data);
+    })
+  }, [])
+
 
   function handleCreateClass(e: any) {
     e.preventDefault();
@@ -128,11 +136,9 @@ export const CreateClassAdmin = () => {
               <FormControl>
                 <FormLabel>Localização</FormLabel>
                 <Select onChange={(e) => setLocationId(+e.target.value)}>
-                  <option value='1'>Online</option>
-                  <option value='2'>Mooca</option>
-                  <option value='3'>Praia Grande</option>
-                  <option value='4'>RJ - Benfica</option>
-                  <option value='5'>Paraisópolis</option>
+                  {locations.map((location: any) => (
+                    <option value={location.id}>{location.name}</option>
+                  ))}
                 </Select>
               </FormControl>
             </Box>

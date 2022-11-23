@@ -59,11 +59,21 @@ const CourseCategory = () => {
       includeScore: true,
       location: 0,
       threshold: 0.4,
-      keys: ["title", "description", "category", "upcoming_classes.location"],
+      keys: ["name", "description", "category", "upcoming_classes.location"],
     });
 
     if (!value) {
       setFilteredCourses(courses);
+      return;
+    }
+
+    if (value === "Presencial") {
+      const result = fuse.search("online");
+      const filtered = courses.filter(
+        (course) => !result.map((item) => item.item.id).includes(course.id)
+      );
+      const presencialCourses = filtered.filter((item) => item.upcoming_classes !== null);
+      setFilteredCourses(presencialCourses);
       return;
     }
 

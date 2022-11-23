@@ -3,7 +3,7 @@ import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
 import { AspectRatio, Box, Button, Checkbox, Flex, Grid, GridItem, Heading, HStack, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Tooltip, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
-import { Plus, Trash } from "phosphor-react";
+import { PencilLine, Plus, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -123,6 +123,15 @@ export const BannersInfoAdmin = () => {
                   </Box>
                   <Box position={"absolute"} top={4} right={4}>
                     <HStack>
+                      <Tooltip label="Editar" aria-label="Editar">
+                        <IconButton
+                        as={Link}
+                        to={`/admin/banners/${banner.id}/edit`}
+                        icon={<PencilLine size={30} />}
+                        colorScheme={"gray"}
+                        aria-label="Editar curso"
+                      />
+                      </Tooltip>
                       <Tooltip label="Deletar banner">
                         <IconButton
                           icon={<Trash size={30} />}

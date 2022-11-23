@@ -70,7 +70,6 @@ export const CreateLocationAdmin = () => {
                 <BackButton />
               </HStack>
             </Header>
-    
             <Box w="100%" maxW={1120} mx="auto" px={8}>
               <Box py={8}>
                 <Text fontSize={"2xl"}>Criar localização</Text>
@@ -82,7 +81,7 @@ export const CreateLocationAdmin = () => {
                     <Input type="text" onChange={(e) => setName(e.target.value)} />
                   </FormControl>
                 </Box>
-               
+                
                 <Button
                   type='submit'
                   colorScheme="green"

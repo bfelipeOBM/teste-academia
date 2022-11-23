@@ -1,6 +1,7 @@
 import { Admin } from "@/ui/Admin";
 import { BannersInfoAdmin } from "@/ui/Admin/Banner";
 import { CreateBannerAdmin } from "@/ui/Admin/Banner/Create";
+import { EditBannerAdmin } from "@/ui/Admin/Banner/Edit";
 import { ClassesInfoAdmin } from "@/ui/Admin/Courses/Classes";
 import { CreateCertificateClass } from "@/ui/Admin/Courses/Classes/Certificates/Create";
 import { CreateClassAdmin } from "@/ui/Admin/Courses/Classes/Create";
@@ -231,6 +232,14 @@ const RouteWrapper = () => {
             }
           />
         </Route>
+        <Route
+          path="/admin/banners/:id/edit"
+          element={
+            <ChakraProvider>
+              <EditBannerAdmin />
+            </ChakraProvider>
+          }
+        />
       </Routes>
     </Router>
   );

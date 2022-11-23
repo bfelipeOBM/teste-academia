@@ -23,6 +23,7 @@ export const EditClassAdmin = () => {
   const [sendActive, setSendActive] = useState<boolean>();
   const [observation, setObservation] = useState<string>();
   const [sendEmail, setSendEmail] = useState(true);
+  const [locations, setLocations] = useState<any>([]);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const dispatch = useDispatch();
@@ -43,6 +44,10 @@ export const EditClassAdmin = () => {
     axios.get(`${Constants.API_URL}courses/${id}/classes/${class_id}`).then((response) => {
       setClasse(response.data);
       setActive(response.data.class_active)
+    })
+
+    axios.get(`${Constants.API_URL}courses/locations`).then(res => {
+      setLocations(res.data);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -151,11 +156,9 @@ export const EditClassAdmin = () => {
               <FormControl>
                 <FormLabel>Localização</FormLabel>
                 <Select defaultValue={classe?.location_id || 1} onChange={(e) => setLocationId(+e.target.value)}>
-                  <option value='1'>Online</option>
-                  <option value='2'>Mooca</option>
-                  <option value='3'>Praia Grande</option>
-                  <option value='4'>Benfica</option>
-                  <option value='5'>Paraisópolis</option>
+                  {locations.map((location: any) => (
+                    <option value={location.id}>{location.name}</option>
+                  ))}
                 </Select>
               </FormControl>
             </Box>

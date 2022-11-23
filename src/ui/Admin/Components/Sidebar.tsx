@@ -21,6 +21,11 @@ export const Sidebar = () => {
               Banners
             </Link>
           </Text>
+          <Text as="p" fontSize={"2xl"}>
+            <Link to={"/admin/locations"}>
+              Localizações
+            </Link>
+          </Text>
         </VStack>
       </Box>
     </Box>

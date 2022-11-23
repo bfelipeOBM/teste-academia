@@ -9,6 +9,9 @@ import { CreateCourseAdmin } from "@/ui/Admin/Courses/Create";
 import { EditCourseAdmin } from "@/ui/Admin/Courses/Edit";
 import { CourseAdminInfos } from "@/ui/Admin/Courses/Infos";
 import { CreateCourseMaterialAdmin } from "@/ui/Admin/Courses/Material/Create";
+import { LocationAdminInfos } from "@/ui/Admin/Location";
+import { CreateLocationAdmin } from "@/ui/Admin/Location/Create";
+import { EditLocationAdmin } from "@/ui/Admin/Location/Edit";
 import { UsersAdminInfos } from "@/ui/Admin/Users";
 import { UsersAdminCreate } from "@/ui/Admin/Users/Create";
 import { UsersAdminEdit } from "@/ui/Admin/Users/Edit";
@@ -184,6 +187,30 @@ const RouteWrapper = () => {
             element={
               <ChakraProvider>
                 <CreateCourseMaterialAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/locations"
+            element={
+              <ChakraProvider>
+                <LocationAdminInfos />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/locations/create"
+            element={
+              <ChakraProvider>
+                <CreateLocationAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/locations/:id/edit"
+            element={
+              <ChakraProvider>
+                <EditLocationAdmin />
               </ChakraProvider>
             }
           />

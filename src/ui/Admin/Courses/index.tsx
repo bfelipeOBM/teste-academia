@@ -32,6 +32,7 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Header } from "../Components/Header";
 import { Course } from "../interface/course";
+import { ReportCourses } from "./Report";
 
 export const Courses = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -119,6 +120,7 @@ export const Courses = () => {
       <Header>
         <HStack justifyContent="space-between">
           <Heading>Cursos</Heading>
+          <ReportCourses />
           <Button
             as={Link}
             to="/admin/courses/create"
@@ -201,7 +203,7 @@ export const Courses = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Excluir curso</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             Deseja excluir o curso{" "}

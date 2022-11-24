@@ -2,6 +2,9 @@ import { Admin } from "@/ui/Admin";
 import { BannersInfoAdmin } from "@/ui/Admin/Banner";
 import { CreateBannerAdmin } from "@/ui/Admin/Banner/Create";
 import { EditBannerAdmin } from "@/ui/Admin/Banner/Edit";
+import { BannersMobileInfoAdmin } from "@/ui/Admin/BannerMobile";
+import { CreateBannerMobileAdmin } from "@/ui/Admin/BannerMobile/Create";
+import { EditBannerMobileAdmin } from "@/ui/Admin/BannerMobile/Edit";
 import { ClassesInfoAdmin } from "@/ui/Admin/Courses/Classes";
 import { CreateCertificateClass } from "@/ui/Admin/Courses/Classes/Certificates/Create";
 import { CreateClassAdmin } from "@/ui/Admin/Courses/Classes/Create";
@@ -231,15 +234,43 @@ const RouteWrapper = () => {
               </ChakraProvider>
             }
           />
-        </Route>
+        
+          <Route
+            path="/admin/banners/:id/edit"
+            element={
+              <ChakraProvider>
+                <EditBannerAdmin />
+              </ChakraProvider>
+            }
+          />
+
+          <Route
+            path="/admin/banners/mobile"
+            element={
+              <ChakraProvider>
+                <BannersMobileInfoAdmin />
+              </ChakraProvider>
+            }
+          />
+          <Route
+            path="/admin/banners/mobile/create"
+            element={
+              <ChakraProvider>
+                <CreateBannerMobileAdmin />
+              </ChakraProvider>
+            }
+          />
+        
         <Route
-          path="/admin/banners/:id/edit"
+          path="/admin/banners/mobile/:id/edit"
           element={
             <ChakraProvider>
-              <EditBannerAdmin />
+              <EditBannerMobileAdmin />
             </ChakraProvider>
           }
         />
+    </Route>
+        
       </Routes>
     </Router>
   );

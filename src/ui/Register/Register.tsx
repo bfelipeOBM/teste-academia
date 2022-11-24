@@ -44,17 +44,17 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [options, setOptions] = useState([
-    { value: "pedreiro", label: "Pedreiro" },
-    { value: "encanador", label: "Encanador" },
-    { value: "eletricista", label: "Eletricista" },
-    { value: "marceneiro", label: "Marceneiro" },
-    { value: "pintor", label: "Pintor" },
-    { value: "serralheiro", label: "Serralheiro" },
-    { value: "gesseiro", label: "Gesseiro" },
-    { value: "aplicadordedrywall", label: "Aplicador de drywall" },
-    { value: "maridodealuguel", label: "Marido de aluguel" },
-    { value: "mestredeobras", label: "Mestre de obras" },
-    { value: "DIGITE OUTRA PROFISSÃO", label: "DIGITE OUTRA PROFISSÃO" },
+    { value: "Pedreiro", label: "Pedreiro" },
+    { value: "Encanador", label: "Encanador" },
+    { value: "Eletricista", label: "Eletricista" },
+    { value: "Marceneiro", label: "Marceneiro" },
+    { value: "Pintor", label: "Pintor" },
+    { value: "Serralheiro", label: "Serralheiro" },
+    { value: "Gesseiro", label: "Gesseiro" },
+    { value: "Aplicador de drywall", label: "Aplicador de drywall" },
+    { value: "Marido de aluguel", label: "Marido de aluguel" },
+    { value: "Mestre de obras", label: "Mestre de obras" },
+    { value: "", label: "DIGITE OUTRA PROFISSÃO" },
   ]);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
@@ -278,7 +278,7 @@ const Register = () => {
                   classNamePrefix="react-select"
                   createOptionPosition="first"
                   onCreateOption={(e) => handleCreate(e)}
-                  formatCreateLabel={(e) => `Selecionar "${e}"`}
+                  formatCreateLabel={(e) => `Selecionar e Adicionar "${e}"`}
                   options={options}
                   value={selectedOption}
                 ></CreatableSelect>

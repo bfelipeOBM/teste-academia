@@ -14,15 +14,16 @@ import "./MyCourses.scss";
 type currentTabT = "all" | "in-progress" | "finished" | "canceled";
 
 const CategoryListLeft = [
+  { title: "Todos" },
   { title: "Pedreiro" },
   { title: "Eletricista" },
   { title: "Mestre de Obras" },
   { title: "Encanador" },
   { title: "Serralheiro" },
-  { title: "Gesseiro" },
 ];
 
 const CategoryListRight = [
+  { title: "Gesseiro" },
   { title: "Aplicador de drywall" },
   { title: "Marido de aluguel" },
   { title: "Marceneiro" },
@@ -93,6 +94,7 @@ const MyCourses = () => {
   };
 
   const handleSelectedCategory = (category: string) => {
+    if (category === "Todos") setSearchValue("");
     setSelectedCategoryItem(category);
   };
 

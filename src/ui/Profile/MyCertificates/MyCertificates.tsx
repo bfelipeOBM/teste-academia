@@ -12,15 +12,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "./MyCertificates.scss";
 
 const CategoryListLeft = [
+  { title: "Todos" },
   { title: "Pedreiro" },
   { title: "Eletricista" },
   { title: "Mestre de Obras" },
   { title: "Encanador" },
   { title: "Serralheiro" },
-  { title: "Gesseiro" },
 ];
 
 const CategoryListRight = [
+  { title: "Gesseiro" },
   { title: "Aplicador de drywall" },
   { title: "Marido de aluguel" },
   { title: "Marceneiro" },
@@ -94,6 +95,7 @@ const MyCertificates = () => {
   };
 
   const handleSelectedCategory = (category: string) => {
+    if (category === "Todos") setSearchValue("");
     setSelectedCategoryItem(category);
   };
 

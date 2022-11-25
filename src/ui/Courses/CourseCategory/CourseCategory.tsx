@@ -12,15 +12,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "./CourseCategory.scss";
 
 const CategoryListLeft = [
+  { title: "Todos" },
   { title: "Pedreiro" },
   { title: "Eletricista" },
   { title: "Mestre de Obras" },
   { title: "Encanador" },
   { title: "Serralheiro" },
-  { title: "Gesseiro" },
 ];
 
 const CategoryListRight = [
+  { title: "Gesseiro" },
   { title: "Aplicador de drywall" },
   { title: "Marido de aluguel" },
   { title: "Marceneiro" },
@@ -72,7 +73,9 @@ const CourseCategory = () => {
       const filtered = courses.filter(
         (course) => !result.map((item) => item.item.id).includes(course.id)
       );
-      const presencialCourses = filtered.filter((item) => item.upcoming_classes !== null);
+      const presencialCourses = filtered.filter(
+        (item) => item.upcoming_classes !== null
+      );
       setFilteredCourses(presencialCourses);
       return;
     }
@@ -99,6 +102,7 @@ const CourseCategory = () => {
   };
 
   const handleSelectedCategory = (category: string) => {
+    if (category === "Todos") setSearchValue("");
     setSelectedCategoryItem(category);
   };
 

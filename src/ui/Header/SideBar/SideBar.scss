@@ -8,6 +8,14 @@
     display: flex;
     flex-direction: column;
 
+    #obramax {
+      color: #ef7f00;
+
+      &:hover {
+        color: #002a5b;
+      }
+    }
+
     &__header {
       display: flex !important;
       flex-direction: row;

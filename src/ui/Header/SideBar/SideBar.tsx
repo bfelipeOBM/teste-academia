@@ -1,4 +1,8 @@
-import { getFirstAndLastName } from "@/application/common/Utils";
+import Constants from "@/application/common/Constants";
+import {
+  getFirstAndLastName,
+  navigateToExternalUrl,
+} from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
 import AuthService from "@/services/auth";
@@ -100,6 +104,15 @@ const SideBar = () => {
         <span id="faq" className="menu-item" onClick={() => navigate("/help")}>
           <i className="material-icons-outlined">help_outline</i>
           Ajuda - FAQ
+        </span>
+        <span id="obramax" className="menu-item">
+          <i
+            className="material-icons-outlined"
+            onClick={() => navigateToExternalUrl(Constants.OBRAMAX_URL)}
+          >
+            info
+          </i>
+          Obramax
         </span>
         <span id="logout" className="menu-item" onClick={logOut}>
           <i className="material-icons-outlined">exit_to_app</i>

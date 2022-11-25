@@ -289,10 +289,14 @@
             box-shadow: 0px 3px 6px rgb(0 0 0 / 16%);
 
             &__items {
-              display: block;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
               background: #002a5b;
 
               &__item {
+                display: flex;
+                align-items: center;
                 width: 268px;
                 height: 60px;
                 padding: 10px 50px;
@@ -301,15 +305,18 @@
                 font-weight: bold;
                 text-align: left;
                 text-decoration: none;
-                display: block;
                 cursor: pointer;
 
-                &:first-child {
-                  padding-top: 30px;
+                .obramax {
+                  color: #ef7f00;
                 }
 
                 &:hover {
                   background: #ef7f00 0% 0% no-repeat padding-box;
+
+                  .obramax {
+                    color: #fff;
+                  }
                 }
               }
             }

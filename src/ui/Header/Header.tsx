@@ -1,4 +1,9 @@
-import { getFirstAndLastName, useWindowSize } from "@/application/common/Utils";
+import Constants from "@/application/common/Constants";
+import {
+  getFirstAndLastName,
+  navigateToExternalUrl,
+  useWindowSize,
+} from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
 import { clearMessage } from "@/application/store/message/action";
 import { userProfile } from "@/application/store/profile/action";
@@ -248,6 +253,15 @@ const Header = () => {
                           </div>
                         </a>
                       )}
+
+                      <div
+                        className="header__items__login__info__username-dropdown-menu__menu__items__item"
+                        onClick={() =>
+                          navigateToExternalUrl(Constants.OBRAMAX_URL)
+                        }
+                      >
+                        <span className="obramax">Obramax</span>
+                      </div>
 
                       <div
                         className="header__items__login__info__username-dropdown-menu__menu__items__item"

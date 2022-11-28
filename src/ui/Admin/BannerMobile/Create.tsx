@@ -41,7 +41,8 @@ export const CreateBannerMobileAdmin = () => {
   }
 
   function handleCreateBanner(e: any) {
-    const data = JSON.stringify({"file": image, "link": link});
+    e.preventDefault()
+    const data = JSON.stringify({"file": image, "link": e.target.link.value});
     setLoading(true)
     let xhr = new XMLHttpRequest();
     // setTimeout(() => {
@@ -99,7 +100,7 @@ export const CreateBannerMobileAdmin = () => {
           <Box py={8}>
             <Text fontSize={"2xl"}>Adicionar banner mobile</Text>
           </Box>
-          <VStack as="form" spacing={6}>
+          <VStack as="form" spacing={6} onSubmit={handleCreateBanner}>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Banner mobile (apenas PNG, GIF, JPEG e JPG)</FormLabel>
@@ -109,16 +110,15 @@ export const CreateBannerMobileAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Link</FormLabel>
-                <Input type="url" name="link" onChange={(e) => setLink(e.target.value)} />
+                <Input type="url" name="link"/>
               </FormControl>
             </Box>
             <Button
-              type='button'
+              type='submit'
               colorScheme="green"
               w={"full"}
               size={"lg"}
               disabled={loading}
-              onClick={(e) => { handleCreateBanner(e) }}
             >{loading ? "Fazendo upload" : "Adicionar banner"}</Button>
           </VStack>
         </Box>

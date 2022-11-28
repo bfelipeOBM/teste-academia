@@ -73,9 +73,12 @@ const MyCertificates = () => {
       return;
     }
 
+    const preresult = fuse.search("Interesse Geral");
     const result = fuse.search(value);
 
-    setFilteredCertificates(result.map((item) => item.item));
+    const combinedresult = [...result, ...preresult];
+
+    setFilteredCertificates(combinedresult.map((item) => item.item));
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

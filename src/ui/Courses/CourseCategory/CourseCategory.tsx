@@ -66,12 +66,12 @@ const CourseCategory = () => {
       keys: ["name", "description", "category", "upcoming_classes.location"],
     });
 
-    if (!value) {
+    if (!value || value === "Todos") {
       setFilteredCourses(courses);
       return;
     }
 
-    if (value === "Presencial" || value === "Todos") {
+    if (value === "Presencial") {
       const result = fuse.search("online");
       const filtered = courses.filter(
         (course) => !result.map((item) => item.item.id).includes(course.id)
@@ -289,6 +289,17 @@ const CourseCategory = () => {
                         <span>{location.name}</span>
                       </div>
                     ))}
+
+                      <div
+                        className={`item-location__locations__dropdown-menu__menu__items__left__item`}
+                        onClick={() => {
+                          handleSelectedFilter("Todos");
+                          handleLocationClick();
+                          handleSelectedLocation("Todos");
+                        }}
+                      >
+                        <span>Todos</span>
+                      </div>
                   </div>
                 </div>
               </div>

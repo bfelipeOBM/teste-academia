@@ -252,14 +252,14 @@ export const EditCourseAdmin = () => {
                 <Checkbox
                   value="Todos"
                   onChange={(e) => {handleAddAllCategories(e)}}
-                  isChecked={selectedOptions.length === options.length}
+                  isChecked={selectedOptions.length === options.length || selectedOptions.includes("Interesse geral")}
                   >Todos</Checkbox>
                 {options.map((value) => (
                   <Checkbox
                     value={value}
                     key={value}
                     onChange={(e) => handleAddCategory(e)}
-                    isChecked={selectedOptions.includes(value)}
+                    isChecked={selectedOptions.includes(value) || selectedOptions.includes("Interesse geral")}
                   >{value}</Checkbox>
                 ))}
               </Grid>

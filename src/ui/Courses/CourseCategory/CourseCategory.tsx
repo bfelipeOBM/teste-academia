@@ -51,6 +51,9 @@ const CourseCategory = () => {
   const { courses_locations } = useSelector(
     (state: ApplicationState) => state.courses_locations
   );
+  const { globalfilter } = useSelector(
+    (state: ApplicationState) => state.globalfilter
+  );
 
   const dispatch = useDispatch();
 
@@ -142,9 +145,13 @@ const CourseCategory = () => {
     if (courses) handleFuseSearch(searchValue);
   }, [searchValue, courses]);
 
+  useEffect(() => {
+    if (globalfilter) handleFuseSearch(globalfilter);
+  }, [globalfilter]);
+
   return (
     <>
-      <div className="course-category">
+      <div id="course-category" className="course-category">
         <div className="course-category__content">
           <div className="content__title">
             <h1>CURSOS E CAPACITAÇÕES</h1>

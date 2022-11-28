@@ -5,6 +5,7 @@ import {
   useWindowSize,
 } from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
+import { setGlobalFilter } from "@/application/store/globalfilter/action";
 import { clearMessage } from "@/application/store/message/action";
 import { userProfile } from "@/application/store/profile/action";
 import defaultProfileImage from "@/assets/default_profile_image@2x.png";
@@ -18,23 +19,20 @@ import "./Header.scss";
 import SideBar from "./SideBar/SideBar";
 
 const CategoryListLeft = [
-  { title: "Eletricista", link: "/" },
-  { title: "Pedreiro", link: "/" },
-  { title: "Mestre de Obras", link: "/" },
-  { title: "Encanador", link: "/" },
-  { title: "Jardineiro", link: "/" },
-  { title: "Empreiteiro", link: "/" },
-  { title: "Azulejista", link: "/" },
-  { title: "Hidráulico", link: "/" },
+  { title: "Todos" },
+  { title: "Pedreiro" },
+  { title: "Eletricista" },
+  { title: "Mestre de Obras" },
+  { title: "Encanador" },
+  { title: "Serralheiro" },
 ];
 
 const CategoryListRight = [
-  { title: "Técnico em construção civil/edificações", link: "/" },
-  { title: "Arquiteto", link: "/" },
-  { title: "Assentador de pisos", link: "/" },
-  { title: "Marceneiro", link: "/" },
-  { title: "Pintor", link: "/" },
-  { title: "Engenheiro", link: "/" },
+  { title: "Gesseiro" },
+  { title: "Aplicador de drywall" },
+  { title: "Marido de aluguel" },
+  { title: "Marceneiro" },
+  { title: "Pintor" },
 ];
 
 type Item = {
@@ -55,9 +53,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const { width } = useWindowSize();
 
-  const handleMenuItemClick = (path: string) => {
+  const handleMenuItemClick = (keyword: string) => {
     setIsMenuOpen(false);
-    navigate(path);
+    dispatch(setGlobalFilter(keyword) as any);
+    window.location.href = "/#course-category";
   };
 
   const logOut = () => {
@@ -144,7 +143,7 @@ const Header = () => {
                     <div
                       key={index}
                       className="header__items__categories__dropdown-menu__menu__items__left__item"
-                      onClick={() => handleMenuItemClick(category.link)}
+                      onClick={() => handleMenuItemClick(category.title)}
                     >
                       <span>{category.title}</span>
                     </div>
@@ -156,7 +155,7 @@ const Header = () => {
                     <div
                       key={index}
                       className="header__items__categories__dropdown-menu__menu__items__right__item"
-                      onClick={() => handleMenuItemClick(category.link)}
+                      onClick={() => handleMenuItemClick(category.title)}
                     >
                       <span>{category.title}</span>
                     </div>

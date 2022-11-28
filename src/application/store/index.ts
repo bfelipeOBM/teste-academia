@@ -7,6 +7,7 @@ import { BannersState } from "./banners/types";
 import { CertificatesState } from "./certificates/types";
 import { ClassState } from "./classes/types";
 import { CoursesState } from "./courses/types";
+import { GlobalFilterState } from "./globalfilter/types";
 import { MessageState } from "./message/types";
 import { ProfileState } from "./profile/types";
 import rootReducer from "./rootReducer";
@@ -31,6 +32,7 @@ export interface ApplicationState {
   banners: BannersState;
   featured_courses: CoursesState;
   certificates: CertificatesState;
+  globalfilter: GlobalFilterState;
 }
 
 export type RootReducer = ReturnType<typeof rootReducer>;

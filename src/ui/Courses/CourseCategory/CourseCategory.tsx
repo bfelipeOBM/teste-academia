@@ -67,7 +67,7 @@ const CourseCategory = () => {
       return;
     }
 
-    if (value === "Presencial") {
+    if (value === "Presencial" || value === "Todos") {
       const result = fuse.search("online");
       const filtered = courses.filter(
         (course) => !result.map((item) => item.item.id).includes(course.id)

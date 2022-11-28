@@ -37,16 +37,13 @@
       }
 
       &__categories {
-        display: none;
-        // width: 117px;
-        // height: 23px;
-        // margin-right: 68px;
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // cursor: pointer;
-
-        // TODO - Adicionar novamente quando tiver categorias
+        width: 117px;
+        height: 23px;
+        margin-right: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
 
         &__title {
           font-size: 18px;

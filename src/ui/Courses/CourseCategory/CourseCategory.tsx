@@ -83,9 +83,12 @@ const CourseCategory = () => {
       return;
     }
 
+    const preresult = fuse.search("Interesse Geral");
     const result = fuse.search(value);
 
-    setFilteredCourses(result.map((item) => item.item));
+    const combinedresult = [...result, ...preresult];
+
+    setFilteredCourses(combinedresult.map((item) => item.item));
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +115,16 @@ const CourseCategory = () => {
   const handleCategoryClick = () => {
     setIsCategoryOpen(!isCategoryOpen);
     setCategoryIcon(!isCategoryOpen ? "expand_less" : "expand_more");
+
+    if (isLocationOpen) {
+      setIsLocationOpen(false);
+      setLocationIcon("expand_more");
+    }
+
+    if (isTypesOpen) {
+      setIsTypesOpen(false);
+      setTypesIcon("expand_more");
+    }
   };
 
   const handleSelectedTypes = (type: string) => {
@@ -121,6 +134,16 @@ const CourseCategory = () => {
   const handleTypesClick = () => {
     setIsTypesOpen(!isTypesOpen);
     setTypesIcon(!isTypesOpen ? "expand_less" : "expand_more");
+
+    if (isLocationOpen) {
+      setIsLocationOpen(false);
+      setLocationIcon("expand_more");
+    }
+
+    if (isCategoryOpen) {
+      setIsCategoryOpen(false);
+      setCategoryIcon("expand_more");
+    }
   };
 
   const handleSelectedLocation = (location: string) => {
@@ -130,6 +153,16 @@ const CourseCategory = () => {
   const handleLocationClick = () => {
     setIsLocationOpen(!isLocationOpen);
     setLocationIcon(!isLocationOpen ? "expand_less" : "expand_more");
+
+    if (isCategoryOpen) {
+      setIsCategoryOpen(false);
+      setCategoryIcon("expand_more");
+    }
+
+    if (isTypesOpen) {
+      setIsTypesOpen(false);
+      setTypesIcon("expand_more");
+    }
   };
 
   useEffect(() => {

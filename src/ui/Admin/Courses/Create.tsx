@@ -86,12 +86,11 @@ export const CreateCourseAdmin = () => {
 
     setLoadingCreateCourse(true)
 
-    setTimeout(() => {
+    // setTimeout(() => {
       const xhr = new XMLHttpRequest();
-      setLoadingCreateCourse(false);
+      // setLoadingCreateCourse(false);
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-          setLoadingCreateCourse(false)
           if (this.status === 201) {
             toast.success('Curso criado!', {
               position: "top-right",
@@ -105,8 +104,9 @@ export const CreateCourseAdmin = () => {
             });
             setTimeout(() => {
               navigate(-1);
-            }, 4000)
+            }, 4001)
           } else {
+            setLoadingCreateCourse(false)
             toast.error('Erro ao criar curso!', {
               position: "top-right",
               autoClose: 5000,
@@ -126,7 +126,7 @@ export const CreateCourseAdmin = () => {
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
 
       xhr.send(data);
-    }, 10000);
+    // }, 10000);
   }
 
 

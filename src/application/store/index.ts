@@ -33,6 +33,7 @@ export interface ApplicationState {
   featured_courses: CoursesState;
   certificates: CertificatesState;
   globalfilter: GlobalFilterState;
+  mobilebanners: BannersState;
 }
 
 export type RootReducer = ReturnType<typeof rootReducer>;

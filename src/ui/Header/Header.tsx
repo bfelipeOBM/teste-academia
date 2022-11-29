@@ -124,6 +124,29 @@ const Header = () => {
           </div>
 
           <div
+            onClick={() => navigateToExternalUrl(Constants.OBRAMAX_URL)}
+            className="header__items__obramax"
+          >
+            Obramax
+          </div>
+
+          <div className="header__items__search">
+            <div style={{ width: "100%" }}>
+              <ReactSearchAutocomplete
+                placeholder="Pesquise por qualquer coisa"
+                items={searchebaleItems}
+                onSearch={handleOnSearch}
+                onHover={handleOnHover}
+                onSelect={handleOnSelect}
+                onFocus={handleOnFocus}
+                showNoResultsText={"Nenhum resultado encontrado"}
+                autoFocus
+                styling={{ zIndex: 1090 }}
+              />
+            </div>
+          </div>
+
+          <div
             className="header__items__categories"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -164,25 +187,6 @@ const Header = () => {
               </div>
             )}
           </div>
-
-          <div className="header__items__search">
-            <div style={{ width: "100%" }}>
-              <ReactSearchAutocomplete
-                placeholder="Pesquise por qualquer coisa"
-                items={searchebaleItems}
-                onSearch={handleOnSearch}
-                onHover={handleOnHover}
-                onSelect={handleOnSelect}
-                onFocus={handleOnFocus}
-                showNoResultsText={"Nenhum resultado encontrado"}
-                autoFocus
-                styling={{ zIndex: 1090 }}
-              />
-            </div>
-          </div>
-
-          {/* TODO: Adicionar novamente quando tiver a página de Todos os cursos */}
-          {/* <div className="header__items__all-courses">Todos os cursos</div> */}
 
           <div
             className="header__items__login__info"
@@ -252,15 +256,6 @@ const Header = () => {
                           </div>
                         </a>
                       )}
-
-                      <div
-                        className="header__items__login__info__username-dropdown-menu__menu__items__item"
-                        onClick={() =>
-                          navigateToExternalUrl(Constants.OBRAMAX_URL)
-                        }
-                      >
-                        <span className="obramax">Obramax</span>
-                      </div>
 
                       <div
                         className="header__items__login__info__username-dropdown-menu__menu__items__item"

@@ -9,10 +9,14 @@
     flex-direction: column;
 
     #obramax {
-      color: #ef7f00;
+      color: #ffee00;
 
-      &:hover {
-        color: #002a5b;
+      img {
+        filter: invert(81%) sepia(71%) saturate(1311%) hue-rotate(359deg)
+          brightness(104%) contrast(109%);
+        width: 32px;
+        height: 32px;
+        margin-right: 20px;
       }
     }
 

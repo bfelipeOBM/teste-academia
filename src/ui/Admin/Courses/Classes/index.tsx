@@ -174,12 +174,11 @@ export const ClassesInfoAdmin = () => {
         ]
       })
     ]
+
     let csvContent = "data:text/csv;charset=utf-8," 
     + rows.map(e => e.join(",")).join("\n");
-
-    const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
+    link.setAttribute("href", csvContent);
     link.setAttribute("download", `${classe.name}-${new Intl.DateTimeFormat('pt-BR').format(new Date(classe?.date))}.csv`);
     document.body.appendChild(link);
 

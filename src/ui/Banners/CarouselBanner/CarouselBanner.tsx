@@ -1,7 +1,10 @@
-import { navigateToExternalUrl } from "@/application/common/Utils";
+import { isMobile, navigateToExternalUrl } from "@/application/common/Utils";
 import { Banner } from "@/application/models/banner";
 import { ApplicationState } from "@/application/store";
-import { getBanners } from "@/application/store/banners/action";
+import {
+  getBanners,
+  getMobileBanners,
+} from "@/application/store/banners/action";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
@@ -15,6 +18,9 @@ const CarouselBanner = () => {
   const dispatch = useDispatch();
 
   const { banners } = useSelector((state: ApplicationState) => state.banners);
+  const { mobilebanners } = useSelector(
+    (state: ApplicationState) => state.mobilebanners
+  );
 
   const next = () => {
     if (animating) return;
@@ -58,13 +64,20 @@ const CarouselBanner = () => {
   });
 
   useEffect(() => {
-    if (banners.length) {
-      setCarouselItems(banners);
+    if (!isMobile()) {
+      if (banners.length) {
+        setCarouselItems(banners);
+      }
+    } else {
+      if (mobilebanners.length) {
+        setCarouselItems(mobilebanners);
+      }
     }
-  }, [banners]);
+  }, [banners, mobilebanners, isMobile()]);
 
   useEffect(() => {
     dispatch(getBanners() as any);
+    dispatch(getMobileBanners() as any);
   }, []);
 
   return (

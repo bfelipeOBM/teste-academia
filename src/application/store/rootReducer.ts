@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import banners from "./banners";
+import { default as banners, default as mobilebanners } from "./banners";
 import certificates from "./certificates";
 import { default as classes, default as myclasses } from "./classes";
 import {
@@ -9,6 +9,7 @@ import {
   default as featured_courses,
   default as mycourses,
 } from "./courses";
+import globalfilter from "./globalfilter";
 import message from "./message";
 import profile from "./profile";
 import user from "./user";
@@ -26,4 +27,6 @@ export default combineReducers({
   banners,
   featured_courses,
   certificates,
+  globalfilter,
+  mobilebanners,
 });

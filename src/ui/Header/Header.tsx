@@ -1,5 +1,11 @@
-import { getFirstAndLastName, useWindowSize } from "@/application/common/Utils";
+import Constants from "@/application/common/Constants";
+import {
+  getFirstAndLastName,
+  navigateToExternalUrl,
+  useWindowSize,
+} from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
+import { setGlobalFilter } from "@/application/store/globalfilter/action";
 import { clearMessage } from "@/application/store/message/action";
 import { userProfile } from "@/application/store/profile/action";
 import defaultProfileImage from "@/assets/default_profile_image@2x.png";
@@ -13,23 +19,20 @@ import "./Header.scss";
 import SideBar from "./SideBar/SideBar";
 
 const CategoryListLeft = [
-  { title: "Eletricista", link: "/" },
-  { title: "Pedreiro", link: "/" },
-  { title: "Mestre de Obras", link: "/" },
-  { title: "Encanador", link: "/" },
-  { title: "Jardineiro", link: "/" },
-  { title: "Empreiteiro", link: "/" },
-  { title: "Azulejista", link: "/" },
-  { title: "Hidráulico", link: "/" },
+  { title: "Todos" },
+  { title: "Pedreiro" },
+  { title: "Eletricista" },
+  { title: "Mestre de Obras" },
+  { title: "Encanador" },
+  { title: "Serralheiro" },
 ];
 
 const CategoryListRight = [
-  { title: "Técnico em construção civil/edificações", link: "/" },
-  { title: "Arquiteto", link: "/" },
-  { title: "Assentador de pisos", link: "/" },
-  { title: "Marceneiro", link: "/" },
-  { title: "Pintor", link: "/" },
-  { title: "Engenheiro", link: "/" },
+  { title: "Gesseiro" },
+  { title: "Aplicador de drywall" },
+  { title: "Marido de aluguel" },
+  { title: "Marceneiro" },
+  { title: "Pintor" },
 ];
 
 type Item = {
@@ -50,9 +53,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const { width } = useWindowSize();
 
-  const handleMenuItemClick = (path: string) => {
+  const handleMenuItemClick = (keyword: string) => {
     setIsMenuOpen(false);
-    navigate(path);
+    dispatch(setGlobalFilter(keyword) as any);
+    window.location.href = "/#course-category";
   };
 
   const logOut = () => {
@@ -120,6 +124,29 @@ const Header = () => {
           </div>
 
           <div
+            onClick={() => navigateToExternalUrl(Constants.OBRAMAX_URL)}
+            className="header__items__obramax"
+          >
+            Obramax
+          </div>
+
+          <div className="header__items__search">
+            <div style={{ width: "100%" }}>
+              <ReactSearchAutocomplete
+                placeholder="Pesquise por qualquer coisa"
+                items={searchebaleItems}
+                onSearch={handleOnSearch}
+                onHover={handleOnHover}
+                onSelect={handleOnSelect}
+                onFocus={handleOnFocus}
+                showNoResultsText={"Nenhum resultado encontrado"}
+                autoFocus
+                styling={{ zIndex: 1090 }}
+              />
+            </div>
+          </div>
+
+          <div
             className="header__items__categories"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -139,7 +166,7 @@ const Header = () => {
                     <div
                       key={index}
                       className="header__items__categories__dropdown-menu__menu__items__left__item"
-                      onClick={() => handleMenuItemClick(category.link)}
+                      onClick={() => handleMenuItemClick(category.title)}
                     >
                       <span>{category.title}</span>
                     </div>
@@ -151,7 +178,7 @@ const Header = () => {
                     <div
                       key={index}
                       className="header__items__categories__dropdown-menu__menu__items__right__item"
-                      onClick={() => handleMenuItemClick(category.link)}
+                      onClick={() => handleMenuItemClick(category.title)}
                     >
                       <span>{category.title}</span>
                     </div>
@@ -160,25 +187,6 @@ const Header = () => {
               </div>
             )}
           </div>
-
-          <div className="header__items__search">
-            <div style={{ width: "100%" }}>
-              <ReactSearchAutocomplete
-                placeholder="Pesquise por qualquer coisa"
-                items={searchebaleItems}
-                onSearch={handleOnSearch}
-                onHover={handleOnHover}
-                onSelect={handleOnSelect}
-                onFocus={handleOnFocus}
-                showNoResultsText={"Nenhum resultado encontrado"}
-                autoFocus
-                styling={{ zIndex: 1090 }}
-              />
-            </div>
-          </div>
-
-          {/* TODO: Adicionar novamente quando tiver a página de Todos os cursos */}
-          {/* <div className="header__items__all-courses">Todos os cursos</div> */}
 
           <div
             className="header__items__login__info"

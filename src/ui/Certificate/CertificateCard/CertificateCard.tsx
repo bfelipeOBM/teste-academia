@@ -4,8 +4,6 @@ import {
   EmailShareButton,
   FacebookIcon,
   FacebookShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
@@ -52,7 +50,7 @@ const CertificateCard = (props: CertificateCardProps) => {
               >
                 <EmailIcon size={32} round></EmailIcon>
               </EmailShareButton>
-              <LinkedinShareButton
+              {/* <LinkedinShareButton
                 url={certificate.certificate_url}
                 title={certificate.name}
                 summary={certificate.certificate_url}
@@ -60,7 +58,7 @@ const CertificateCard = (props: CertificateCardProps) => {
                 className="share__button"
               >
                 <LinkedinIcon size={32} round />
-              </LinkedinShareButton>
+              </LinkedinShareButton> */}
 
               <FacebookShareButton
                 url={certificate.certificate_url}

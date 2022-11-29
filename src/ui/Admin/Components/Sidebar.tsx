@@ -22,6 +22,11 @@ export const Sidebar = () => {
             </Link>
           </Text>
           <Text as="p" fontSize={"2xl"}>
+            <Link to={"/admin/banners/mobile"}>
+              Banners Mobile
+            </Link>
+          </Text>
+          <Text as="p" fontSize={"2xl"}>
             <Link to={"/admin/locations"}>
               Localizações
             </Link>

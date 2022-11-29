@@ -1,7 +1,7 @@
 import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, VStack, Image } from '@chakra-ui/react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,7 +35,8 @@ export const EditBannerAdmin = () => {
 
   useEffect(() => {
     axios.get(`${Constants.API_URL}banners/${id}`).then(res => {
-        console.log(res.data)
+        setImage(res.data.url)
+        setLink(res.data.link)
     })
   }, [])
 
@@ -49,6 +50,7 @@ export const EditBannerAdmin = () => {
   }
 
   function handleCreateBanner(e: any) {
+    e.preventDefault()
     const data = JSON.stringify({"file": image, "link": link});
     setLoading(true)
     let xhr = new XMLHttpRequest();
@@ -107,26 +109,26 @@ export const EditBannerAdmin = () => {
           <Box py={8}>
             <Text fontSize={"2xl"}>Editar banner</Text>
           </Box>
-          <VStack as="form" spacing={6}>
+          <VStack as="form" spacing={6} onSubmit={handleCreateBanner}>
           <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Banner (apenas PNG, GIF, JPEG e JPG)</FormLabel>
-                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} required />
+                <Input type="file" name="file" onChange={(e) => handleAddImage(e)} />
+                <Image src={image} />
               </FormControl>
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
-                <FormLabel>Link</FormLabel>
-                <Input type="url" name="link" onChange={(e) => setLink(e.target.value)} />
+                <FormLabel>Link (colocar link com https:// ou http://)</FormLabel>
+                <Input type="url" name="link" value={link || ""} onChange={(e) => setLink(e.target.value)} />
               </FormControl>
             </Box>
             <Button
-              type='button'
+              type='submit'
               colorScheme="green"
               w={"full"}
               size={"lg"}
               disabled={loading}
-              onClick={(e) => { handleCreateBanner(e) }}
             >{loading ? "Fazendo upload" : "Editar banner"}</Button>
           </VStack>
         </Box>

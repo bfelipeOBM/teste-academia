@@ -12,15 +12,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "./CourseCategory.scss";
 
 const CategoryListLeft = [
+  { title: "Todos" },
   { title: "Pedreiro" },
   { title: "Eletricista" },
   { title: "Mestre de Obras" },
   { title: "Encanador" },
   { title: "Serralheiro" },
-  { title: "Gesseiro" },
 ];
 
 const CategoryListRight = [
+  { title: "Gesseiro" },
   { title: "Aplicador de drywall" },
   { title: "Marido de aluguel" },
   { title: "Marceneiro" },
@@ -50,6 +51,9 @@ const CourseCategory = () => {
   const { courses_locations } = useSelector(
     (state: ApplicationState) => state.courses_locations
   );
+  const { globalfilter } = useSelector(
+    (state: ApplicationState) => state.globalfilter
+  );
 
   const dispatch = useDispatch();
 
@@ -62,7 +66,7 @@ const CourseCategory = () => {
       keys: ["name", "description", "category", "upcoming_classes.location"],
     });
 
-    if (!value) {
+    if (!value || value === "Todos") {
       setFilteredCourses(courses);
       return;
     }
@@ -72,14 +76,19 @@ const CourseCategory = () => {
       const filtered = courses.filter(
         (course) => !result.map((item) => item.item.id).includes(course.id)
       );
-      const presencialCourses = filtered.filter((item) => item.upcoming_classes !== null);
+      const presencialCourses = filtered.filter(
+        (item) => item.upcoming_classes !== null
+      );
       setFilteredCourses(presencialCourses);
       return;
     }
 
+    const preresult = fuse.search("Interesse Geral");
     const result = fuse.search(value);
 
-    setFilteredCourses(result.map((item) => item.item));
+    const combinedresult = [...result, ...preresult];
+
+    setFilteredCourses(combinedresult.map((item) => item.item));
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -99,12 +108,23 @@ const CourseCategory = () => {
   };
 
   const handleSelectedCategory = (category: string) => {
+    if (category === "Todos") setSearchValue("");
     setSelectedCategoryItem(category);
   };
 
   const handleCategoryClick = () => {
     setIsCategoryOpen(!isCategoryOpen);
     setCategoryIcon(!isCategoryOpen ? "expand_less" : "expand_more");
+
+    if (isLocationOpen) {
+      setIsLocationOpen(false);
+      setLocationIcon("expand_more");
+    }
+
+    if (isTypesOpen) {
+      setIsTypesOpen(false);
+      setTypesIcon("expand_more");
+    }
   };
 
   const handleSelectedTypes = (type: string) => {
@@ -114,6 +134,16 @@ const CourseCategory = () => {
   const handleTypesClick = () => {
     setIsTypesOpen(!isTypesOpen);
     setTypesIcon(!isTypesOpen ? "expand_less" : "expand_more");
+
+    if (isLocationOpen) {
+      setIsLocationOpen(false);
+      setLocationIcon("expand_more");
+    }
+
+    if (isCategoryOpen) {
+      setIsCategoryOpen(false);
+      setCategoryIcon("expand_more");
+    }
   };
 
   const handleSelectedLocation = (location: string) => {
@@ -123,6 +153,16 @@ const CourseCategory = () => {
   const handleLocationClick = () => {
     setIsLocationOpen(!isLocationOpen);
     setLocationIcon(!isLocationOpen ? "expand_less" : "expand_more");
+
+    if (isCategoryOpen) {
+      setIsCategoryOpen(false);
+      setCategoryIcon("expand_more");
+    }
+
+    if (isTypesOpen) {
+      setIsTypesOpen(false);
+      setTypesIcon("expand_more");
+    }
   };
 
   useEffect(() => {
@@ -138,9 +178,13 @@ const CourseCategory = () => {
     if (courses) handleFuseSearch(searchValue);
   }, [searchValue, courses]);
 
+  useEffect(() => {
+    if (globalfilter) handleFuseSearch(globalfilter);
+  }, [globalfilter]);
+
   return (
     <>
-      <div className="course-category">
+      <div id="course-category" className="course-category">
         <div className="course-category__content">
           <div className="content__title">
             <h1>CURSOS E CAPACITAÇÕES</h1>
@@ -263,6 +307,16 @@ const CourseCategory = () => {
                   }`}
                 >
                   <div className="item-location__locations__dropdown-menu__menu__items__left">
+                    <div
+                      className={`item-location__locations__dropdown-menu__menu__items__left__item`}
+                      onClick={() => {
+                        handleSelectedFilter("Todos");
+                        handleLocationClick();
+                        handleSelectedLocation("Todos");
+                      }}
+                    >
+                      <span>Todos</span>
+                    </div>
                     {courses_locations.map((location, index) => (
                       <div
                         key={index}

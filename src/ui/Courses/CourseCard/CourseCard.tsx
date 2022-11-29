@@ -17,11 +17,9 @@ const CourseCard = (props: Props) => {
   const user = useSelector((state: ApplicationState) => state.user);
 
   const goToCourse = () => {
-    user.isLoggedIn
-      ? navigate(`/course/${course.course_id || course.id}`, {
-          state: { id: course.course_id || course.id },
-        })
-      : navigate(`/login`);
+    navigate(`/course/${course.course_id || course.id}`, {
+      state: { id: course.course_id || course.id },
+    });
   };
 
   useEffect(() => {
@@ -48,16 +46,6 @@ const CourseCard = (props: Props) => {
               </div>
             ))}
           </div>
-
-          <div className="header__next-class">
-            <span className="title">
-              {course?.upcoming_classes && (
-                <>
-                  próxima turma: <span className="date">{nextClassDate}</span>
-                </>
-              )}
-            </span>
-          </div>
         </div>
         <div className="course-card__content__title__description">
           <span className="title">{course.name}</span>
@@ -67,11 +55,22 @@ const CourseCard = (props: Props) => {
           <button className="goto__button" onClick={goToCourse}>
             Quero Participar
           </button>
-          {course?.workload > 0 && (
-            <div className="workload">
-              Carga horária: <span>{course?.workload}h</span>
+          <div className="info">
+            <div className="next-class">
+              <span className="title">
+                {course?.upcoming_classes && (
+                  <>
+                    próxima turma: <span className="date">{nextClassDate}</span>
+                  </>
+                )}
+              </span>
             </div>
-          )}
+            {course?.workload > 0 && (
+              <div className="workload">
+                Carga horária: <span>{course?.workload}h</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

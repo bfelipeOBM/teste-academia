@@ -62,22 +62,26 @@ const FeaturedCourses = () => {
   }, []);
 
   return (
-    <div className="featured-courses">
-      <div className="featured-courses__title">
-        <h1>Cursos em destaque</h1>
-      </div>
+    <>
+      {limitedCourses.length > 0 && (
+        <div className="featured-courses">
+          <div className="featured-courses__title">
+            <h1>Cursos em destaque</h1>
+          </div>
 
-      <div className="featured-courses__content">
-        <Carousel activeIndex={activeIndex} next={next} previous={previous}>
-          <CarouselIndicators
-            items={limitedCourses || []}
-            activeIndex={activeIndex}
-            onClickHandler={goToIndex}
-          />
-          {slides || []}
-        </Carousel>
-      </div>
-    </div>
+          <div className="featured-courses__content">
+            <Carousel activeIndex={activeIndex} next={next} previous={previous}>
+              <CarouselIndicators
+                items={limitedCourses || []}
+                activeIndex={activeIndex}
+                onClickHandler={goToIndex}
+              />
+              {slides || []}
+            </Carousel>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

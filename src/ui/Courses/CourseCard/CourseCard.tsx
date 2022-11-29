@@ -17,11 +17,9 @@ const CourseCard = (props: Props) => {
   const user = useSelector((state: ApplicationState) => state.user);
 
   const goToCourse = () => {
-    user.isLoggedIn
-      ? navigate(`/course/${course.course_id || course.id}`, {
-          state: { id: course.course_id || course.id },
-        })
-      : navigate(`/login`);
+    navigate(`/course/${course.course_id || course.id}`, {
+      state: { id: course.course_id || course.id },
+    });
   };
 
   useEffect(() => {

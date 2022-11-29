@@ -91,10 +91,13 @@ const Course = () => {
 
   const handleEnroll = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    if (classes.length && classes[0]) {
-      setIsModalOpen(true);
-      setCurrentClass(classes[0]);
+    if (user.isLoggedIn) {
+      if (classes.length && classes[0]) {
+        setIsModalOpen(true);
+        setCurrentClass(classes[0]);
+      }
+    } else {
+      navigate("/login");
     }
   };
 
@@ -102,23 +105,27 @@ const Course = () => {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    try {
-      if (course.id && currentClass) {
-        await dispatch(
-          getCourseMaterial(course.id, currentClass.class_id) as any
-        );
+    if (user.isLoggedIn) {
+      try {
+        if (course.id && currentClass) {
+          await dispatch(
+            getCourseMaterial(course.id, currentClass.class_id) as any
+          );
+        }
+      } catch {
+        toast.warn(`${message.detail}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
-    } catch {
-      toast.warn(`${message.detail}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+    } else {
+      navigate("/login");
     }
   };
 
@@ -157,14 +164,10 @@ const Course = () => {
   };
 
   useEffect(() => {
-    if (user.isLoggedIn) {
-      loadAlreadyEnrolled();
-      window.scrollTo(0, 0);
-      if (id) {
-        loadCourse();
-      }
-    } else {
-      navigate("/");
+    loadAlreadyEnrolled();
+    window.scrollTo(0, 0);
+    if (id) {
+      loadCourse();
     }
   }, []);
 
@@ -240,7 +243,9 @@ const Course = () => {
                 </div>
                 <div className="title">{course.name}</div>
                 <div className="description">
-                  <div dangerouslySetInnerHTML={{ __html: course.description }} />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: course.description }}
+                  />
                 </div>
                 <div className="share">
                   <span className="share__title">Compartilhar: </span>

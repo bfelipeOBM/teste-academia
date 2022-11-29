@@ -6,6 +6,12 @@ const getBanners = async () => {
   return response.data;
 };
 
+const getMobileBanners = async () => {
+  const response = await axios.get(`${Constants.API_URL}banners/mobile/all`);
+  return response.data;
+};
+
 export default {
   getBanners,
+  getMobileBanners,
 };

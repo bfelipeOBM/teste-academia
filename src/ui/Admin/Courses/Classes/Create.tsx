@@ -136,9 +136,9 @@ export const CreateClassAdmin = () => {
               <FormControl>
                 <FormLabel>Localização</FormLabel>
                 <Select onChange={(e) => setLocationId(+e.target.value)}>
-                {locations.map((location: any) => (
-                  <option value={location.id}>{location.name}</option>
-                ))}
+                  {locations.map((location: any) => (
+                    <option value={location.id}>{location.name}</option>
+                  ))}
                 </Select>
               </FormControl>
             </Box>

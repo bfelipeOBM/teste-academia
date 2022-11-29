@@ -153,12 +153,13 @@
                       &__item {
                         width: 100%;
                         height: 60px;
-                        padding: 10px 30px 30px 50px;
+                        padding: 0 30px 0 50px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {
@@ -177,14 +178,15 @@
                       background: #002a5b;
 
                       &__item {
-                        width: 100%;
+                        width: 277px;
                         height: 60px;
-                        padding: 10px 30px 30px 15px;
+                        padding: 0 30px 0 15px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {
@@ -255,12 +257,13 @@
                       &__item {
                         width: 100%;
                         height: 60px;
-                        padding: 20px 30px 0px 30px;
+                        padding: 0 30px 0px 30px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {
@@ -330,12 +333,13 @@
                       &__item {
                         width: 100%;
                         height: 60px;
-                        padding: 20px 30px 0px 30px;
+                        padding: 0 30px 0px 30px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {
@@ -517,12 +521,13 @@
                       &__item {
                         width: 100%;
                         height: 60px;
-                        padding: 5px 15px 15px 25px;
+                        padding: 0 15px 0 25px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {
@@ -543,12 +548,13 @@
                       &__item {
                         width: 100%;
                         height: 60px;
-                        padding: 5px 15px 15px 8px;
+                        padding: 0 15px 0 8px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {
@@ -619,12 +625,13 @@
                       &__item {
                         width: 100%;
                         height: 60px;
-                        padding: 20px 30px 0px 30px;
+                        padding: 0 30px 0 30px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {
@@ -694,12 +701,13 @@
                       &__item {
                         width: 100%;
                         height: 60px;
-                        padding: 20px 30px 0px 30px;
+                        padding: 0 30px 0px 30px;
                         font-size: 16px;
                         font-weight: bold;
                         text-align: left;
                         text-decoration: none;
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         cursor: pointer;
 
                         &:hover {

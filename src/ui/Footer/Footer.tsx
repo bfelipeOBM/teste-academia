@@ -1,4 +1,5 @@
 import footerLogo from "@/assets/logo.png";
+import obramaxLogo from "@/assets/obramax_logo@2x.png";
 import "./Footer.scss";
 
 const Footer = () => {
@@ -13,17 +14,24 @@ const Footer = () => {
               height="100%"
               alt="footer logo"
             />
-          </div>
 
-          <div className="footer__items__up__about">
-            <span className="footer__items__up__about__text">
-              A Academia de Profissionais oferece diversos cursos e aulas para
-              capacitar você, profissional da construção! Em parceria com
-              grandes nomes da indústria promovemos a troca de conhecimento e
-              ensinamos boas práticas, dicas e tudo que você precisa saber para
-              se manter sempre atualizado!
-            </span>
+            <img
+              src={obramaxLogo}
+              width="100%"
+              height="100%"
+              alt="footer logo"
+            />
           </div>
+        </div>
+
+        <div className="footer__items__up__about">
+          <span className="footer__items__up__about__text">
+            A Academia de Profissionais oferece diversos cursos e aulas para
+            capacitar você, profissional da construção! Em parceria com grandes
+            nomes da indústria promovemos a troca de conhecimento e ensinamos
+            boas práticas, dicas e tudo que você precisa saber para se manter
+            sempre atualizado!
+          </span>
         </div>
 
         {/* <div className="footer__items__divider__middle"></div>

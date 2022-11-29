@@ -5,6 +5,7 @@ import {
 } from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
 import { userProfile } from "@/application/store/profile/action";
+import mlab from "@/assets/mlab.svg";
 import AuthService from "@/services/auth";
 import { useEffect } from "react";
 import { slide as Menu } from "react-burger-menu";
@@ -84,7 +85,7 @@ const SideBar = () => {
 
         <div className="menu-divider"></div>
 
-        <span id="about" className="menu-item">
+        {/* <span id="about" className="menu-item">
           <i
             className="material-icons-outlined"
             onClick={() => navigate("/about")}
@@ -92,7 +93,7 @@ const SideBar = () => {
             info
           </i>
           Sobre a Academia
-        </span>
+        </span> */}
         <span
           id="courses"
           className="menu-item"
@@ -105,13 +106,12 @@ const SideBar = () => {
           <i className="material-icons-outlined">help_outline</i>
           Ajuda - FAQ
         </span>
-        <span id="obramax" className="menu-item">
-          <i
-            className="material-icons-outlined"
-            onClick={() => navigateToExternalUrl(Constants.OBRAMAX_URL)}
-          >
-            info
-          </i>
+        <span
+          id="obramax"
+          className="menu-item"
+          onClick={() => navigateToExternalUrl(Constants.OBRAMAX_URL)}
+        >
+          <img src={mlab} />
           Obramax
         </span>
         <span id="logout" className="menu-item" onClick={logOut}>

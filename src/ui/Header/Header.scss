@@ -26,20 +26,18 @@
       }
 
       &__logo {
-        // flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 159px;
         height: 40px;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        margin-right: 68px;
       }
 
       &__categories {
         width: 117px;
         height: 23px;
-        margin-right: 68px;
+        margin: 0 45px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -48,12 +46,12 @@
         &__title {
           font-size: 18px;
           font-weight: bold;
-          color: #ef7f00;
+          color: #ffffff;
         }
 
         i {
           font-size: 26px;
-          color: #ef7f00;
+          color: #ffffff;
           align-self: baseline;
         }
 
@@ -67,17 +65,14 @@
           }
 
           &__menu {
-            width: 702px;
-            height: 600px;
             display: none;
             position: absolute;
             z-index: 9999;
-            margin-left: 31%;
+            right: 20%;
             top: 69px;
             background: #002a5b 0% 0% no-repeat padding-box;
             box-shadow: 0px 3px 6px #00000029;
-            padding-top: 30px;
-            padding-bottom: 88px;
+            padding: 30px 0;
             flex-direction: row;
             color: #fff;
             cursor: auto;
@@ -134,8 +129,7 @@
 
       &__search {
         flex: 3;
-        // width: 812px;
-        height: 45px;
+        margin-right: 20px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -151,8 +145,6 @@
 
           input {
             padding-left: 55px !important;
-            width: 812px;
-            height: 45px;
             border: 1px solid #ffffff;
             border-radius: 5px;
             padding: 0.5rem 1rem;
@@ -184,14 +176,14 @@
         }
       }
 
-      &__all-courses {
+      &__obramax {
         width: 232px;
         height: 23px;
         display: flex;
         align-items: center;
         justify-content: center;
         letter-spacing: 0.32px;
-        color: #ffffff;
+        color: #ffee00;
         font-size: 18px;
         font-weight: bold;
         cursor: pointer;
@@ -430,7 +422,7 @@
         }
       }
 
-      &__all-courses {
+      &__obramax {
         display: none;
       }
 

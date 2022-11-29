@@ -4,7 +4,7 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
-    height: 450px;
+    height: 100%;
     margin-bottom: 30px;
     background: #002a5b 0% 0% no-repeat padding-box;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
@@ -15,7 +15,6 @@
 
     &__image {
       width: 45%;
-      height: 100%;
       cursor: pointer;
 
       img {
@@ -26,8 +25,8 @@
     &__content {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       width: 55%;
-      height: 100%;
       padding: 20px 49.5px;
 
       &__header {
@@ -104,7 +103,7 @@
           width: 100%;
           display: -webkit-box;
           -webkit-box-orient: vertical;
-          -webkit-line-clamp: 5;
+          -webkit-line-clamp: 2;
           overflow: hidden;
         }
       }
@@ -264,6 +263,16 @@
 
         .workload {
           display: none;
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 1366px) {
+    &__content {
+      &__title__description {
+        .description {
+          -webkit-line-clamp: 5;
         }
       }
     }

@@ -48,7 +48,6 @@ export const CreateBannerAdmin = () => {
     // setTimeout(() => {
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-          setLoading(false)
           if (this.status === 201) {
             toast.success('Banner adicionado!', {
               position: "top-right",
@@ -64,6 +63,7 @@ export const CreateBannerAdmin = () => {
               navigate(-1);
             }, 3000)
           } else {
+            setLoading(false)
             toast.error('Erro ao adicionar banner!', {
               position: "top-right",
               autoClose: 5000,

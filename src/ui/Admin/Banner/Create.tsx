@@ -109,7 +109,7 @@ export const CreateBannerAdmin = () => {
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
-                <FormLabel>Link</FormLabel>
+                <FormLabel>Link (colocar link com https:// ou http://)</FormLabel>
                 <Input type="url" name="link"  />
               </FormControl>
             </Box>

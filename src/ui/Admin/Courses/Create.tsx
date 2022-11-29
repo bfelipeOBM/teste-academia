@@ -95,7 +95,6 @@ export const CreateCourseAdmin = () => {
 
     setLoadingCreateCourse(true)
 
-    setTimeout(() => {
       const xhr = new XMLHttpRequest();
       setLoadingCreateCourse(false);
       xhr.addEventListener("readystatechange", function () {
@@ -129,7 +128,12 @@ export const CreateCourseAdmin = () => {
           }
         }
       });
-    })
+  
+      xhr.open('POST', `${Constants.API_URL}courses/`);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
+
+      xhr.send(data);
   }
 
   return (

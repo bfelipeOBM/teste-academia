@@ -86,7 +86,7 @@ export const CreateCourseAdmin = () => {
 
     setLoadingCreateCourse(true)
 
-    setTimeout(() => {
+    // setTimeout(() => {
       const xhr = new XMLHttpRequest();
       setLoadingCreateCourse(false);
       xhr.addEventListener("readystatechange", function () {
@@ -126,7 +126,7 @@ export const CreateCourseAdmin = () => {
       xhr.setRequestHeader("Bearer", `${userState.data?.access_token}`)
 
       xhr.send(data);
-    }, 10000);
+    // }, 10000);
   }
 
 

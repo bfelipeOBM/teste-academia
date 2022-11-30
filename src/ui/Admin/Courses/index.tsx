@@ -55,7 +55,7 @@ export const Courses = () => {
   }, [userState.isLoggedIn, dispatch]);
 
   useEffect(() => {
-    axios.get(`${Constants.API_URL}courses`).then((res) => {
+    axios.get(`${Constants.API_URL}courses?search=ananab`).then((res) => {
       setCourses(res.data);
       setFilteredCourses(res.data)
     });

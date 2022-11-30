@@ -3,6 +3,7 @@ import {
   CLEAR_PROFILE,
   GET_PROFILE_FAIL,
   GET_PROFILE_SUCCESS,
+  SET_PROFILE_PAGE,
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_IMAGE_FAIL,
   UPDATE_PROFILE_IMAGE_SUCCESS,
@@ -97,6 +98,13 @@ export const updatePhoto =
       }
     );
   };
+
+export const setProfilePage = (page: string) => (dispatch: Dispatch) => {
+  dispatch({
+    type: SET_PROFILE_PAGE,
+    payload: { page },
+  });
+};
 
 export const clearProfile = () => (dispatch: Dispatch) => {
   dispatch({

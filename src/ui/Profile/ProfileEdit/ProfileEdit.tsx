@@ -1,8 +1,8 @@
 import {
   capitalize,
   cpfOrCnpjMask,
+  isMobile,
   phoneMask,
-  useWindowSize,
 } from "@/application/common/Utils";
 import { User } from "@/application/models/user";
 import { ApplicationState } from "@/application/store";
@@ -48,7 +48,6 @@ const ProfileEdit = (props: ProfileEditProps) => {
   );
   const [userImageFile, setUserImageFile] = useState<string>();
   const dispatch = useDispatch();
-  const { width } = useWindowSize();
   const [options, setOptions] = useState([
     { value: "Pedreiro", label: "Pedreiro" },
     { value: "Encanador", label: "Encanador" },
@@ -213,7 +212,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
           </span>
         </div>
         <div className="profile-edit__form">
-          {width < 769 && (
+          {isMobile() && (
             <div className="profile-edit__form__avatar-upload">
               <div className="profile-edit__form__avatar-upload__title">
                 <span>Imagem de Perfil</span>
@@ -464,7 +463,7 @@ const ProfileEdit = (props: ProfileEditProps) => {
               {loading ? "Carregando..." : "Atualizar Dados"}
             </button>
           </form>
-          {width > 769 && (
+          {!isMobile() && (
             <div className="profile-edit__form__avatar-upload">
               <div className="profile-edit__form__avatar-upload__title">
                 <span>Imagem de Perfil</span>

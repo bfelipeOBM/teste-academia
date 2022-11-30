@@ -1,20 +1,18 @@
 import { FormatToBrazilianDate } from "@/application/common/Utils";
 import { Course } from "@/application/models/course";
-import { ApplicationState } from "@/application/store";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./CourseCard.scss";
 
 interface Props {
   course: Course;
+  categoryFilter?: (category: string) => void;
 }
 
 const CourseCard = (props: Props) => {
-  const { course } = props;
+  const { course, categoryFilter } = props;
   const [nextClassDate, setNextClassDate] = useState("");
   const navigate = useNavigate();
-  const user = useSelector((state: ApplicationState) => state.user);
 
   const goToCourse = () => {
     navigate(`/course/${course.course_id || course.id}`, {
@@ -41,7 +39,11 @@ const CourseCard = (props: Props) => {
         <div className="course-card__content__header">
           <div className="header__tags">
             {course?.category!.map((tag) => (
-              <div key={tag} className="tag">
+              <div
+                key={tag}
+                className="tag"
+                onClick={() => (categoryFilter ? categoryFilter(tag) : {})}
+              >
                 <span className="title">{tag}</span>
               </div>
             ))}
@@ -53,7 +55,7 @@ const CourseCard = (props: Props) => {
         </div>
         <div className="course-card__content__footer">
           <button className="goto__button" onClick={goToCourse}>
-            Quero Participar
+            Saiba Mais
           </button>
           <div className="info">
             <div className="next-class">

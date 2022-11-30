@@ -5,6 +5,7 @@ import {
   GET_PROFILE_FAIL,
   GET_PROFILE_SUCCESS,
   ProfileState,
+  SET_PROFILE_PAGE,
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_IMAGE_FAIL,
   UPDATE_PROFILE_IMAGE_SUCCESS,
@@ -13,6 +14,7 @@ import {
 
 const initialState: ProfileState = {
   profile: {} as User,
+  profilePage: "profile",
 };
 
 const reducer: Reducer<ProfileState> = (
@@ -54,6 +56,11 @@ const reducer: Reducer<ProfileState> = (
       return {
         ...state,
         profile: { ...state.profile, profile_image: null },
+      };
+    case SET_PROFILE_PAGE:
+      return {
+        ...state,
+        profilePage: payload.page,
       };
     case CLEAR_PROFILE:
       return initialState;

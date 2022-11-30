@@ -1,8 +1,8 @@
 import Constants from "@/application/common/Constants";
 import {
   getFirstAndLastName,
+  isMobile,
   navigateToExternalUrl,
-  useWindowSize,
 } from "@/application/common/Utils";
 import { ApplicationState } from "@/application/store";
 import { setGlobalFilter } from "@/application/store/globalfilter/action";
@@ -51,7 +51,6 @@ const Header = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { width } = useWindowSize();
 
   const handleMenuItemClick = (keyword: string) => {
     setIsMenuOpen(false);
@@ -67,11 +66,11 @@ const Header = () => {
   };
 
   const handleAvatarClick = () => {
-    if (user.isLoggedIn && width > 783) {
+    if (user.isLoggedIn && !isMobile()) {
       setIsUserMenuOpen(!isUserMenuOpen);
     }
 
-    if (width < 1200) {
+    if (isMobile()) {
       user.isLoggedIn ? navigate("/profile") : navigate("/login");
     }
   };

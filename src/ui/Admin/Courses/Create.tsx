@@ -113,7 +113,7 @@ export const CreateCourseAdmin = () => {
             });
             setTimeout(() => {
               navigate(-1);
-            }, 4000)
+            }, 4001)
           } else {
             setLoadingCreateCourse(false)
             toast.error('Erro ao criar curso!', {

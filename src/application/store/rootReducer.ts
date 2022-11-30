@@ -11,7 +11,7 @@ import {
 } from "./courses";
 import globalfilter from "./globalfilter";
 import message from "./message";
-import profile from "./profile";
+import { default as profile, default as profilePage } from "./profile";
 import user from "./user";
 
 export default combineReducers({
@@ -29,4 +29,5 @@ export default combineReducers({
   certificates,
   globalfilter,
   mobilebanners,
+  profilePage,
 });

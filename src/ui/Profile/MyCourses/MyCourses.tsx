@@ -67,7 +67,7 @@ const MyCourses = () => {
       keys: ["name", "status", "category", "upcoming_classes.location"],
     });
 
-    if (!value) {
+    if (!value || value === "Todos") {
       setFilteredCourses(mycourses);
       return;
     }

@@ -5,7 +5,7 @@ interface ProfileCardProps {
   email: string;
   profile_image: string;
   onEdit: () => void;
-  currentPage: "profile" | "courses" | "certificates";
+  currentPage: string;
   handlePageChange: (page: "profile" | "courses" | "certificates") => void;
 }
 

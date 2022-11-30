@@ -343,7 +343,11 @@ const CourseCategory = () => {
           <div className="content__courses">
             <div className="cards">
               {filteredCourses?.map((course: Course) => (
-                <CourseCard key={course.id} course={course} />
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  categoryFilter={setSearchValue}
+                />
               ))}
               {filteredCourses.length < 1 && <h1>Nenhum curso encontrado</h1>}
             </div>

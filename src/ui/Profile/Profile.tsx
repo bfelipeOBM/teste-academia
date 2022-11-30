@@ -16,30 +16,31 @@ type ProfileCardPropsT = {
   email: string;
   profile_image: string;
   onEdit: () => void;
-  currentPage: "profile" | "courses" | "certificates";
+  currentPage: string;
   handlePageChange: (page: "profile" | "courses" | "certificates") => void;
 };
 
 const Profile = () => {
-  const [currentPage, setCurrentPage] = useState<
-    "profile" | "courses" | "certificates"
-  >("profile");
+  const user = useSelector((state: ApplicationState) => state.user);
+  const { profile } = useSelector((state: ApplicationState) => state.profile);
+  const { profilePage } = useSelector(
+    (state: ApplicationState) => state.profile
+  );
+  const { name, email, profile_image } = profile;
+
+  const [currentPage, setCurrentPage] = useState<string>(profilePage);
   const [ProfileCardProps, setProfileCardProps] = useState<ProfileCardPropsT>({
     name: "",
     email: "",
     profile_image: "",
     onEdit: () => {},
-    currentPage: "profile",
+    currentPage: profilePage,
     handlePageChange: () => {},
   });
 
   const navigate = useNavigate();
 
-  const user = useSelector((state: ApplicationState) => state.user);
-  const { profile } = useSelector((state: ApplicationState) => state.profile);
-  const { name, email, profile_image } = profile;
-
-  const handlePageChange = (page: "profile" | "courses" | "certificates") => {
+  const handlePageChange = (page: string) => {
     setCurrentPage(page);
   };
 
@@ -61,6 +62,10 @@ const Profile = () => {
       handlePageChange,
     });
   }, [profile, currentPage]);
+
+  useEffect(() => {
+    handlePageChange(profilePage);
+  }, [profilePage]);
 
   return (
     <>

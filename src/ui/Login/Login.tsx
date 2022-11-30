@@ -1,4 +1,4 @@
-import { useWindowSize } from "@/application/common/Utils";
+import { isMobile } from "@/application/common/Utils";
 import { UserLogin } from "@/application/models/user";
 import { ApplicationState } from "@/application/store";
 import { login } from "@/application/store/user/action";
@@ -37,8 +37,6 @@ const Login = () => {
   const { data: message } = useSelector(
     (state: ApplicationState) => state.message
   );
-
-  const { width } = useWindowSize();
 
   useEffect(() => {
     if (user.isLoggedIn) {
@@ -111,7 +109,7 @@ const Login = () => {
   return (
     <>
       <ToastContainer />
-      {width > 769 && (
+      {!isMobile() && (
         <div className="login-watermark-image">
           <img src={waterMark} alt="login" />
         </div>

@@ -34,6 +34,7 @@ export interface ApplicationState {
   certificates: CertificatesState;
   globalfilter: GlobalFilterState;
   mobilebanners: BannersState;
+  profilePage: ProfileState;
 }
 
 export type RootReducer = ReturnType<typeof rootReducer>;

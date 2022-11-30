@@ -104,6 +104,16 @@ const MyCourses = () => {
   const handleCategoryClick = () => {
     setIsCategoryOpen(!isCategoryOpen);
     setCategoryIcon(!isCategoryOpen ? "expand_less" : "expand_more");
+
+    if (isLocationOpen) {
+      setIsLocationOpen(false);
+      setLocationIcon("expand_more");
+    }
+
+    if (isTypesOpen) {
+      setIsTypesOpen(false);
+      setTypesIcon("expand_more");
+    }
   };
 
   const handleSelectedTypes = (type: string) => {
@@ -113,6 +123,16 @@ const MyCourses = () => {
   const handleTypesClick = () => {
     setIsTypesOpen(!isTypesOpen);
     setTypesIcon(!isTypesOpen ? "expand_less" : "expand_more");
+
+    if (isLocationOpen) {
+      setIsLocationOpen(false);
+      setLocationIcon("expand_more");
+    }
+
+    if (isCategoryOpen) {
+      setIsCategoryOpen(false);
+      setCategoryIcon("expand_more");
+    }
   };
 
   const handleSelectedLocation = (location: string) => {
@@ -122,6 +142,16 @@ const MyCourses = () => {
   const handleLocationClick = () => {
     setIsLocationOpen(!isLocationOpen);
     setLocationIcon(!isLocationOpen ? "expand_less" : "expand_more");
+
+    if (isCategoryOpen) {
+      setIsCategoryOpen(false);
+      setCategoryIcon("expand_more");
+    }
+
+    if (isTypesOpen) {
+      setIsTypesOpen(false);
+      setTypesIcon("expand_more");
+    }
   };
 
   const handleTabClick = (tab: currentTabT) => {

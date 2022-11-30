@@ -92,7 +92,14 @@ const SideBar = () => {
 
         <div className="menu-divider"></div>
 
-        <span id="home" className="menu-item" onClick={() => navigate("/")}>
+        <span
+          id="home"
+          className="menu-item"
+          onClick={() => {
+            navigate("/");
+            setMenuOpen(false);
+          }}
+        >
           <i className="material-icons-outlined">home</i>
           Início
         </span>

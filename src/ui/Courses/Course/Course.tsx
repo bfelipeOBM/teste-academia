@@ -68,7 +68,16 @@ const Course = () => {
     setLoading(true);
     if (course.id) {
       await dispatch(getCourseClasses(course) as any);
-      if (classes.length && classes[0]) {
+      if (classes.length > 1) {
+        const firstClassDate = new Date(classes[0].date);
+        const currentDate = new Date();
+        console.log(classes[1])
+        if (currentDate > firstClassDate) {
+          setCurrentClass(classes[1]);
+        } else {
+          setCurrentClass(classes[0]);
+        }
+      } else if (classes.length && classes[0]) {
         setCurrentClass(classes[0]);
       }
     }
@@ -83,18 +92,18 @@ const Course = () => {
     setLoading(false);
   };
 
-  const enrolledStudentsText = (enrolled: number) => {
+  const enrolledStudentsText = (enrolled: any) => {
     return classes.length > 0
-      ? `${enrolled} de ${classes[0].max_students} alunos matriculados`
+      ? `${enrolled} de ${currentClass?.max_students} alunos matriculados`
       : "";
   };
 
   const handleEnroll = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (user.isLoggedIn) {
-      if (classes.length && classes[0]) {
+      if (classes.length && currentClass) {
         setIsModalOpen(true);
-        setCurrentClass(classes[0]);
+        setCurrentClass(currentClass);
       }
     } else {
       navigate("/login");
@@ -131,7 +140,7 @@ const Course = () => {
 
   const handleDisabledButtons = async (
     myCourses: currentCourse[],
-    currentClasses: Class
+    currentClasses: any
   ) => {
     setLoadingButton(true);
 
@@ -170,15 +179,28 @@ const Course = () => {
       loadCourse();
     }
   }, []);
-
+  console.log(course?.upcoming_classes)
   useEffect(() => {
-    if (
-      course?.upcoming_classes &&
-      course.upcoming_classes.length > 0 &&
-      course.upcoming_classes[0].date
-    ) {
-      setNextClassDate(FormatToBrazilianDate(course.upcoming_classes[0].date));
+    if (course?.upcoming_classes) {
+      if (course.upcoming_classes.length > 1) {
+        const firstClassDate = new Date(course.upcoming_classes[0].date);
+        const currentDate = new Date();
+        if (currentDate > firstClassDate) {
+          setNextClassDate(FormatToBrazilianDate(course.upcoming_classes[1].date));
+        } else {
+          setNextClassDate(FormatToBrazilianDate(course.upcoming_classes[0].date));
+        }
+      } else {
+        setNextClassDate(FormatToBrazilianDate(course.upcoming_classes[0].date));
+      }
     }
+    // if (
+    //   course?.upcoming_classes &&
+    //   course.upcoming_classes.length > 0 &&
+    //   course.upcoming_classes[0].date
+    // ) {
+    //   setNextClassDate(FormatToBrazilianDate(course.upcoming_classes[0].date));
+    // }
 
     if (course) {
       loadClasses();
@@ -186,7 +208,7 @@ const Course = () => {
   }, [course]);
 
   useEffect(() => {
-    handleDisabledButtons(mycourses, classes[0]);
+    handleDisabledButtons(mycourses, currentClass);
   }, [mycourses, classes]);
 
   return (
@@ -287,8 +309,8 @@ const Course = () => {
                 <div className="details">
                   <div className="partner">
                     Parceiro:{" "}
-                    {classes.length > 0 && classes[0]?.partner && (
-                      <span>{classes[0].partner} </span>
+                    {classes.length > 0 && currentClass?.partner && (
+                      <span>{currentClass.partner} </span>
                     )}
                   </div>
 
@@ -315,9 +337,9 @@ const Course = () => {
                   </div>
 
                   <div className="enrollments">
-                    {enrolledStudentsText(classes[0]?.students_count)}
+                    {enrolledStudentsText(currentClass?.students_count)}
                     {classes.length > 0 &&
-                      classes[0]?.students_count == classes[0].max_students && (
+                      classes[0]?.students_count == currentClass?.max_students && (
                         <span> - Turma lotada</span>
                       )}
                   </div>

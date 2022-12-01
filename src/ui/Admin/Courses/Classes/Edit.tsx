@@ -140,7 +140,7 @@ export const EditClassAdmin = () => {
                 <FormLabel>Quantidade de participantes</FormLabel>
                 <NumberInput
                   defaultValue={classe?.max_students}
-                  min={0}
+                  min={1}
                   max={100}
                   onChange={(e) => setMaxStudents(+e)}>
                 <NumberInputField />

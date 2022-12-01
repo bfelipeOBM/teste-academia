@@ -122,7 +122,7 @@ export const CreateClassAdmin = () => {
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
                 <FormLabel>Quantidade de participantes</FormLabel>
-                <NumberInput defaultValue={0} min={1} onChange={(e) => setMaxStudents(+e)}>
+                <NumberInput defaultValue={1} min={1} onChange={(e) => setMaxStudents(+e)}>
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />

@@ -1,3 +1,4 @@
+import About from "@/ui/About/About";
 import { Admin } from "@/ui/Admin";
 import { BannersInfoAdmin } from "@/ui/Admin/Banner";
 import { CreateBannerAdmin } from "@/ui/Admin/Banner/Create";
@@ -82,6 +83,7 @@ const RouteWrapper = () => {
       <Routes>
         <Route element={<AnimationLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<ChakraProvider><About /></ChakraProvider>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />

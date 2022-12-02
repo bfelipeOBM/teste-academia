@@ -18,7 +18,7 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-  
+import * as XLSX from 'xlsx';
 
 export const ReportCourses = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -53,22 +53,17 @@ export const ReportCourses = () => {
                 ]
                 })
             ]
-            let csvContent = "data:text/csv;charset=utf-8," 
-            + rows.map(e => e.join(",")).join("\n");
-
-            const link = document.createElement("a");
-            link.setAttribute("href", csvContent);
-            link.setAttribute("download", `relatorio-${startDate}-${endDate}.csv`);
-            document.body.appendChild(link);
-
-            link.click();
+            const ws = XLSX.utils.aoa_to_sheet(rows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Relatório de Cursos");
+            XLSX.writeFile(wb, `relatorio-${startDate}-${endDate}.xlsx`);
             });
         }
     }
-
+    
     return (
        <>
-        <Button onClick={generateReport} colorScheme={"blue"}>Gerar CSV</Button>
+        <Button onClick={onOpen} colorScheme={"blue"}>Gerar CSV</Button>
 
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

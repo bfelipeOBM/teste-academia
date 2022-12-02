@@ -12,6 +12,7 @@ import { Header } from "../Components/Header";
 import { Sidebar } from "../Components/Sidebar";
 import { User } from "../interface/user";
 import 'react-toastify/dist/ReactToastify.css';
+import * as XLSX from 'xlsx';
 
 export const UsersAdminInfos = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -67,18 +68,12 @@ export const UsersAdminInfos = () => {
       ]),
     ]
 
-    let csvContent = "data:text/csv;charset=utf-8," 
-    + rows.map(e => e.join(",")).join("\n");
-
-    const link = document.createElement("a");
-    link.setAttribute("href", csvContent);
-    link.setAttribute("download", `usuarios.csv`);
-    document.body.appendChild(link);
-
-    link.click();
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Usuários");
+    XLSX.writeFile(wb, "usuarios.xlsx");
+    
   }
-
-
 
   function handleDeleteButton(user: User) {
     setUserToDelete(user);

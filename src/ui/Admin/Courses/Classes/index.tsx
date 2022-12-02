@@ -12,6 +12,7 @@ import { Header } from "../../Components/Header";
 import { Sidebar } from "../../Components/Sidebar";
 import { InfosCreateMaterialAdmin } from "../Material/Infos";
 import { CertificateModal } from "./Certificates/Modal"
+import * as XLSX from 'xlsx';
 
 export const ClassesInfoAdmin = () => {
   const {id, class_id} = useParams();
@@ -175,14 +176,10 @@ export const ClassesInfoAdmin = () => {
       })
     ]
 
-    let csvContent = "data:text/csv;charset=utf-8," 
-    + rows.map(e => e.join(",")).join("\n");
-    const link = document.createElement("a");
-    link.setAttribute("href", csvContent);
-    link.setAttribute("download", `${classe.name}-${new Intl.DateTimeFormat('pt-BR').format(new Date(classe?.date))}.csv`);
-    document.body.appendChild(link);
-
-    link.click();
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, `Relatório de usuários da turma ${classe.name}`);
+    XLSX.writeFile(wb, `${classe.name}-${new Intl.DateTimeFormat('pt-BR').format(new Date(classe?.date))}.xlsx`);
   }
 
   return (

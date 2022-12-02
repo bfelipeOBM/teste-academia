@@ -106,6 +106,9 @@ const ProfileEdit = (props: ProfileEditProps) => {
         progress: undefined,
         theme: "colored",
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch {
       toast.error(`${message.detail}`, {
         position: "top-right",
@@ -117,9 +120,10 @@ const ProfileEdit = (props: ProfileEditProps) => {
         progress: undefined,
         theme: "colored",
       });
+      setLoading(false);
     }
 
-    setLoading(false);
+    
   };
 
   const changePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {

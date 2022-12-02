@@ -65,10 +65,10 @@ export const ReportCourses = () => {
             });
         }
     }
-    console.log(startDate, endDate);
+
     return (
        <>
-        <Button onClick={onOpen} colorScheme={"blue"}>Gerar CSV</Button>
+        <Button onClick={generateReport} colorScheme={"blue"}>Gerar CSV</Button>
 
         <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

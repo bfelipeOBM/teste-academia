@@ -55,6 +55,31 @@ export const UsersAdminInfos = () => {
     })
   }, [])
 
+  const generateReport = () => {
+    const rows = [
+      ["NOME", "EMAIL", "CPF/CNPJ", "PROFISSÃO", "WHATSAPP"],
+      ...users.map((user) => [
+        user.name,
+        user.email,
+        user.document,
+        user.occupation,
+        user.phone,
+      ]),
+    ]
+
+    let csvContent = "data:text/csv;charset=utf-8," 
+    + rows.map(e => e.join(",")).join("\n");
+
+    const link = document.createElement("a");
+    link.setAttribute("href", csvContent);
+    link.setAttribute("download", `usuarios.csv`);
+    document.body.appendChild(link);
+
+    link.click();
+  }
+
+
+
   function handleDeleteButton(user: User) {
     setUserToDelete(user);
     onOpen();
@@ -111,6 +136,7 @@ export const UsersAdminInfos = () => {
           <HStack justifyContent="space-between" flexDir={['column', 'row']}>
             <Heading>Usuários</Heading>
             <HStack spacing={6}>
+              <Button onClick={generateReport} colorScheme={"facebook"} size={"lg"}>Gerar CSV</Button>
               <Button
                 as={Link}
                 to="/admin/users/create/multiple"

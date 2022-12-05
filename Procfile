@@ -1,1 +1,1 @@
-web: node scripts/heroku-start.js
+web: vite preview --port 8000

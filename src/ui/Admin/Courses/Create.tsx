@@ -1,7 +1,7 @@
 import Constants from '@/application/common/Constants';
 import { ApplicationState } from '@/application/store';
 import { userProfile } from '@/application/store/profile/action';
-import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
+import { Flex, HStack, Button, Box, Text, FormControl, FormLabel, Input, Textarea, VStack, Checkbox, Grid, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, FormErrorMessage } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,6 +23,7 @@ export const CreateCourseAdmin = () => {
   const [video, setVideo] = useState("")
   const [image, setImage] = useState<any>("")
   const [workload, setWorkload] = useState(0.0);
+  const [checkboxError, setCheckboxError] = useState(false);
   const userState = useSelector((state: ApplicationState) => state.user);
   const { profile } = useSelector((state: ApplicationState) => state.profile);
   const [loadingCreateCourse, setLoadingCreateCourse] = useState(false);
@@ -39,6 +40,14 @@ export const CreateCourseAdmin = () => {
       window.location.href = "/";
     }
   }, [userState.isLoggedIn, dispatch]);
+
+  useEffect(() => {
+    if (selectedOptions.length > 0) {
+      setCheckboxError(false);
+    } else {
+      setCheckboxError(true);
+    }
+  }, [selectedOptions])
 
 
   function handleAddCategory(e: any) {
@@ -129,7 +138,6 @@ export const CreateCourseAdmin = () => {
     // }, 10000);
   }
 
-
   return (
     <Flex w="100%" flexDir={['column', 'row']}>
       <Sidebar />
@@ -183,7 +191,9 @@ export const CreateCourseAdmin = () => {
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormLabel>Profissão</FormLabel>
+              {checkboxError && <Text mb={3} color="red.500">Selecione pelo menos uma profissão</Text>}
               <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                
                 <Checkbox
                   value="Todos"
                   onChange={(e) => {handleAddAllCategories(e)}}
@@ -196,7 +206,9 @@ export const CreateCourseAdmin = () => {
                     isChecked={selectedOptions.includes(value)}
                   >{value}</Checkbox>
                 ))}
+                
               </Grid>
+              
             </Box>
             <Box borderWidth={1} borderStyle={"solid"} p={4} borderRadius={8} w={"100%"}>
               <FormControl>
